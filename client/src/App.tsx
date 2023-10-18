@@ -5,7 +5,7 @@ import {HeaderSearch} from './components/Header'
 import Products from './components/Products'
 import { Footer } from './components/Footer';
 import { Divider } from '@mantine/core';
-import { useLoaderData } from "react-router-dom"
+import { useLoaderData } from 'react-router-dom'
 
 
 function App() {
