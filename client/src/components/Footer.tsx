@@ -57,7 +57,7 @@ export function Footer() {
 
   return (
     <footer className={classes.footer}>
-      <Container className={classes.inner}>
+      <Container className={classes.inner} fluid>
         <div className={classes.logo}>
           <MantineLogo size={30} />
           <Text size="xs" c="dimmed" className={classes.description}>
