@@ -5,10 +5,10 @@ import { MantineLogo } from '@mantine/ds';
 import classes from './HeaderSearch.module.css';
 import  Vaca from '../assets/img/vaca.png'
 const links = [
-  { link: '/Home', label: 'Home' },
-  { link: '/About', label: 'About' },
+  { link: '/', label: 'Home' },
+  { link: '/shop', label: 'Shop' },
   { link: '/Contact', label: 'Contact' },
-  { link: '/Signup', label: 'Signup' },
+  { link: '/signup', label: 'signup' },
 ];
 
 export function HeaderSearch() {

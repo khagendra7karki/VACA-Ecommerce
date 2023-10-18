@@ -1,21 +1,27 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import {HeaderSearch} from './components/Header'
-import Products from './components/Products'
-import { Footer } from './components/Footer';
-import { Divider } from '@mantine/core';
+import {Signin} from './components/Signin'
+import {Signup} from './components/Signup'
+import Home from './components/Home'
 import { useLoaderData } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Shop from './components/Shop';
 
 
 function App() {
   
   return (
     <div >
-     <HeaderSearch/>
-     <Divider my="sm" />
-     <Products/>
-     <Footer/>
+     <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/signin" element={<Signin />} />
+              <Route path="/signup" element={<Signup />} />
+              {/* <Route path="/profile" element={<Shop />} /> */}
+              <Route index element={<Home />} />
+              <Route path="/shop" element={<Shop />} />
+              </Routes></BrowserRouter>
     </div>
   );
 }
