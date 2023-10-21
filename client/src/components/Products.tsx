@@ -1,4 +1,4 @@
-import { SimpleGrid, Card, Image, Text, Container, AspectRatio } from '@mantine/core';
+import { SimpleGrid, Card, Image, Text, Container, AspectRatio, Button } from '@mantine/core';
 import classes from './Products.module.css';
 import {  MantineProvider, createTheme, rem } from '@mantine/core';
 
@@ -11,7 +11,7 @@ import { useNotifications } from "@mantine/notifications";
 import { bindActionCreators } from "redux";
 import { actionCreators, State } from "../state";
 import Loading from "./Loading";
-
+import { useNavigate } from "react-router";
 
 const CONTAINER_SIZES: Record<string, string> = {
   xxs: rem(300),
@@ -124,7 +124,7 @@ export default function ArticlesCardsGrid() {
   //const notifications = useNotifications();
 
   //const [activePage, setActivePage] = useState(1);
-
+  const navigate = useNavigate();
   const { getProducts } = bindActionCreators(actionCreators, dispatch);
 
   const { products, error, loading } = useSelector(
@@ -143,6 +143,7 @@ export default function ArticlesCardsGrid() {
   }, [dispatch]);
 console.log( products)
 console.log( products.payload, "tttttttt")
+console.log( products.products, "ppppppppp")
   // useEffect(() => {
   //   if (error) {
   //     notifications.showNotification({
@@ -168,6 +169,16 @@ console.log( products.payload, "tttttttt")
         {product.oldPrice}
       </Text>
       
+            <Button
+              onClick={() => navigate(`/product/${product._id}`)}
+              variant="filled"
+              radius="lg"
+              color="dark"
+              fullWidth
+            >
+              View Product
+            </Button>
+        
     </Card>
      )))
     : (

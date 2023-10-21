@@ -3,12 +3,13 @@ import logo from './logo.svg';
 import './App.css';
 import {Signin} from './components/Signin'
 import {Signup} from './components/Signup'
-import Home from './components/Home'
+import Home from './pages/Home'
 import { useLoaderData } from 'react-router-dom'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Shop from './components/Shop';
 import { Notifications } from '@mantine/notifications';
 import '@mantine/core/styles.css';
+import '@mantine/notifications/styles.css';
 // other css files are required only if
 // you are using components from the corresponding package
 // import '@mantine/dates/styles.css';
@@ -18,6 +19,8 @@ import '@mantine/core/styles.css';
 import { MantineProvider, createTheme } from '@mantine/core';
 import { Provider } from 'react-redux';
 import { store } from "./state/index";
+import Cart from './pages/Cart';
+import Product from './pages/Product';
 
 const theme = createTheme({
   /** Put your mantine theme override here */
@@ -38,6 +41,8 @@ function App() {
               {/* <Route path="/profile" element={<Shop />} /> */}
               <Route index element={<Home />} />
               <Route path="/shop" element={<Shop />} />
+              <Route path="/cart" element={<Cart />} />
+              <Route path="/product/:id" element={<Product />} />
               </Routes></BrowserRouter>
     </MantineProvider>
       </Provider>

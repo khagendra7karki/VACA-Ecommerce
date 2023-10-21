@@ -9,7 +9,7 @@ const getProductsReducer = (
   },
   action: Action
 ) => {
-  console.log(action.type, action.payload, 'qqqqqqqq')
+  //console.log(action.type, action.payload, "mmmmmmmmmmmm"  )
   switch (action.type) {
     case ActionType.GET_PRODUCTS_REQUEST:
       return { ...state, loading: true, error: null };

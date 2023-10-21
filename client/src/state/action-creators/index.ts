@@ -70,9 +70,8 @@ export const getProducts = () => {
         type: ActionType.GET_PRODUCTS_REQUEST,
       });
 
-      // const { data } = await axios.get(`/api/v1/products?pageNumber=${page}`);
-      const { data } = await axios.get('http://localhost:5000/products');
-console.log(data,"hhhhhhhhh");
+      const { data } = await axios.get(`http://localhost:5000/products`);
+// console.log('kkkkkk',data)
       dispatch({
         type: ActionType.GET_PRODUCTS_SUCCESS,
         payload: data,
@@ -116,9 +115,9 @@ export const getProduct = (id: string) => {
       dispatch({
         type: ActionType.GET_PRODUCT_REQUEST,
       });
-
-      const { data } = await axios.get(`/api/v1/products/${id}`);
-
+   
+      const { data } = await axios.get(`http://localhost:5000/getproduct/${id}`);
+console.log(data,"kkkkkkkkkkkkk", id)
       dispatch({
         type: ActionType.GET_PRODUCT_SUCCESS,
         payload: data,
