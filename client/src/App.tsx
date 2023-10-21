@@ -7,13 +7,30 @@ import Home from './components/Home'
 import { useLoaderData } from 'react-router-dom'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Shop from './components/Shop';
+import { Notifications } from '@mantine/notifications';
+import '@mantine/core/styles.css';
+// other css files are required only if
+// you are using components from the corresponding package
+// import '@mantine/dates/styles.css';
+// import '@mantine/dropzone/styles.css';
+// import '@mantine/code-highlight/styles.css';
+// ...
+import { MantineProvider, createTheme } from '@mantine/core';
+import { Provider } from 'react-redux';
+import { store } from "./state/index";
 
+const theme = createTheme({
+  /** Put your mantine theme override here */
+});
 
 function App() {
   
   return (
     <div >
-     <BrowserRouter>
+      <Provider store={store}>
+      <MantineProvider theme={theme}>
+    <Notifications />
+    <BrowserRouter>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/signin" element={<Signin />} />
@@ -22,6 +39,10 @@ function App() {
               <Route index element={<Home />} />
               <Route path="/shop" element={<Shop />} />
               </Routes></BrowserRouter>
+    </MantineProvider>
+      </Provider>
+     
+     
     </div>
   );
 }

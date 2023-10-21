@@ -2,6 +2,17 @@ import { SimpleGrid, Card, Image, Text, Container, AspectRatio } from '@mantine/
 import classes from './Products.module.css';
 import {  MantineProvider, createTheme, rem } from '@mantine/core';
 
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+
+import { useNotifications } from "@mantine/notifications";
+
+
+import { bindActionCreators } from "redux";
+import { actionCreators, State } from "../state";
+import Loading from "./Loading";
+
+
 const CONTAINER_SIZES: Record<string, string> = {
   xxs: rem(300),
   xs: rem(400),
@@ -103,21 +114,66 @@ const mockdata = [
   },
 ];
 
+
+
+
+
+
 export default function ArticlesCardsGrid() {
-  const cards = mockdata.map((article) => (
-    <Card key={article.title} p="md" radius="md" component="a" href="#" className={classes.card} >
+  const dispatch = useDispatch();
+  //const notifications = useNotifications();
+
+  //const [activePage, setActivePage] = useState(1);
+
+  const { getProducts } = bindActionCreators(actionCreators, dispatch);
+
+  const { products, error, loading } = useSelector(
+    (state: State) => state.products
+  
+  );
+  console.log("getproducts", products)
+  // const handlerPageChange = () => {
+  //   //setActivePage(page);
+  //   getProducts();
+  // };
+
+  useEffect(() => {
+    getProducts();
+    
+  }, [dispatch]);
+console.log( products)
+console.log( products.payload, "tttttttt")
+  // useEffect(() => {
+  //   if (error) {
+  //     notifications.showNotification({
+  //       title: "Error!",
+  //       message: error,
+  //       color: "red",
+  //     });
+  //   }
+  //   // eslint-disable-next-line
+  // }, [error]);
+
+  const cards =
+  (Object.keys(products).includes("payload") )? (
+  products.payload.map((product :any) => (
+    <Card key={product.title} p="md" radius="md" component="a" href="#" className={classes.card} >
       <AspectRatio ratio={1920 / 1080}>
-        <Image src={article.image} />
+        <Image src={product.image} />
       </AspectRatio>
       <Text className={classes.title} mt={5}>
-        {article.title}
+        {product.title}
       </Text>
       <Text c="dimmed" size="xs" tt="uppercase" fw={700} mt="md">
-        {article.date}
+        {product.oldPrice}
       </Text>
       
     </Card>
-  ));
+     )))
+    : (
+      <>hello world</>
+    )
+ 
 
   return (
     <MantineProvider theme={theme}>
