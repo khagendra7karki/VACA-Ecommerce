@@ -20,7 +20,7 @@ const router = express.Router()
 
 
 //product routers
-router.get('/products', productController.getProduct)
+router.get('/getProducts', productController.getProduct)
 router.get('/getproduct/:id', productController.getProductById )
 router.delete('/deleteProduct/:id',productController.deleteProductById)
 router.post( '/addProduct', productController.storeProduct)
@@ -30,8 +30,20 @@ router.post( '/createuser', userController.createUser )
 
 
 //reveiw routers
-router.post( '/addReview', reviewController.createReview )
-router.get( '/getReview/:id', reviewController.getReview)
+
+/**
+ * 
+    To add review the format of the review should be: 
+    const review = {
+        productId: { type: Mongoose.Schema.Types.ObjectId },
+        userId: { type; Mongoose.Schema.Types.ObjectId },
+        review: { type: String },
+        rating: { type: Number } //  between 1 - 5 ( integer )
+    }
+
+*/    
+router.post( '/addReview', reviewController.addReview )
+// router.get( '/getReview/:id', reviewController.getReview)
 
 
 // routere.post('/')

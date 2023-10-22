@@ -11,30 +11,36 @@ const ProductSchema = new Schema({
         type: String,
         requied: true,
     },
-
     price: {
         type: Number,
         required: true,
     },
     category:{
         type: String,
-    },
-    image:{
-        type: String,
-        required: true,
-    },
-    isOld: {
-        type: Boolean,
-        required: true,
-    },
-    oldPrice: {
-        type: Number,
         required: true
     },
+    image:[{
+        type: String,
+        required: true,
+    }],
+    oldPrice: {
+        type: Number,
+    },
+
+    reviews: [
+        {
+            userID: {
+                type: mongoose.Schema.Types.ObjectId,
+                required: true
+            },
+            review: { type: String, required: true},
+            rating: { type: Number, required: true}
+        },
+        {timestamps: true}
+    ],
 
     rating: {
         type : Number,
-        required: true,
     }
 
 })
