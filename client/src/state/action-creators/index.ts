@@ -70,7 +70,7 @@ export const getProducts = () => {
         type: ActionType.GET_PRODUCTS_REQUEST,
       });
 
-      const { data } = await axios.get(`http://localhost:5000/products`);
+      const { data } = await axios.get(`http://localhost:5000/getProducts`);
 // console.log('kkkkkk',data)
       dispatch({
         type: ActionType.GET_PRODUCTS_SUCCESS,
