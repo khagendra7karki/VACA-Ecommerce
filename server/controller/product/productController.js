@@ -44,15 +44,11 @@ const product = {
         }
     },
     getProductById: async( req, res) =>{
-        const productId = req.body.id
-        await productSchema.findById( productId, ( error, data ) =>{
-            if( error ){
-                res.status(500).json({message: 'An error occurred'})
-            }
-            else{
-                res.status(200).json( {task : 'getProductId',status:'unsuccessful', payload: data})
-            }
-        })
+        const productId  = req.params.id
+        // res.status(500).json({message: 'An error occurred'})
+        const product = await productSchema.findById( productId )
+        res.status(200).json( {task : 'getProductId',status:'unsuccessful', payload: product })
+        console.log(product )
     },
     storeProduct: async( req, res) =>{
         
