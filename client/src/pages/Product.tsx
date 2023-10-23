@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Alert, Badge, Button, Grid, Group, Image, NumberInputHandlers, Stack, Text } from '@mantine/core';
+import { ActionIcon, Alert, Badge, Button, Grid, Group, Image, NumberInput, NumberInputHandlers, Stack, Text } from '@mantine/core';
 import classes from './product.module.css';
 import { IoIosCloseCircle, IoIosUnlock } from "react-icons/io";
 import ReviewCard from '../components/ReviewCard';
@@ -9,6 +9,7 @@ import { actionCreators, State } from "../state";
 import { useDispatch, useSelector } from "react-redux";
 import { notifications } from "@mantine/notifications";
 import { ActionType } from "../state/action-types";
+import Loading from '../components/Loading';
 
 const Product = () => {
   const params = useParams();
@@ -46,9 +47,9 @@ const Product = () => {
   //   });
   // };
 
-  // const handlerAddToCart = (quantity: number, id: string) => {
-  //   addToCart(id, quantity);
-  // };
+  const handlerAddToCart = (quantity: number, id: string) => {
+    addToCart(id, quantity);
+  };
 
   useEffect(() => {
     if (reviewError !== null) {
@@ -76,17 +77,20 @@ const Product = () => {
   // }, [review]);
 
   useEffect(() => {
-    console.log(params.id)
     getProduct(params.id as string);
-    // eslint-disable-next-line
   }, [dispatch, review, quickSearch]);
 console.log("hhhrrrr", product)
-
+// console.log(product.payload.title,"productid ")
   return (
     <>
+    {loading ? (
+      <Loading />
+    ) : (
+    <>
+     {Object.keys(product).length && (
     <Grid gutter={{ base: 5, xs: 'md', md: 'xl', xl: 50 }}>
     <Grid.Col span={4}>
-    <Image src="https://i.imgur.com/ZL52Q2D.png" alt="Tesla Model S" />
+    <Image src={product.payload.image} alt="Tesla Model S" />
     </Grid.Col>
     <Grid.Col span={4}>
         <Stack
@@ -95,9 +99,9 @@ console.log("hhhrrrr", product)
       justify="flex-start"
     >
        <Group justify="space-between" mt="md">
-        <div> <Text fw={500}>Tesla Model S</Text>
+        <div> <Text fw={500}>{product.payload.title}</Text>
           <Text fz="xs" c="dimmed">
-            Free recharge at any station
+          {product.payload.description}
           </Text>
         </div>
         <Badge variant="outline">25% off</Badge>
@@ -106,24 +110,63 @@ console.log("hhhrrrr", product)
           Basic configuration
         </Text>
         <Group gap={30}>
+        <Group >
+                          <ActionIcon
+                            size={28}
+                            radius="lg"
+                            variant="filled"
+                            color="dark"
+                            onClick={() => handlers?.current?.decrement()}
+                          >
+                            –
+                          </ActionIcon>
+                          <NumberInput
+                            hideControls
+                            value={value}
+                            onChange={(val) => setValue(val)}
+                            handlersRef={handlers}
+                            max={10}
+                            min={1}
+                            step={1}
+                            styles={{
+                              input: { width: 54, textAlign: "center" },
+                            }}
+                            radius="lg"
+                          />
+                          <ActionIcon
+                            size={28}
+                            radius="lg"
+                            variant="filled"
+                            color="dark"
+                            onClick={() => handlers?.current?.increment()}
+                          >
+                            +
+                          </ActionIcon>
+                        </Group>
           <div>
             <Text fz="xl" fw={700} style={{ lineHeight: 1 }}>
-              $168.00
+            $
+                          {new Intl.NumberFormat().format(
+                            value * product.payload.price
+                          )}
             </Text>
             <Text fz="sm" c="dimmed" fw={500} style={{ lineHeight: 1 }} mt={3}>
-              per day
+            {product.payload.oldPrice}
             </Text>
           </div>
+                            
+          <Button radius="xl" style={{ flex: 1 }} onClick={() => handlerAddToCart( value, product.payload._id)}>
+          
 
-          <Button radius="xl" style={{ flex: 1 }}>
-            Rent now
-          </Button>
+            Add To Cart
+          </Button> 
         </Group>
     </Stack>
          
       </Grid.Col>
    
   </Grid>
+     )}
   {/* <div style={{ marginTop: "1rem" }}>
               {Object.keys(product).length && product.reviews.length ? (
                 product.reviews.map((review: any) => {
@@ -150,8 +193,10 @@ console.log("hhhrrrr", product)
               )}
             </div> */}
   </>
-  )
-}
+ )
+  }
+  </>
+)}
 
 export default Product
 

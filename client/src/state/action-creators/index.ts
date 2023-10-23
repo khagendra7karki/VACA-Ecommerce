@@ -6,17 +6,18 @@ import { store } from "../store";
 
 export const addToCart = (id: string, qty: number) => {
   return async (dispatch: Dispatch<Action>, getState: any) => {
-    const { data } = await axios.get(`/api/v1/products/${id}`);
-
+    const { data } = await axios.get(`http://localhost:5000/getProduct/${id}`);
+    console.log('kkkkkeeeeeeeeeerrrrrrrwk',data)
     dispatch({
       type: ActionType.CART_ADD_ITEM,
-      payload: {
-        product: data._id,
-        name: data.name,
-        image: data.image,
-        price: data.price,
-        countInStock: data.countInStock,
-        qty,
+      payload: 
+      {
+        product: data.payload._id,
+        title: data.payload.title,
+        image: data.payload.image,
+        price: data.payload.price,
+        // countInStock: data.payload.countInStock,
+        // qty,
       },
     });
 
@@ -116,8 +117,8 @@ export const getProduct = (id: string) => {
         type: ActionType.GET_PRODUCT_REQUEST,
       });
    
-      const { data } = await axios.get(`http://localhost:5000/getproduct/${id}`);
-console.log(data,"kkkkkkkkkkkkk", id)
+      const { data } = await axios.get(`http://localhost:5000/getProduct/${id}`);
+console.log(data,"kkkkkkkkkkkkk", id, data.payload)
       dispatch({
         type: ActionType.GET_PRODUCT_SUCCESS,
         payload: data,

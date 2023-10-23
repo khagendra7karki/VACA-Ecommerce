@@ -36,6 +36,7 @@ const getProductReducer = (
   action: Action
 ) => {
   switch (action.type) {
+    
     case ActionType.GET_PRODUCT_REQUEST:
       return { ...state, loading: true, error: null };
     case ActionType.GET_PRODUCT_SUCCESS:

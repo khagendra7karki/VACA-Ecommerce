@@ -77,9 +77,9 @@ const Cart = () => {
   </Modal>
   <div className="grid-container">
     {cartItems && cartItems.length ? (
-      cartItems.map((item: any) => {
+      cartItems.map((item: any, index : number) => {
         return (
-          <Card className="cart-card">
+          <Card className="cart-card" key={index}>
             <div className="grid-item">
               <Image
                 fit="contain"
@@ -91,24 +91,27 @@ const Cart = () => {
             </div>
             <div className="grid-item">
               <div className="item-name">
-                {item.name}
+                {item.title}
               </div>
             </div>
             <div className="grid-item">
               <div className="item-price">
-                ${item.price} x {item.qty}
+                ${item.price} 
+                {/* x {item.qty} */}
               </div>
             </div>
             <div className="grid-item">
               <NumberInput
                 radius="lg"
-                value={item.qty}
+                //value={item.qty}
+                value={1}
                 ref={numRef}
                 onChange={(e) =>
                   handlerUpdateCartItems(e as number, item.product)
                 }
                 min={1}
-                max={item.countInStock}
+                //max={item.countInStock}
+                max={5}
                 required
               />
             </div>
@@ -141,14 +144,16 @@ const Cart = () => {
   <div className="subtotal-container">
     <Card radius="lg" shadow="xl" withBorder>
       <Text style={{ marginBottom: "1rem" }}>
-        Subtotal (
-        {cartItems.reduce((acc: any, item: any) => acc + item.qty, 0)}
+        Subtotal 
+        {/* {cartItems.reduce((acc: any, item: any) => acc + item.qty, 0)} */}
+        {cartItems.reduce((acc: any, item: any) => acc + 1, 0)}
         Items
       </Text>
       <Text size="xl" style={{ marginTop: ".5rem" }}>
         $
         {cartItems
-          .reduce((acc: any, item: any) => acc + item.qty * item.price, 0)
+          // .reduce((acc: any, item: any) => acc + item.qty * item.price, 0)
+          .reduce((acc: any, item: any) => acc + 1 * item.price, 0)
           .toFixed(2)}
       </Text>
       {cartItems && cartItems.length ? (
@@ -174,3 +179,14 @@ const Cart = () => {
 };
 
 export default Cart;
+
+
+// import React from 'react'
+
+// function Cart() {
+//   return (
+//     <div>Cart</div>
+//   )
+// }
+
+// export default Cart
