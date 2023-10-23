@@ -34,9 +34,9 @@ const product = {
         }
     },
     deleteProductById: async( req, res) =>{
-        const { id } = req.params
+        const productId = req.params.id
         try{
-            await productSchema.deleteOne( { _id: id })
+            await productSchema.deleteOne( { _id: productId })
             res.status( 200).json( { task: 'deleteItem', status: 'successful'})
         }
         catch( error ){
