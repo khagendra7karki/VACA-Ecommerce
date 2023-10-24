@@ -14,6 +14,7 @@ import {
 } from "@mantine/core";
 import { RiShoppingBagLine } from "react-icons/ri";
 import { BiTrashAlt } from "react-icons/bi";
+import Layout from "../Layout/Layout";
 
 const Cart = () => {
   const numRef = useRef(null);
@@ -44,7 +45,7 @@ const Cart = () => {
   };
 
   return (
-   // ...
+   <Layout>
 
 <div className="cart-container">
   <Modal
@@ -173,7 +174,7 @@ const Cart = () => {
   </div>
 </div>
 
-// ...
+</Layout>
 
   );
 };

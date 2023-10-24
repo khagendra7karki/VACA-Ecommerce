@@ -4,22 +4,25 @@ import { IconSearch } from '@tabler/icons-react';
 import { MantineLogo } from '@mantine/ds';
 import classes from './HeaderSearch.module.css';
 import  Vaca from '../assets/img/vaca.png'
+
+
 const links = [
   { link: '/', label: 'Home' },
   { link: '/shop', label: 'Shop' },
   { link: '/Contact', label: 'Contact' },
   { link: '/signup', label: 'signup' },
+  { link: '/cart', label: 'cart' },
 ];
 
 export function HeaderSearch() {
   const [opened, { toggle }] = useDisclosure(false);
-
+ 
   const items = links.map((link) => (
     <a
       key={link.label}
       href={link.link}
       className={classes.link}
-      onClick={(event) => event.preventDefault()}
+      // onClick={(event) => event.preventDefault()}
     >
       {link.label}
     </a>

@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { notifications } from "@mantine/notifications";
 import { ActionType } from "../state/action-types";
 import Loading from '../components/Loading';
+import Layout from '../Layout/Layout';
 
 const Product = () => {
   const params = useParams();
@@ -82,7 +83,7 @@ const Product = () => {
 console.log("hhhrrrr", product)
 // console.log(product.payload.title,"productid ")
   return (
-    <>
+    <Layout>
     {loading ? (
       <Loading />
     ) : (
@@ -195,7 +196,7 @@ console.log("hhhrrrr", product)
   </>
  )
   }
-  </>
+  </Layout>
 )}
 
 export default Product
