@@ -11,6 +11,7 @@ const links = [
   { link: '/shop', label: 'Shop' },
   { link: '/Contact', label: 'Contact' },
   { link: '/signup', label: 'signup' },
+  { link: '/signin', label: 'signin' },
   { link: '/cart', label: 'cart' },
 ];
 

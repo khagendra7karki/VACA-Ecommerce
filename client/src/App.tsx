@@ -1,8 +1,8 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import {Signin} from './components/Signin'
-import {Signup} from './components/Signup'
+import {Signin} from './pages/authentication/Signin'
+import {Signup} from './pages/authentication/Signup'
 import Home from './pages/Home'
 import { useLoaderData } from 'react-router-dom'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
