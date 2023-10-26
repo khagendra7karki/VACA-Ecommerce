@@ -31,7 +31,8 @@ const Cart = () => {
   );
 
   const handlerUpdateCartItems = (value: number, id: string) => {
-    dispatch(addToCart(id, value));
+    addToCart( id, value );
+    // dispatch( addToCart( id, value ))
   };
 
   const selectItem = (id: string) => {
@@ -41,7 +42,8 @@ const Cart = () => {
 
   const handlerDeleteCartItem = (id: string) => {
     setOpened(false);
-    dispatch(removeFromCart(id));
+    removeFromCart( id );
+    // dispatch(removeFromCart(id));
   };
 
   return (
