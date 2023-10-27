@@ -48,7 +48,6 @@ const product = {
         // res.status(500).json({message: 'An error occurred'})
         const product = await productSchema.findById( productId )
         res.status(200).json( {task : 'getProductId',status:'unsuccessful', payload: product })
-        console.log(product )
     },
     storeProduct: async( req, res) =>{
         

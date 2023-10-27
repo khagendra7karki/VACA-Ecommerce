@@ -12,6 +12,15 @@ import { bindActionCreators } from "redux";
 import { actionCreators, State } from "../state";
 import Loading from "./Loading";
 import { useNavigate } from "react-router";
+import { ProductsCard } from './ProductsCard';
+
+interface Product {
+  _id: string,  
+  title: string,
+  image: string[],
+  oldPrice?: Number,
+  price: Number,
+};
 
 const CONTAINER_SIZES: Record<string, string> = {
   xxs: rem(300),
@@ -69,42 +78,12 @@ export default function ArticlesCardsGrid() {
 console.log( products)
 console.log( products.payload, "tttttttt")
 console.log( products.products, "ppppppppp")
-  // useEffect(() => {
-  //   if (error) {
-  //     notifications.showNotification({
-  //       title: "Error!",
-  //       message: error,
-  //       color: "red",
-  //     });
-  //   }
-  //   // eslint-disable-next-line
-  // }, [error]);
+
 
   const cards =
   (Object.keys(products).includes("payload") )? (
-  products.payload.map((product :any) => (
-    <Card key={product.title} p="md" radius="md" component="a" href="#" className={classes.card} >
-      <AspectRatio ratio={1920 / 1080}>
-        <Image src={product.image} />
-      </AspectRatio>
-      <Text className={classes.title} mt={5}>
-        {product.title}
-      </Text>
-      <Text c="dimmed" size="xs" tt="uppercase" fw={700} mt="md">
-        {product.oldPrice}
-      </Text>
-      
-            <Button
-              onClick={() => navigate(`/product/${product._id}`)}
-              variant="filled"
-              radius="lg"
-              color="dark"
-              fullWidth
-            >
-              View Product
-            </Button>
-        
-    </Card>
+  products.payload.map((product : Product ) => (
+    <ProductsCard product = { product } key = { Number( product._id )}/>
      )))
     : (
       <>hello world</>
@@ -113,8 +92,9 @@ console.log( products.products, "ppppppppp")
 
   return (
     <MantineProvider theme={theme}>
-    <Container py="md" size="xl" bg="var(--mantine-color-blue-light)">
-      <SimpleGrid cols={{ base: 1, sm: 4 }} spacing="xl">{cards}</SimpleGrid>
-    </Container>  </MantineProvider>
+      <Container py="md" size="xl">
+        <SimpleGrid cols={{ base: 1, xs: 2, sm: 3, md: 4}} spacing="xl">{cards}</SimpleGrid>
+      </Container>  
+    </MantineProvider>
   );
 }

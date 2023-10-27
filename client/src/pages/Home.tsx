@@ -6,12 +6,11 @@ import Products from '../components/Products'
 import Layout from '../Layout/Layout'
 export default function Home() {
   return (
-  <Layout> <div >
-  
-    <Divider my="sm" />
-    <Products/>
-    <Footer/>
-   </div>
+  <Layout> 
+    <div >
+      <Divider my="sm" />
+      <Products/>
+    </div>
    </Layout>
  
   )
