@@ -26,7 +26,11 @@ const ProductSchema = new Schema({
     oldPrice: {
         type: Number,
     },
-
+    availableQuantity: {
+        type: Number,
+        required: true,
+        default: 0
+    },
     reviews: [
         {
             userID: {
@@ -41,6 +45,8 @@ const ProductSchema = new Schema({
 
     rating: {
         type : Number,
+        required: true,
+        default: 0
     }
 
 })
