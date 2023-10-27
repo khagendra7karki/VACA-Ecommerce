@@ -5,11 +5,14 @@ dotenv.config()
 
 const URI = process.env.MONGODB_URI
 const database = new db()
-const connection = await database.connectDB( URI )
+const connections = await database.connectDB( URI )
+
+// await connections.connection.dropCollection('products')
 const returnValue  = fetch( 'https://fakestoreapi.com/products?limit=100').then( res => res.json()).then( res => res)
 
 
 const randomDiscountPercentage = [ 0.2, 0.3 , 0.45, 0.5, 0.1, 0.35, 0.25, 0.15] 
+const randomQuantity = [ 0, 3, 4, 5, 0, 6, 7, 8, 0, 13]
 
 
 await returnValue.then( async (products) =>{
@@ -25,6 +28,7 @@ await returnValue.then( async (products) =>{
                             
                             image: [ products[i].image ],
                             category: products[i].category,
+                            availableQuantity: randomQuantity[ Math.floor( randomQuantity.length * Math.random() )]
 
                         }
         console.log( product )
@@ -35,6 +39,9 @@ await returnValue.then( async (products) =>{
         
     }
 })
+
+// const products = await productSchema.find( )
+
 
 
 
