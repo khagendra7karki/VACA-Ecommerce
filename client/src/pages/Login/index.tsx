@@ -1,3 +1,13 @@
+import { useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { bindActionCreators } from "redux";
+
+import { signInWithPopup, GoogleAuthProvider, getAuth } from 'firebase/auth';
+
+import { State, actionCreators } from "../../state";
+
+
 import {
   Paper,
   TextInput,
@@ -10,18 +20,18 @@ import {
 } from "@mantine/core";
 import classes from "./Signin.module.css";
 import Layout from "../../Layout/Layout";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import { notifications } from "@mantine/notifications";
-import { bindActionCreators } from "redux";
-import { State, actionCreators } from "../../state";
 import { useForm } from "@mantine/form";
-import { useEffect } from "react";
 
-export function Signin() {
+
+export default function Signin() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
+
+  // auth provider for google
+  const Provider = new GoogleAuthProvider();
+  const auth = getAuth();
 
   const redirectTo = location.search;
   const { login } = bindActionCreators(actionCreators, dispatch);
@@ -75,6 +85,21 @@ export function Signin() {
     // eslint-disable-next-line
   }, [error]);
 
+  const googleLogin = ( e: React.MouseEvent ) =>{
+    e.preventDefault()
+    signInWithPopup( auth, Provider ).then( ( result ) =>{
+      const userInfo = {
+        id: result.user.uid,
+        name: result.user.displayName,
+        email: result.user.email,
+        image: result.user.photoURL
+      }
+    })
+
+    
+
+  }
+
   return (
     <Layout>
       <form
@@ -109,6 +134,10 @@ export function Signin() {
             <Checkbox label="Keep me logged in" mt="xl" size="md" />
             <Button fullWidth type="submit" mt="xl" size="md">
               Login
+            </Button>
+
+            <Button fullWidth onClick = { googleLogin }>
+              Login With Google
             </Button>
 
             <Text ta="center" mt="md">
