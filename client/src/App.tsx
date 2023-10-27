@@ -1,7 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import {Signin} from './pages/authentication/Signin'
+import Login from './pages/Login'
 import {Signup} from './pages/authentication/Signup'
 import Home from './pages/Home'
 import { useLoaderData } from 'react-router-dom'
@@ -21,22 +21,32 @@ import { Provider } from 'react-redux';
 import { store } from "./state/index";
 import Cart from './pages/Cart';
 import Product from './pages/Product';
+import app from './firebase';
 
 const theme = createTheme({
   /** Put your mantine theme override here */
 });
 
 function App() {
+  /**
+   * assigning import 'app'
+   * to apps so that the module is 
+   * executed which initializes firebase
+   * 
+   * Donot delete this line
+   */
+  const apps = app;
+  
   
   return (
     <div >
-      <Provider store={store}>
+      <Provider store={store} >
       <MantineProvider theme={theme}>
     <Notifications />
     <BrowserRouter>
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/signin" element={<Signin />} />
+              <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
               {/* <Route path="/profile" element={<Shop />} /> */}
               <Route index element={<Home />} />
