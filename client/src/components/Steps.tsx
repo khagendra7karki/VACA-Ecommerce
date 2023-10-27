@@ -32,10 +32,16 @@ const Steps: React.FC<PropsWithChildren<IStepProps>> = ({
     // breakpoint="sm"
      >
 
+<<<<<<< HEAD
       {steps.map((step, i) => {
         return (
           <Stepper.Step
             key={i}
+=======
+      {steps.map((step) => {
+        return (
+          <Stepper.Step
+>>>>>>> 123eecd (shipping-payment-placOrder-pageSetup)
             label={step.label}
             description={step.description}
           ></Stepper.Step>
