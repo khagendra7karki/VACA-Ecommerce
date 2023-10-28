@@ -33,6 +33,7 @@ const Steps: React.FC<PropsWithChildren<IStepProps>> = ({
      >
 
 <<<<<<< HEAD
+<<<<<<< HEAD
       {steps.map((step, i) => {
         return (
           <Stepper.Step
@@ -42,6 +43,12 @@ const Steps: React.FC<PropsWithChildren<IStepProps>> = ({
         return (
           <Stepper.Step
 >>>>>>> 123eecd (shipping-payment-placOrder-pageSetup)
+=======
+      {steps.map((step, i) => {
+        return (
+          <Stepper.Step
+            key={i}
+>>>>>>> ca4b090 (payment error fixed)
             label={step.label}
             description={step.description}
           ></Stepper.Step>

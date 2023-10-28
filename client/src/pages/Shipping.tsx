@@ -26,6 +26,7 @@ const Shipping = () => {
       country: "",
     },
 <<<<<<< HEAD
+<<<<<<< HEAD
    
     
   });
@@ -48,12 +49,21 @@ const Shipping = () => {
     //   postalCode: "Postal Code is not valid",
     //   country: "Country is not valid",
     // },
+=======
+   
+    
+>>>>>>> ca4b090 (payment error fixed)
   });
 
-  const handlerAddShipping = (values: any) => {
-    navigate("/payment");
+  const handlerAddShipping = (values: any) => {  
+    console.log(values) 
     saveShippingAddress(values);
+<<<<<<< HEAD
 >>>>>>> 123eecd (shipping-payment-placOrder-pageSetup)
+=======
+    navigate("/payment");
+   
+>>>>>>> ca4b090 (payment error fixed)
   };
 
   // useEffect(() => {
@@ -61,10 +71,14 @@ const Shipping = () => {
   //     navigate("/login?redirect=shipping");
   //   }
 <<<<<<< HEAD
+<<<<<<< HEAD
   //   // eslint-disable-next-lineadd
 =======
   //   // eslint-disable-next-line
 >>>>>>> 123eecd (shipping-payment-placOrder-pageSetup)
+=======
+  //   // eslint-disable-next-lineadd
+>>>>>>> ca4b090 (payment error fixed)
   // }, []);
 
   return (
@@ -80,10 +94,14 @@ const Shipping = () => {
                 placeholder="Your Address"
                 {...form.getInputProps("address")}
 <<<<<<< HEAD
+<<<<<<< HEAD
               //  error={form.errors.address}
 =======
                 error={form.errors.address}
 >>>>>>> 123eecd (shipping-payment-placOrder-pageSetup)
+=======
+              //  error={form.errors.address}
+>>>>>>> ca4b090 (payment error fixed)
                 label="Address"
               />
             </Grid.Col>
@@ -93,10 +111,14 @@ const Shipping = () => {
                 placeholder="Your City"
                 {...form.getInputProps("city")}
 <<<<<<< HEAD
+<<<<<<< HEAD
               //  error={form.errors.city}
 =======
                 error={form.errors.city}
 >>>>>>> 123eecd (shipping-payment-placOrder-pageSetup)
+=======
+              //  error={form.errors.city}
+>>>>>>> ca4b090 (payment error fixed)
                 label="City"
               />
             </Grid.Col>
@@ -106,10 +128,14 @@ const Shipping = () => {
                 placeholder="Your Postal Code"
                 {...form.getInputProps("postalCode")}
 <<<<<<< HEAD
+<<<<<<< HEAD
              //   error={form.errors.postalCode}
 =======
                 error={form.errors.postalCode}
 >>>>>>> 123eecd (shipping-payment-placOrder-pageSetup)
+=======
+             //   error={form.errors.postalCode}
+>>>>>>> ca4b090 (payment error fixed)
                 label="Postal Code"
               />
             </Grid.Col>
@@ -119,10 +145,14 @@ const Shipping = () => {
                 placeholder="Your Country"
                 {...form.getInputProps("country")}
 <<<<<<< HEAD
+<<<<<<< HEAD
               //  error={form.errors.country}
 =======
                 error={form.errors.country}
 >>>>>>> 123eecd (shipping-payment-placOrder-pageSetup)
+=======
+              //  error={form.errors.country}
+>>>>>>> ca4b090 (payment error fixed)
                 label="Country"
               />
             </Grid.Col>
@@ -130,10 +160,14 @@ const Shipping = () => {
               <Button
                 type="submit"
 <<<<<<< HEAD
+<<<<<<< HEAD
               //  onClick={() => navigate("/payment")}
 =======
                 onClick={() => navigate("/payment")}
 >>>>>>> 123eecd (shipping-payment-placOrder-pageSetup)
+=======
+              //  onClick={() => navigate("/payment")}
+>>>>>>> ca4b090 (payment error fixed)
                 radius="lg"
                 color="dark"
                 fullWidth
