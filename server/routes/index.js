@@ -26,8 +26,7 @@ router.delete('/deleteProduct/:id',productController.deleteProductById)
 router.post( '/addProduct', productController.storeProduct)
 
 //user router
-router.post( '/createuser', userController.createUser )
-
+router.post( '/addUser', userController.addUser );
 
 //reveiw routers
 
