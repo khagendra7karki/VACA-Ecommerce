@@ -43,14 +43,10 @@ const PlaceOrder = () => {
 
   const handlerOrderCreate = () => {
 <<<<<<< HEAD
-<<<<<<< HEAD
   
 =======
     dispatch(
 >>>>>>> 123eecd (shipping-payment-placOrder-pageSetup)
-=======
-  
->>>>>>> ca4b090 (payment error fixed)
       createOrder(
         cartItems,
         shippingAddress,
@@ -61,14 +57,10 @@ const PlaceOrder = () => {
         cartItems.totalPrice
       )
 <<<<<<< HEAD
-<<<<<<< HEAD
     
 =======
     );
 >>>>>>> 123eecd (shipping-payment-placOrder-pageSetup)
-=======
-    
->>>>>>> ca4b090 (payment error fixed)
   };
 
   useEffect(() => {
@@ -172,14 +164,10 @@ const PlaceOrder = () => {
                           >
                             <Text  style={{alignContent:"left"}} color="gray" >
 <<<<<<< HEAD
-<<<<<<< HEAD
                               {item.title}
 =======
                               {item.name}
 >>>>>>> 123eecd (shipping-payment-placOrder-pageSetup)
-=======
-                              {item.title}
->>>>>>> ca4b090 (payment error fixed)
                             </Text>
                           </Grid.Col>
                           <Grid.Col

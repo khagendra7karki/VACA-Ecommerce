@@ -1,12 +1,9 @@
 import {
   Card,
 <<<<<<< HEAD
-<<<<<<< HEAD
 =======
 
 >>>>>>> 123eecd (shipping-payment-placOrder-pageSetup)
-=======
->>>>>>> ca4b090 (payment error fixed)
   Grid,
   Text,
   RadioGroup,
@@ -30,14 +27,10 @@ const Payment = () => {
   const handlerAddPaymentMethod = (method: string) => {
     navigate("/placeorder");
 <<<<<<< HEAD
-<<<<<<< HEAD
     savePaymentMethod(method);
 =======
     dispatch(savePaymentMethod(method));
 >>>>>>> 123eecd (shipping-payment-placOrder-pageSetup)
-=======
-    savePaymentMethod(method);
->>>>>>> ca4b090 (payment error fixed)
   };
 
   return (
@@ -51,16 +44,12 @@ const Payment = () => {
               <Grid.Col span={12}>
                 <RadioGroup value="credit" color="dark" required>
 <<<<<<< HEAD
-<<<<<<< HEAD
                   <Radio checked size="sm" value="credit" label="   Credit Card or PayPal"/>
 =======
                   <Radio checked size="sm" value="credit">
                     Credit Card or PayPal
                   </Radio>
 >>>>>>> 123eecd (shipping-payment-placOrder-pageSetup)
-=======
-                  <Radio checked size="sm" value="credit" label="   Credit Card or PayPal"/>
->>>>>>> ca4b090 (payment error fixed)
                 </RadioGroup>
               </Grid.Col>
             </Card>
