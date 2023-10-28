@@ -25,6 +25,17 @@ const Shipping = () => {
       postalCode: "",
       country: "",
     },
+<<<<<<< HEAD
+   
+    
+  });
+
+  const handlerAddShipping = (values: any) => {  
+    console.log(values) 
+    saveShippingAddress(values);
+    navigate("/payment");
+   
+=======
     // validationRules: {
     //   address: (value) => value.trim().length >= 2,
     //   city: (value) => value.trim().length >= 2,
@@ -42,13 +53,18 @@ const Shipping = () => {
   const handlerAddShipping = (values: any) => {
     navigate("/payment");
     saveShippingAddress(values);
+>>>>>>> 123eecd (shipping-payment-placOrder-pageSetup)
   };
 
   // useEffect(() => {
   //   if (!userInfo) {
   //     navigate("/login?redirect=shipping");
   //   }
+<<<<<<< HEAD
+  //   // eslint-disable-next-lineadd
+=======
   //   // eslint-disable-next-line
+>>>>>>> 123eecd (shipping-payment-placOrder-pageSetup)
   // }, []);
 
   return (
@@ -63,7 +79,11 @@ const Shipping = () => {
                 radius="lg"
                 placeholder="Your Address"
                 {...form.getInputProps("address")}
+<<<<<<< HEAD
+              //  error={form.errors.address}
+=======
                 error={form.errors.address}
+>>>>>>> 123eecd (shipping-payment-placOrder-pageSetup)
                 label="Address"
               />
             </Grid.Col>
@@ -72,7 +92,11 @@ const Shipping = () => {
                 radius="lg"
                 placeholder="Your City"
                 {...form.getInputProps("city")}
+<<<<<<< HEAD
+              //  error={form.errors.city}
+=======
                 error={form.errors.city}
+>>>>>>> 123eecd (shipping-payment-placOrder-pageSetup)
                 label="City"
               />
             </Grid.Col>
@@ -81,7 +105,11 @@ const Shipping = () => {
                 radius="lg"
                 placeholder="Your Postal Code"
                 {...form.getInputProps("postalCode")}
+<<<<<<< HEAD
+             //   error={form.errors.postalCode}
+=======
                 error={form.errors.postalCode}
+>>>>>>> 123eecd (shipping-payment-placOrder-pageSetup)
                 label="Postal Code"
               />
             </Grid.Col>
@@ -90,14 +118,22 @@ const Shipping = () => {
                 radius="lg"
                 placeholder="Your Country"
                 {...form.getInputProps("country")}
+<<<<<<< HEAD
+              //  error={form.errors.country}
+=======
                 error={form.errors.country}
+>>>>>>> 123eecd (shipping-payment-placOrder-pageSetup)
                 label="Country"
               />
             </Grid.Col>
             <Grid.Col span={12}>
               <Button
                 type="submit"
+<<<<<<< HEAD
+              //  onClick={() => navigate("/payment")}
+=======
                 onClick={() => navigate("/payment")}
+>>>>>>> 123eecd (shipping-payment-placOrder-pageSetup)
                 radius="lg"
                 color="dark"
                 fullWidth

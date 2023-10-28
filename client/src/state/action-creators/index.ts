@@ -7,7 +7,6 @@ import { store } from "../store";
 export const addToCart = (id: string, qty: number) => {
   return async (dispatch: Dispatch<Action>, getState: any) => {
     const { data } = await axios.get(`http://localhost:5000/getProduct/${id}`);
-    console.log('kkkkkeeeeeeeeeerrrrrrrwk',data)
     dispatch({
       type: ActionType.CART_ADD_ITEM,
       payload: 
@@ -16,8 +15,8 @@ export const addToCart = (id: string, qty: number) => {
         title: data.payload.title,
         image: data.payload.image,
         price: data.payload.price,
-        // countInStock: data.payload.countInStock,
-        // qty,
+        availableQuantity: data.payload.availableQuantity,
+        qty,
       },
     });
 

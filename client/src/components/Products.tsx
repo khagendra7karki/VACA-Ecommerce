@@ -75,9 +75,6 @@ export default function ArticlesCardsGrid() {
     getProducts();
     
   }, [dispatch]);
-console.log( products)
-console.log( products.payload, "tttttttt")
-console.log( products.products, "ppppppppp")
 
 
   const cards =
