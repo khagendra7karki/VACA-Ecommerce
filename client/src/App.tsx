@@ -25,10 +25,7 @@ import Shipping from './pages/Shipping';
 import Payment from './pages/Payment';
 import PlaceOrder from './pages/PlaceOrder';
 import Order from './pages/Order';
-<<<<<<< HEAD
 import app from './firebase';
-=======
->>>>>>> 123eecd (shipping-payment-placOrder-pageSetup)
 
 const theme = createTheme({
   /** Put your mantine theme override here */

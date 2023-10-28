@@ -42,11 +42,7 @@ const PlaceOrder = () => {
   ).toFixed(2);
 
   const handlerOrderCreate = () => {
-<<<<<<< HEAD
   
-=======
-    dispatch(
->>>>>>> 123eecd (shipping-payment-placOrder-pageSetup)
       createOrder(
         cartItems,
         shippingAddress,
@@ -56,11 +52,7 @@ const PlaceOrder = () => {
         cartItems.shippingPrice,
         cartItems.totalPrice
       )
-<<<<<<< HEAD
     
-=======
-    );
->>>>>>> 123eecd (shipping-payment-placOrder-pageSetup)
   };
 
   useEffect(() => {
@@ -163,11 +155,7 @@ const PlaceOrder = () => {
                             span={3}
                           >
                             <Text  style={{alignContent:"left"}} color="gray" >
-<<<<<<< HEAD
                               {item.title}
-=======
-                              {item.name}
->>>>>>> 123eecd (shipping-payment-placOrder-pageSetup)
                             </Text>
                           </Grid.Col>
                           <Grid.Col
