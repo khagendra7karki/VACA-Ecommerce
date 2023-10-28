@@ -22,6 +22,10 @@ import { store } from "./state/index";
 import Cart from './pages/Cart';
 import Product from './pages/Product';
 import app from './firebase';
+import Shipping from './pages/Shipping';
+import Payment from './pages/Payment';
+import PlaceOrder from './pages/PlaceOrder';
+import Order from './pages/Order';
 
 const theme = createTheme({
   /** Put your mantine theme override here */
@@ -53,6 +57,11 @@ function App() {
               <Route path="/shop" element={<Shop />} />
               <Route path="/cart" element={<Cart />} />
               <Route path="/product/:id" element={<Product />} />
+               <Route path="/shipping" element={<Shipping />} />
+              <Route path="/payment" element={<Payment />} />
+              <Route path="/placeorder" element={<PlaceOrder />} />
+              <Route path="/order/:order" element={<Order />} />
+
               </Routes></BrowserRouter>
     </MantineProvider>
       </Provider>

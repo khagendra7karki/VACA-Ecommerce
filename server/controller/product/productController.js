@@ -3,7 +3,7 @@ import productSchema from "../../models/productShema.js"
 
 const product = {
     getProduct : async (req, res) => {
-        
+
         try{
             console.log( 'Request for product received')
             const products = await productSchema.find({}).limit( 20 )

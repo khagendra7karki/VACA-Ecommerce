@@ -16,8 +16,38 @@ const user = {
     },
     image: {
         type: String,
-        required: true
     },
+    phoneNumber: {
+        type: String    
+    },
+    
+    whishlist:[
+        {
+            product: {
+                type:  mongoose.Schema.Types.ObjectId,
+                required: true
+            },
+
+            quantity: {
+                type: Number,
+                required: true
+            }
+        }
+    ],
+    cart: [
+        {
+            product: {
+                type: mongoose.Schema.Types.ObjectId,
+                required: true
+            },
+
+            quantity: {
+                type: Number,
+                required: true
+            }
+
+        }
+    ]
 
 }
 
