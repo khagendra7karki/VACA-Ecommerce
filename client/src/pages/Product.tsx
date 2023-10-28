@@ -27,7 +27,7 @@ const Product = () => {
   const handlers = useRef<NumberInputHandlers>(null);
 
   const { product, loading } = useSelector((state: State) => state.product);
-  console.log("tttttttt", product)
+ 
   const { quickSearch } = useSelector((state: State) => state.quickSearch);
 
   const { userInfo } = useSelector((state: State) => state.userLogin);
@@ -80,8 +80,7 @@ const Product = () => {
   useEffect(() => {
     getProduct(params.id as string);
   }, [dispatch, review, quickSearch]);
-console.log("hhhrrrr", product)
-// console.log(product.payload.title,"productid ")
+  
   return (
     <Layout>
     {loading ? (
@@ -101,6 +100,25 @@ console.log("hhhrrrr", product)
     >
        <Group justify="space-between" mt="md">
         <div> <Text fw={500}>{product.payload.title}</Text>
+        {product.payload.availableQuantity === 0 ? (
+                        <Badge
+                          color="red"
+                          style={{ marginLeft: "10px" }}
+                          variant="filled"
+                        >
+                          {" "}
+                          Sold Out
+                        </Badge>
+                      ) : (
+                        <Badge
+                          color="green"
+                          style={{ marginLeft: "10px" }}
+                          variant="filled"
+                        >
+                          {" "}
+                          In Stock
+                        </Badge>
+                      )}
           <Text fz="xs" c="dimmed">
           {product.payload.description}
           </Text>

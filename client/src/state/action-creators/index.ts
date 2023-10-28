@@ -15,8 +15,8 @@ export const addToCart = (id: string, qty: number) => {
         title: data.payload.title,
         image: data.payload.image,
         price: data.payload.price,
-        // countInStock: data.payload.countInStock,
-        // qty,
+        availableQuantity: data.payload.availableQuantity,
+        qty,
       },
     });
 
