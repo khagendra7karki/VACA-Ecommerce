@@ -61,7 +61,7 @@ export function Signin() {
     
     const { email, password } = values;
     console.log(email, password, "email and password")
-    dispatch(login(email, password));
+    login(email, password);
   };
 
   useEffect(() => {

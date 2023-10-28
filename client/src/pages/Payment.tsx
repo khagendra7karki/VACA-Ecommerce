@@ -1,6 +1,5 @@
 import {
   Card,
-
   Grid,
   Text,
   RadioGroup,
@@ -23,7 +22,7 @@ const Payment = () => {
 
   const handlerAddPaymentMethod = (method: string) => {
     navigate("/placeorder");
-    dispatch(savePaymentMethod(method));
+    savePaymentMethod(method);
   };
 
   return (
@@ -36,9 +35,7 @@ const Payment = () => {
             <Card withBorder shadow="xs" radius="lg">
               <Grid.Col span={12}>
                 <RadioGroup value="credit" color="dark" required>
-                  <Radio checked size="sm" value="credit">
-                    Credit Card or PayPal
-                  </Radio>
+                  <Radio checked size="sm" value="credit" label="   Credit Card or PayPal"/>
                 </RadioGroup>
               </Grid.Col>
             </Card>

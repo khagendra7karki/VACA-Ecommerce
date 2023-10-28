@@ -42,7 +42,7 @@ const PlaceOrder = () => {
   ).toFixed(2);
 
   const handlerOrderCreate = () => {
-    dispatch(
+  
       createOrder(
         cartItems,
         shippingAddress,
@@ -52,7 +52,7 @@ const PlaceOrder = () => {
         cartItems.shippingPrice,
         cartItems.totalPrice
       )
-    );
+    
   };
 
   useEffect(() => {
@@ -155,7 +155,7 @@ const PlaceOrder = () => {
                             span={3}
                           >
                             <Text  style={{alignContent:"left"}} color="gray" >
-                              {item.name}
+                              {item.title}
                             </Text>
                           </Grid.Col>
                           <Grid.Col
