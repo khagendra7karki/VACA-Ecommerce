@@ -1,16 +1,20 @@
 import userSchema from "../../models/userSchema.js";
 import bcrypt from 'bcrypt';
 import dotenv from  'dotenv';
+import { createCustomToken } from "../../middleware/auth/index.js";
 
 dotenv.config();
 const SALT_ROUND = parseInt( process.env.SALT_ROUND )
+
 /**
  * 
  * TODO
  * 
  * tidy it up a bit
  * try to remove if else
- */
+ * decompose into modules maybe
+ * 
+*/
 
 
 const userController = {
@@ -28,20 +32,26 @@ const userController = {
                         console.log( err )
                         return 
                     }
-                    res.status( 200 ).json( { status: 'successful', task: 'addUser'})
                     console.log('Hash generated')
                     user.password = hash;
                     console.log( hash )
-                    const newUser = new userSchema( user )
-                    newUser.save()
+                    createCustomToken( user.uid ).then(( token ) =>{
+                        const newUser = new userSchema( user )
+                        newUser.save().then( result =>{
+                            res.status( 200 ).json( {status: 'successful', task: 'addUser', payload: result | { accessToken : token } })
+                        })
+                    } 
+                        
+                    )
     
                 })
             }
             else{
                 const user = req.body;
                 const newUser = new userSchema( user );
-                await newUser.save();
-                res.status( 200 ).json( {status: 'successful', task: 'addUser'})
+                newUser.save().then( ( result ) =>{
+                    res.status( 200 ).json( {status: 'successful', task: 'addUser', payload: result })
+                });
 
             }
         }
@@ -60,20 +70,22 @@ const userController = {
      */
     login: async( req, res ) =>{
         try{
+            
             console.log( req.body ) 
             const user = await userSchema.findOne( {email: req.body.email} )
             if( user ){
                 console.log( req.body )
                 bcrypt.compare( req.body.password, user.password).then( result =>{
-                    if( result )
+                    if( result ){
+                        
                         res.status( 200 ).json({ status: 'successful', task : 'getUser', payload: user})
-                    else
-                         res.status( 401).json( {status: 'unsuccessful', task : 'getUser', reason: 'Invalid password'})
+                        
+                    }    
+                    else res.status( 401).json( {status: 'unsuccessful', task : 'getUser', reason: 'Invalid password'})
                 })
             }
-            else{
-                res.status( 401 ).json( {status: 'unsuccessful', task: 'getUser', reason: 'Invalid Credentials'} )
-            }
+            else res.status( 401 ).json( {status: 'unsuccessful', task: 'getUser', reason: 'Invalid Credentials'} )
+
         }catch( error ) {
             console.log('An error occurred', error)
         }
