@@ -3,6 +3,7 @@ import { Dispatch } from "redux";
 import { ActionType } from "../action-types";
 import { Action } from "../actions/index";
 import { store } from "../store";
+import { stringify } from "querystring";
 
 export const addToCart = (id: string, qty: number) => {
   return async (dispatch: Dispatch<Action>, getState: any) => {
@@ -281,7 +282,7 @@ export const createOrder = (
         shippingPrice,
         totalPrice,
       };
-let user : any = "65386caaf5f81f2689e95abb"
+let _id : any = "65386caaf5f81f2689e95abb"
 //     const { data } = await axios.post("/api/v1/orders", formData, config);
 const data = {orderItems :orderItems,
   shippingAddress :shippingAddress,
@@ -290,7 +291,7 @@ const data = {orderItems :orderItems,
   taxPrice :taxPrice,
   shippingPrice :shippingPrice,
   totalPrice : totalPrice,
-  user
+  _id
 }
  
       dispatch({
@@ -321,9 +322,48 @@ export const getOrder = (id: any) => {
           Authorization: `Bearer ${token}`,
         },
       };
-
+// interface Data {
+//   user : string,
+//   user.email : string,
+//   paymentMethod : string,
+//   orderItems ,
+//   isDelivered :false, 
+//   shippingAddress.address, 
+//   shippingAddress.city,shippingAddress.postalCode,
+//   shippingAddress.country
+// }
      // const { data } = await axios.get(`/api/v1/orders/${id}`, config);
-const data ={}
+// const data = {isPaid : true ,
+//   user.name : "dk",
+//   user.email : "njdnck",
+//   paymentMethod : "admnd",
+//   orderItems  : {},
+//   isDelivered :false, 
+//   shippingAddress.address : "cdadc", 
+//   shippingAddress.city : "casdac",
+//   shippingAddress.postalCode : "cadca",
+//   shippingAddress.country : "cadca"
+// }
+const data = {
+  isPaid: true,
+  user: {
+    name: "dk",
+    email: "njdnck",
+  },
+  paymentMethod: "admnd",
+  orderItems: {},
+  isDelivered: false,
+  shippingAddress: {
+    address: "cdadc",
+    city: "casdac",
+    postalCode: "cadca",
+    country: "cadca",
+  },
+};
+
+
+
+
       dispatch({
         type: ActionType.GET_ORDER_SUCCESS,
         payload: data,

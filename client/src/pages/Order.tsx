@@ -42,34 +42,34 @@ const Order = () => {
 
   const { success } = useSelector((state: State) => state.orderPay);
 
-  const successPaymentHanlder = (paymentResult: any) => {
-    payOrder(params.order, paymentResult);
-  };
+  // const successPaymentHanlder = (paymentResult: any) => {
+  //   payOrder(params.order, paymentResult);
+  // };
 
-  useEffect(() => {
-    const addPayPalScript = async () => {
-      const { data: clientId } = await axios.get("/api/v1/config/paypal");
-      const script = document.createElement("script");
-      script.type = "text/javascript";
-      script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}`;
-      script.async = true;
-      script.onload = () => {
-        setSdkReady(true);
-      };
-      document.body.appendChild(script);
-    };
+  // useEffect(() => {
+  //   const addPayPalScript = async () => {
+  //     const { data: clientId } = await axios.get("/api/v1/config/paypal");
+  //     const script = document.createElement("script");
+  //     script.type = "text/javascript";
+  //     script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}`;
+  //     script.async = true;
+  //     script.onload = () => {
+  //       setSdkReady(true);
+  //     };
+  //     document.body.appendChild(script);
+  //   };
 
-    if (!order || success) {
-      dispatch({ type: ActionType.ORDER_PAY_RESET });
-    } else if (!order.isPaid) {
-      if (!(window as any).paypal) {
-        addPayPalScript();
-      } else {
-        setSdkReady(true);
-      }
-    }
-    // eslint-disable-next-line
-  }, [dispatch]);
+  //   if (!order || success) {
+  //     dispatch({ type: ActionType.ORDER_PAY_RESET });
+  //   } else if (!order.isPaid) {
+  //     if (!(window as any).paypal) {
+  //       addPayPalScript();
+  //     } else {
+  //       setSdkReady(true);
+  //     }
+  //   }
+  //   // eslint-disable-next-line
+  // }, [dispatch]);
 
   useEffect(() => {
     getOrder(params.order);
@@ -139,7 +139,7 @@ const Order = () => {
                           {order.shippingAddress.city}{" "}
                           {order.shippingAddress.postalCode},{" "}
                           {order.shippingAddress.country}
-                        </Text>
+                        </Text>  
                       </Grid.Col>
                       <Grid.Col span={12}>
                         {order.isDelivered ? (
@@ -208,6 +208,9 @@ const Order = () => {
                           Not paid yet.
                         </Alert>
                       )}
+
+
+                    
                     </Grid.Col>
                   </Card>
                 </Grid.Col>

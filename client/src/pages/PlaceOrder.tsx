@@ -57,6 +57,7 @@ const PlaceOrder = () => {
 
   useEffect(() => {
     if (Object.keys(orderCreate).length) {
+      console.log(orderCreate,"lllllllllllllllllllllllllllllllllll")
       navigate(`/order/${orderCreate._id}`);
     }
     // eslint-disable-next-line
