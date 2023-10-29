@@ -13,7 +13,7 @@ import reviewController from '../controller/review/reviewController.js'
 //
 // admin routes
 //
-import adminRoutes from './admin/index.js'
+// import adminRoutes from './admin/index.js'
 
 
 const router = express.Router()
@@ -26,7 +26,8 @@ router.delete('/deleteProduct/:id',productController.deleteProductById)
 router.post( '/addProduct', productController.storeProduct)
 
 //user router
-router.post( '/addUser', userController.addUser );
+router.post( '/registerUser', userController.registerUser );
+router.post('/login', userController.login )
 
 //reveiw routers
 
@@ -46,5 +47,5 @@ router.post( '/addReview', reviewController.addReview )
 
 
 // routere.post('/')
-router.use('/', adminRoutes )
+// router.use('/', adminRoutes )
 export default router 

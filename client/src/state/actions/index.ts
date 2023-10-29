@@ -166,17 +166,17 @@ interface OrderPayResetAction {
 }
 
 interface GetUsersSuccessAction {
-  type: ActionType.GET_USERS_REQUEST;
+  type: ActionType.GET_USER_REQUEST;
   payload?: any;
 }
 
 interface GetUsersFailAction {
-  type: ActionType.GET_USERS_SUCCESS;
+  type: ActionType.GET_USER_SUCCESS;
   payload: any;
 }
 
 interface GetUsersRequestAction {
-  type: ActionType.GET_USERS_FAIL;
+  type: ActionType.GET_USER_FAIL;
   payload: any;
 }
 

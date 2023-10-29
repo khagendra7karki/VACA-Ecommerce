@@ -2,7 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Login from './pages/Login'
-import {Signup} from './pages/authentication/Signup'
+import {Signup} from './pages/SignUp'
 import Home from './pages/Home'
 import { useLoaderData } from 'react-router-dom'
 import { BrowserRouter, Routes, Route } from "react-router-dom";

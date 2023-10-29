@@ -58,7 +58,7 @@ const loginReducer = (
   }
 };
 
-const getUsersReducer = (
+const getUserReducer = (
   state = {
     users: [],
     error: null,
@@ -67,16 +67,16 @@ const getUsersReducer = (
   action: Action
 ) => {
   switch (action.type) {
-    case ActionType.GET_USERS_REQUEST:
+    case ActionType.GET_USER_REQUEST:
       return { ...state, loading: true, error: null };
-    case ActionType.GET_USERS_SUCCESS:
+    case ActionType.GET_USER_SUCCESS:
       return {
         ...state,
-        users: action.payload,
+        user: action.payload,
         loading: false,
         error: null,
       };
-    case ActionType.GET_USERS_FAIL:
+    case ActionType.GET_USER_FAIL:
       return { ...state, loading: false, error: action.payload };
     default:
       return state;
@@ -150,7 +150,7 @@ const updateUserReducer = (
 export {
   registerReducer,
   loginReducer,
-  getUsersReducer,
+  getUserReducer,
   updateProfileReducer,
   updateUserReducer,
 };

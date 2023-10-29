@@ -10,7 +10,6 @@ class Database{
         try{
             const database = await mongoose.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true })
             console.log('Database connected')
-            return database
         }
         catch(error){
             console.log('An error occurred', error)

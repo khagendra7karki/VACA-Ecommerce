@@ -4,6 +4,8 @@ import { ActionType } from "../action-types";
 import { Action } from "../actions/index";
 import { store } from "../store";
 
+import createNewUser from "../../firebase/createNewUser";
+
 export const addToCart = (id: string, qty: number) => {
   return async (dispatch: Dispatch<Action>, getState: any) => {
     const { data } = await axios.get(`http://localhost:5000/getProduct/${id}`);
@@ -168,7 +170,7 @@ export const addReview = (id: string, rating: number, comment: string) => {
   };
 };
 
-export const register = (name: string, email: string, password: string) => {
+export const register = (fullName: string, email: string, password: string) => {
   return async (dispatch: Dispatch<Action>) => {
     try {
       dispatch({
@@ -182,24 +184,37 @@ export const register = (name: string, email: string, password: string) => {
       };
 
       const formData = {
-        name,
+        fullName,
         email,
         password,
       };
 
-      const { data } = await axios.post("/api/v1/users", formData, config);
+      // create a new user using the 
+      // firebase SDK
+      createNewUser( email, password, ( userCredential  ) =>{
 
-      dispatch({
-        type: ActionType.USER_REGISTER_SUCCESS,
-        payload: data,
-      });
+        const { uid, email, accessToken } = userCredential
+        const user = { fullName, uid, email, password, accessToken }
 
-      dispatch({
-        type: ActionType.USER_LOGIN_SUCCESS,
-        payload: data,
-      });
+        console.log( user );
+        
+        axios.post("http://localhost:5000/registerUser", user , config).then( result =>{
 
-      localStorage.setItem("userInfo", JSON.stringify(data));
+          dispatch({
+            type: ActionType.USER_REGISTER_SUCCESS,
+            payload: result,
+          });
+
+          dispatch({
+            type: ActionType.USER_LOGIN_SUCCESS,
+            payload: result,
+          });
+    
+          localStorage.setItem("userInfo", JSON.stringify(result));
+          })
+      })
+
+
     } catch (error: any) {
       dispatch({
         type: ActionType.USER_REGISTER_FAIL,
@@ -228,7 +243,7 @@ export const login = (email: string, password: string) => {
       };
 
       const { data } = await axios.post(
-        "/api/v1/users/login",
+        "http://localhost:5000/login",
         formData,
         config
       );
@@ -363,11 +378,11 @@ export const payOrder = (id: any, paymentResult: any) => {
   };
 };
 
-export const getUsers = () => {
+export const getUser = () => {
   return async (dispatch: Dispatch<Action>) => {
     try {
       dispatch({
-        type: ActionType.GET_USERS_REQUEST,
+        type: ActionType.GET_USER_REQUEST,
       });
 
       const token = store.getState().userLogin.userInfo.token;
@@ -382,12 +397,12 @@ export const getUsers = () => {
       const { data } = await axios.get(`/api/v1/users`, config);
 
       dispatch({
-        type: ActionType.GET_USERS_SUCCESS,
+        type: ActionType.GET_USER_SUCCESS,
         payload: data,
       });
     } catch (error: any) {
       dispatch({
-        type: ActionType.GET_USERS_FAIL,
+        type: ActionType.GET_USER_FAIL,
         payload: error,
       });
     }

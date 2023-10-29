@@ -2,7 +2,7 @@
 import mongoose from 'mongoose'
 
 const user = { 
-    id:{
+    uid:{
         type: String,
         required: true,
     },
@@ -10,7 +10,10 @@ const user = {
         type: String,
         required: true
     },
-    name:{
+    password:{
+        type: String,
+    },
+    fullName:{
         type: String,
         required: true,
     },

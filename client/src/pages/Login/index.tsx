@@ -34,7 +34,7 @@ export default function Signin() {
   const auth = getAuth();
 
   const redirectTo = location.search;
-  const { login } = bindActionCreators(actionCreators, dispatch);
+  const { login  } = bindActionCreators(actionCreators, dispatch);
 
   const { userInfo, loading, error } = useSelector(
     (state: State) => state.userLogin
@@ -87,17 +87,14 @@ export default function Signin() {
 
   const googleLogin = ( e: React.MouseEvent ) =>{
     e.preventDefault()
-    signInWithPopup( auth, Provider ).then( ( result ) =>{
-      const userInfo = {
-        id: result.user.uid,
-        name: result.user.displayName,
-        email: result.user.email,
-        image: result.user.photoURL
-      }
-    })
-
-    
-
+    // signInWithPopup( auth, Provider ).then( ( result ) =>{
+    //   const userInfo = {
+    //     id: result.user.uid,
+    //     name: result.user.displayName,
+    //     email: result.user.email,
+    //     image: result.user.photoURL
+    //   }
+    // })
   }
 
   return (
@@ -136,7 +133,7 @@ export default function Signin() {
               Login
             </Button>
 
-            <Button fullWidth onClick = { googleLogin }>
+            <Button fullWidth mt = 'xl' onClick = { googleLogin }>
               Login With Google
             </Button>
 
