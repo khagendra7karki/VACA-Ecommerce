@@ -117,7 +117,7 @@ export const getProduct = (id: string) => {
       });
    
       const { data } = await axios.get(`http://localhost:5000/getProduct/${id}`);
-console.log(data,"kkkkkkkkkkkkk", id, data.payload)
+// console.log(data,"kkkkkkkkkkkkk", id, data.payload)
       dispatch({
         type: ActionType.GET_PRODUCT_SUCCESS,
         payload: data,
@@ -187,8 +187,8 @@ export const register = (name: string, email: string, password: string) => {
         password,
       };
 
-      const { data } = await axios.post("/api/v1/users", formData, config);
-
+     // const { data } = await axios.post("/api/v1/users", formData, config);
+      const data = {name: name , email :email, password:password , token : 'aaaaaaaaaaaaaaaaddd', _id: "65386caaf5f81f2689e95abb" , isAdmin: false}
       dispatch({
         type: ActionType.USER_REGISTER_SUCCESS,
         payload: data,
@@ -281,9 +281,18 @@ export const createOrder = (
         shippingPrice,
         totalPrice,
       };
-
-      const { data } = await axios.post("/api/v1/orders", formData, config);
-
+let user : any = "65386caaf5f81f2689e95abb"
+//     const { data } = await axios.post("/api/v1/orders", formData, config);
+const data = {orderItems :orderItems,
+  shippingAddress :shippingAddress,
+  paymentMethod: paymentMethod,
+  itemsPrice :itemsPrice,
+  taxPrice :taxPrice,
+  shippingPrice :shippingPrice,
+  totalPrice : totalPrice,
+  user
+}
+ 
       dispatch({
         type: ActionType.CREATE_ORDER_SUCCESS,
         payload: data,
@@ -313,8 +322,8 @@ export const getOrder = (id: any) => {
         },
       };
 
-      const { data } = await axios.get(`/api/v1/orders/${id}`, config);
-
+     // const { data } = await axios.get(`/api/v1/orders/${id}`, config);
+const data ={}
       dispatch({
         type: ActionType.GET_ORDER_SUCCESS,
         payload: data,
@@ -344,12 +353,12 @@ export const payOrder = (id: any, paymentResult: any) => {
         },
       };
 
-      const { data } = await axios.put(
-        `/api/v1/orders/${id}/pay`,
-        paymentResult,
-        config
-      );
-
+      // const { data } = await axios.put(
+      //   `/api/v1/orders/${id}/pay`,
+      //   paymentResult,
+      //   config
+      // );
+const data = {}
       dispatch({
         type: ActionType.ORDER_PAY_SUCCESS,
         payload: data,
