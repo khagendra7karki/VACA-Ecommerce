@@ -6,10 +6,11 @@ import {Signup} from './pages/authentication/Signup'
 import Home from './pages/Home'
 import { useLoaderData } from 'react-router-dom'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Shop from './components/Shop';
+import Shop from './pages/Shop';
 import { Notifications } from '@mantine/notifications';
 import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
+import '@mantine/carousel/styles.css';
 // other css files are required only if
 // you are using components from the corresponding package
 // import '@mantine/dates/styles.css';
