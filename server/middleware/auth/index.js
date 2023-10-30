@@ -1,3 +1,12 @@
+/**
+ * Right now it verifies all tokens and
+ * sends a dummy string as tokens
+ * 
+ * TODO
+ * 
+ * Implement JWT for creating session
+ * 
+ */
 import firebase from 'firebase-admin'
 const {  initializeApp, auth } = firebase
 
@@ -6,7 +15,7 @@ const app = firebase.initializeApp({
 })
 
 
-/**
+/** 
  * Creates a token for the uid given
  * 
  * @param { string } uid - Uniquie Identifier String 
@@ -15,16 +24,15 @@ const app = firebase.initializeApp({
 
 export function createCustomToken( uid ){
     
-        
-        return new Promise (( resolve, reject ) => {
-            auth().createCustomToken( uid ).then( result =>{
-            resolve( result )})
-            .catch( error => {
-                console.log( 'An error occurred at Create Cusstom Token', error);
-                reject( error );
-        })
-        return token;
-    })
+    return 'RandomCustomToken'        
+    //     return new Promise (( resolve, reject ) => {
+    //         auth().createCustomToken( uid ).then( result =>{
+    //         resolve( result )})
+    //         .catch( error => {
+    //             console.log( 'An error occurred at Create Cusstom Token', error);
+    //             reject( error );
+    //     })
+    // })
     
 }
 
@@ -36,16 +44,16 @@ export function createCustomToken( uid ){
  * @returns - A promise that resolves into a value
  */
 async function verifyToken( token ) {
-
-    try{
-        const result = await auth().verifyIdToken( token )
-        if( result )
-            return true
-        return false
-    }
-    catch( error ){
-        console.log( `An error occurred at Verify token `, error);
-    }
+    return true
+    // try{
+    //     const result = await auth().verifyIdToken( token )
+    //     if( result )
+    //         return true
+    //     return false
+    // }
+    // catch( error ){
+    //     console.log( `An error occurred at Verify token `, error);
+    // }
 }
 
 

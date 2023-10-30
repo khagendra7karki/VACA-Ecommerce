@@ -183,7 +183,7 @@ export const register = (fullName: string, email: string, password: string) => {
         },
       };
 
-      const formData = {
+      const formData = {  
         fullName,
         email,
         password,
@@ -198,20 +198,21 @@ export const register = (fullName: string, email: string, password: string) => {
 
         console.log( user );
         
-        axios.post("http://localhost:5000/registerUser", user , config).then( result =>{
-
+        axios.post("http://localhost:5000/registerUser", user , config)
+        .then( res =>{
+          console.log( 'Payload', res.data.payload )
           dispatch({
-            type: ActionType.USER_REGISTER_SUCCESS,
-            payload: result,
-          });
+              type: ActionType.USER_REGISTER_SUCCESS,
+              payload: res.data.payload,
+            });
 
-          dispatch({
-            type: ActionType.USER_LOGIN_SUCCESS,
-            payload: result,
-          });
-    
-          localStorage.setItem("userInfo", JSON.stringify(result));
-          })
+            dispatch({
+              type: ActionType.USER_LOGIN_SUCCESS,
+              payload: res.data.payload,
+            });
+      
+            localStorage.setItem("userInfo", JSON.stringify(res.data.payload ));
+            })
       })
 
 
@@ -242,7 +243,7 @@ export const login = (email: string, password: string) => {
         password,
       };
 
-      const { data } = await axios.post(
+      const res = await axios.post(
         "http://localhost:5000/login",
         formData,
         config
@@ -250,10 +251,10 @@ export const login = (email: string, password: string) => {
 
       dispatch({
         type: ActionType.USER_LOGIN_SUCCESS,
-        payload: data,
+        payload: res.data.payload,
       });
-
-      localStorage.setItem("userInfo", JSON.stringify(data));
+      console.log( 'login response payload', res.data )
+      localStorage.setItem("userInfo", JSON.stringify(res.data.payload));
     } catch (error: any) {
       dispatch({
         type: ActionType.USER_LOGIN_FAIL,
