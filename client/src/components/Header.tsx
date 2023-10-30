@@ -8,7 +8,7 @@ import  Vaca from '../assets/img/vaca.png'
 
 const links = [
   { link: '/', label: 'Home' },
-  { link: '/shop', label: 'Shop' },
+  { link: '/shop', label: 'Shop'  },
   { link: '/Contact', label: 'Contact' },
   { link: '/signup', label: 'signup' },
   { link: '/login', label: 'signin' },

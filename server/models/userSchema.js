@@ -68,6 +68,7 @@ const userSchema = new mongoose.Schema( {
     },
     
     whishlist: WishList,
+    
     cart: Cart ,
 
 }, { timestamps: true } )
