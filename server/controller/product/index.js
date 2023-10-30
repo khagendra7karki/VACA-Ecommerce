@@ -1,7 +1,7 @@
 import productSchema from "../../models/productShema.js"
 
 
-const product = {
+const productController = {
     getProduct : async (req, res) => {
 
         try{
@@ -67,4 +67,4 @@ const product = {
     }
 }
 
-export default product
+export default productController

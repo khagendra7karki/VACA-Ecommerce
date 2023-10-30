@@ -6,8 +6,9 @@
  */
 
 import express from 'express'
-import productController from '../controller/product/productController.js'
-import userController from '../controller/user/userController.js'
+import productRouter from './product/index.js'
+import userRouter from './user/index.js'
+
 import reviewController from '../controller/review/reviewController.js'
 
 //
@@ -20,14 +21,10 @@ const router = express.Router()
 
 
 //product routers
-router.get('/getProducts', productController.getProduct)
-router.get('/getProduct/:id', productController.getProductById )
-router.delete('/deleteProduct/:id',productController.deleteProductById)
-router.post( '/addProduct', productController.storeProduct)
+router.use('/', productRouter );
 
 //user router
-router.post( '/registerUser', userController.registerUser );
-router.post('/login', userController.login )
+router.use('/', userRouter );
 
 //reveiw routers
 
