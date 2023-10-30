@@ -1,7 +1,50 @@
-// make user schem with basic email and password fields
-import mongoose from 'mongoose'
+/**
+ * TODO
+ * 
+ * add a little bit of description
+ */
+import mongoose, { Schema } from 'mongoose'
 
-const user = { 
+const wishListItem = new mongoose.Schema({
+    product: {
+        type:  mongoose.Schema.Types.ObjectId,
+        required: true
+    },
+
+    quantity: {
+        type: Number,
+        required: true
+    }
+
+}, { timestamps: true })
+
+
+const WishList = new mongoose.Schema({
+    items: [ wishListItem ],
+
+}, { timestamps: true })
+
+
+const cartItem = new mongoose.Schema({
+    product: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true
+    },
+
+    quantity: {
+        type: Number,
+        required: true
+    }
+
+}, { timestamps: true })
+
+const Cart = new mongoose.Schema({
+    items: [ cartItem ],
+
+}, { timestamps: true })
+
+
+const userSchema = new mongoose.Schema( { 
     uid:{
         type: String,
         required: true,
@@ -24,36 +67,9 @@ const user = {
         type: String    
     },
     
-    whishlist:[
-        {
-            product: {
-                type:  mongoose.Schema.Types.ObjectId,
-                required: true
-            },
+    whishlist: WishList,
+    cart: Cart ,
 
-            quantity: {
-                type: Number,
-                required: true
-            }
-        }
-    ],
-    cart: [
-        {
-            product: {
-                type: mongoose.Schema.Types.ObjectId,
-                required: true
-            },
-
-            quantity: {
-                type: Number,
-                required: true
-            }
-
-        }
-    ]
-
-}
-
-const userSchema = new mongoose.Schema( user )
+}, { timestamps: true } )
 
 export default mongoose.model( 'user', userSchema )
