@@ -322,28 +322,10 @@ export const getOrder = (id: any) => {
           Authorization: `Bearer ${token}`,
         },
       };
-// interface Data {
-//   user : string,
-//   user.email : string,
-//   paymentMethod : string,
-//   orderItems ,
-//   isDelivered :false, 
-//   shippingAddress.address, 
-//   shippingAddress.city,shippingAddress.postalCode,
-//   shippingAddress.country
-// }
+
      // const { data } = await axios.get(`/api/v1/orders/${id}`, config);
-// const data = {isPaid : true ,
-//   user.name : "dk",
-//   user.email : "njdnck",
-//   paymentMethod : "admnd",
-//   orderItems  : {},
-//   isDelivered :false, 
-//   shippingAddress.address : "cdadc", 
-//   shippingAddress.city : "casdac",
-//   shippingAddress.postalCode : "cadca",
-//   shippingAddress.country : "cadca"
-// }
+
+
 const data = {
   isPaid: true,
   user: {
@@ -360,10 +342,6 @@ const data = {
     country: "cadca",
   },
 };
-
-
-
-
       dispatch({
         type: ActionType.GET_ORDER_SUCCESS,
         payload: data,
