@@ -1,3 +1,12 @@
+/**
+ * TODO
+ * optimize the code
+ * 
+ * addToCart can receive the product info from the 
+ * frontend iteself. Request for product need not be 
+ * made
+ */
+
 import axios from "axios";
 import { Dispatch } from "redux";
 import { ActionType } from "../action-types";
@@ -9,7 +18,8 @@ import createNewUser from "../../firebase/createNewUser";
 
 export const addToCart = (id: string, qty: number) => {
   return async (dispatch: Dispatch<Action>, getState: any) => {
-    const { data } = await axios.get(`http://localhost:5000/getProduct/${id}`);
+    {
+      const { data } = await axios.get(`http://localhost:5000/getProduct/${id}`);
     dispatch({
       type: ActionType.CART_ADD_ITEM,
       payload: 
@@ -22,7 +32,20 @@ export const addToCart = (id: string, qty: number) => {
         qty,
       },
     });
+    
+  }
+    const token = store.getState().userLogin.userInfo.token;
 
+    const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+    const { data } = await axios.post(`http://localhost:5000/cart/addItem/${id}/${qty}`,{},config );
+    console.log( data.payload );
+    
     localStorage.setItem(
       "cartItems",
       JSON.stringify(getState().cart.cartItems)

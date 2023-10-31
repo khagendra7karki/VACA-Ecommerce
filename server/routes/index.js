@@ -36,6 +36,9 @@ router.use('/order/', orderRouter );
 //cart routes
 router.use('/cart/', cartRouter );
 
+//wishList routes
+router.use('/wishList/', cartRouter );
+
 /**
  * 
     To add review the format of the review should be: 
