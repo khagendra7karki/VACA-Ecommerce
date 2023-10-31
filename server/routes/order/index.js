@@ -1,5 +1,5 @@
 import express from "express";
-const router = express.Router();
+const orderRouter = express.Router();
 import {
   addOrderItems,
   getOrderById,
@@ -7,13 +7,13 @@ import {
   updateOrderToDelivered,
   getMyOrders,
   getOrders,
-} from "../../controller/order";
+} from "../../controller/order/index.js";
 //import { protect, admin } from "../middleware/authMiddleware";
 
-router.route("/").post( addOrderItems).get( getOrders);
-router.route("/myorders").get( getMyOrders);
-router.route("/:id").get( getOrderById);
-router.route("/:id/pay").put( updateOrderToPaid);
-router.route("/:id/deliver").put( updateOrderToDelivered);
+orderRouter.route("/").post( addOrderItems).get( getOrders);
+orderRouter.route("/myorders").get( getMyOrders);
+orderRouter.route("/:id").get( getOrderById);
+orderRouter.route("/:id/pay").put( updateOrderToPaid);
+orderRouter.route("/:id/deliver").put( updateOrderToDelivered);
 
-export default router;
+export default orderRouter;

@@ -10,7 +10,9 @@ import productRouter from './product/index.js'
 import userRouter from './user/index.js'
 
 import reviewController from '../controller/review/reviewController.js'
+import orderRouter from './order/index.js'
 
+import { verificationMiddleware } from '../middleware/auth/index.js'
 //
 // admin routes
 //
@@ -26,6 +28,9 @@ router.use('/', productRouter );
 //user router
 router.use('/', userRouter );
 
+//order routes
+router.use('/order/', orderRouter );
+
 //reveiw routers
 
 /**
@@ -40,6 +45,13 @@ router.use('/', userRouter );
 
 */    
 router.post( '/addReview', reviewController.addReview )
+
+//testing....
+
+
+
+//END testing..
+
 // router.get( '/getReview/:id', reviewController.getReview)
 
 

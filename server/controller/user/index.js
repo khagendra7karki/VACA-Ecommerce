@@ -10,7 +10,7 @@ import { createCustomToken } from "../../middleware/auth/index.js";
 
 dotenv.config();
 const SALT_ROUND = parseInt( process.env.SALT_ROUND )
-
+const SECRET = process.env.SECRET
 
 /**
  * 
@@ -34,7 +34,7 @@ const hashPassword = async (password, SALT_ROUND) => {
 const createUser = async (user, token) => {
     const newUser = new userSchema(user);
     const result = await newUser.save();
-    return { status: 'successful', task: 'addUser', payload: {...result._doc, accessToken : token } };
+    return { status: 'successful', task: 'addUser', payload: {...result._doc, token } };
 };
 
 const userController = {
@@ -83,8 +83,8 @@ const userController = {
             if ( !result ) return res.status( 401 ).json( { status: 'unsuccessful', task: 'login', reason: 'Incorrect Password'})
             
             //generate the access Token for the corresponding user
-            const accessToken = await createCustomToken( user.uid );
-            res.status( 200 ).json( { status: 'successful', task: 'login', payload: {...user._doc, accessToken : accessToken } })
+            const token = await createCustomToken( user , SECRET );
+            res.status( 200 ).json( { status: 'successful', task: 'login', payload: {...user._doc, token } })
 
         }catch( error ) {
             console.log('An error occurred', error)

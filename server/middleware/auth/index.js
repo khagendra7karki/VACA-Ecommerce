@@ -1,20 +1,9 @@
-/**
- * Right now it verifies all tokens and
- * sends a dummy string as tokens
- * 
- * TODO
- * 
- * Implement JWT for creating session
- * 
- */
-import firebase from 'firebase-admin'
-const {  initializeApp, auth } = firebase
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv'
 
-const app = firebase.initializeApp({
-    serviceAccountId:'firebase-adminsdk-7eynm@vaca-ecommerce.iam.gserviceaccount.com',
-})
+dotenv.config()
 
-
+const SECRET = process.env.SECRET
 /** 
  * Creates a token for the uid given
  * 
@@ -22,18 +11,9 @@ const app = firebase.initializeApp({
  * @returns A promise that resolves into a token 
  */
 
-export function createCustomToken( uid ){
-    
-    return 'RandomCustomToken'        
-    //     return new Promise (( resolve, reject ) => {
-    //         auth().createCustomToken( uid ).then( result =>{
-    //         resolve( result )})
-    //         .catch( error => {
-    //             console.log( 'An error occurred at Create Cusstom Token', error);
-    //             reject( error );
-    //     })
-    // })
-    
+export function createCustomToken( user, SECRET ){
+
+    return jwt.sign( user, SECRET)
 }
 
 
@@ -43,17 +23,18 @@ export function createCustomToken( uid ){
  * @param { string } token - token to be verified
  * @returns - A promise that resolves into a value
  */
-async function verifyToken( token ) {
-    return true
-    // try{
-    //     const result = await auth().verifyIdToken( token )
-    //     if( result )
-    //         return true
-    //     return false
-    // }
-    // catch( error ){
-    //     console.log( `An error occurred at Verify token `, error);
-    // }
+function verifyToken( token , SECRET) {
+    try{
+
+        const user = jwt.verify( token, SECRET );
+        if ( !user ) return false
+        console.log( user )
+        return user;
+
+    }catch( error ){
+        console.log('An error has occurred while validating token ', error )
+        return false
+    }
 }
 
 
@@ -71,11 +52,13 @@ async function verifyToken( token ) {
 
 
 export function verificationMiddleware( req, res, next ){
+
     const idToken = req.header('Authorization').split('Bearer ')[1];
-    const result = Promise.resolve( verifyToken( idToken )).
-    catch( ( error ) =>{
-        console.log( 'An error at Verfication Middleware has occurred', error );
-    })
+
+    const result =  verifyToken( idToken, SECRET )
+
     if( !result ) return res.status( 401 ).json({ status: 'unsuccessful', task: 'validiate ', reason: 'Invalid Token'})  
+    
+    res.locals.user = result
     next()
 }
