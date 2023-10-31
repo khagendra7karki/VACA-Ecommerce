@@ -12,6 +12,8 @@ import userRouter from './user/index.js'
 import reviewController from '../controller/review/reviewController.js'
 import orderRouter from './order/index.js'
 
+import cartRouter from './cart/index.js'
+
 import { verificationMiddleware } from '../middleware/auth/index.js'
 //
 // admin routes
@@ -31,7 +33,8 @@ router.use('/', userRouter );
 //order routes
 router.use('/order/', orderRouter );
 
-//reveiw routers
+//cart routes
+router.use('/cart/', cartRouter );
 
 /**
  * 

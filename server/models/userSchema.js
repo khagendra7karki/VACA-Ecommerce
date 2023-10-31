@@ -6,7 +6,7 @@
 import mongoose, { Schema } from 'mongoose'
 
 const wishListItem = new mongoose.Schema({
-    product: {
+    productId: {
         type:  mongoose.Schema.Types.ObjectId,
         required: true
     },
@@ -26,7 +26,7 @@ const WishList = new mongoose.Schema({
 
 
 const cartItem = new mongoose.Schema({
-    product: {
+    productId: {
         type: mongoose.Schema.Types.ObjectId,
         required: true
     },
@@ -67,9 +67,16 @@ const userSchema = new mongoose.Schema( {
         type: String    
     },
     
-    whishlist: WishList,
+    whishlist: {
+        type: WishList,
+        default: { items: []}
+
+    },
     
-    cart: Cart ,
+    cart: {
+        type: Cart,
+        default: { items: []}
+    } ,
 
 }, { timestamps: true } )
 
