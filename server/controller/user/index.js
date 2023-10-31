@@ -64,7 +64,7 @@ const userController = {
 
     /**
      * 
-     * @param { * }} res - response object
+     * @param { * } res - response object
      * @param { * } req - request object
      * @param { string } req.body.email - user email
      * @param { stirng } req.body.password - user password 
@@ -74,8 +74,8 @@ const userController = {
         try{
             
             console.log( req.body ) 
-            const user = await userSchema.findOne( {email: req.body.email} )
-            console.log( 'User object', user );
+            const user = await userSchema.findOne( {email: req.body.email} ).lean()
+            // console.log( 'User object', user );
             if( !user ) return res.status( 401 ).json( {status: 'unsuccessful', task: 'login', reason: 'Invalid Credentials'} )
             
             const result = await bcrypt.compare( req.body.password, user.password)
@@ -83,8 +83,10 @@ const userController = {
             if ( !result ) return res.status( 401 ).json( { status: 'unsuccessful', task: 'login', reason: 'Incorrect Password'})
             
             //generate the access Token for the corresponding user
-            const token = await createCustomToken( user , SECRET );
-            res.status( 200 ).json( { status: 'successful', task: 'login', payload: {...user._doc, token } })
+            const { _id, uid, email, password, fullName } = user
+
+            const token = await createCustomToken( { _id, uid, email, password, fullName } , SECRET );
+            res.status( 200 ).json( { status: 'successful', task: 'login', payload: {...user , token } })
 
         }catch( error ) {
             console.log('An error occurred', error)

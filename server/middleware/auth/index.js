@@ -12,7 +12,8 @@ const SECRET = process.env.SECRET
  */
 
 export function createCustomToken( user, SECRET ){
-
+    console.log( user )
+    
     return jwt.sign( user, SECRET)
 }
 
@@ -54,6 +55,7 @@ function verifyToken( token , SECRET) {
 export function verificationMiddleware( req, res, next ){
 
     const idToken = req.header('Authorization').split('Bearer ')[1];
+    console.log( idToken )
 
     const result =  verifyToken( idToken, SECRET )
 
