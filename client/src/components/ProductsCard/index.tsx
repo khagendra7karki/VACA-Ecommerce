@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 
-import './style.css';
+import './productStyle.css';
 
 interface Product {
     _id: string,

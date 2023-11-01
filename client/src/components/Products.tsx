@@ -65,7 +65,7 @@ export default function ArticlesCardsGrid() {
     (state: State) => state.products
   
   );
-  console.log("getproducts", products)
+  // console.log("getproducts", products)
   // const handlerPageChange = () => {
   //   //setActivePage(page);
   //   getProducts();

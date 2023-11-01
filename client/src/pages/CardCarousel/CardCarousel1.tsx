@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { State, actionCreators } from '../../state';
 import { useEffect } from 'react';
+import { Container, MantineProvider, SimpleGrid, createTheme, rem } from '@mantine/core';
 
 interface Product {
     _id: string,  
@@ -12,6 +13,7 @@ interface Product {
     oldPrice?: Number,
     price: Number,
   };
+  
   
 function Cardslide1() {
     const dispatch = useDispatch();
@@ -29,8 +31,9 @@ function Cardslide1() {
   const cards =
   (Object.keys(products).includes("payload") )? (
   products.payload.map((product : Product ) => (
-    <Carousel.Slide>
-    <ProductsCard product = { product } key = { Number( product._id )}/>
+    <Carousel.Slide >
+      <Container style={{height:'600px', display:'flex', }}>
+    <ProductsCard  product = { product } key = { Number( product._id )}/></Container>
     </Carousel.Slide>
      )))
     : (
@@ -38,16 +41,20 @@ function Cardslide1() {
     )
  
   return (
+   
     <Carousel
       withIndicators
-      height={500}
-      slideSize="33.333333%"
+      height={700}
+      slideSize="25%"
       slideGap="md"
       loop
       align="start"
       slidesToScroll={4}
     >
+       
         {cards}
+    
+       {/* {cards} */}
       {/* <Carousel.Slide>1</Carousel.Slide>
        <Carousel.Slide>2</Carousel.Slide>
       <Carousel.Slide>3</Carousel.Slide> */}

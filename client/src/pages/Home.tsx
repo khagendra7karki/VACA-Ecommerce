@@ -13,7 +13,7 @@ export default function Home() {
   <Layout> 
     <Stack
       //h={300}
-      bg="var(--mantine-color-blue-light)"
+      // bg="var(--mantine-color-blue-light)"
     
     > 
    <Slider />
