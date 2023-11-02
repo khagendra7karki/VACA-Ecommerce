@@ -25,22 +25,27 @@ const PlaceOrder = () => {
   );
 
   const addDecimals = (num: number) => {
-    return (Math.round(num * 100) / 100).toFixed(2);
+    return parseInt((Math.round(num * 100) / 100).toFixed(2));
   };
 
+  console.log( cartItems[0].price )
   cartItems.itemsPrice = addDecimals(
-    cartItems.reduce((acc: any, item: any) => acc + item.price * item.qty, 0)
+    cartItems.reduce((acc: any, item: any) => {
+      console.log( item.price )
+      return acc + item.price * item.quantity}, 0)
   );
   cartItems.shippingPrice = addDecimals(cartItems.itemsPrice > 100 ? 0 : 100);
   cartItems.taxPrice = addDecimals(
     Number((0.15 * cartItems.itemsPrice).toFixed(2))
   );
+  const { itemsPrice , shippingPrice, taxPrice } = cartItems
+  // console.log( itemsPrice, shippingPrice, taxPrice )
   cartItems.totalPrice = (
     Number(cartItems.itemsPrice) +
     Number(cartItems.shippingPrice) +
     Number(cartItems.taxPrice)
   ).toFixed(2);
-
+  
   const handlerOrderCreate = () => {
   
       createOrder(
@@ -195,7 +200,7 @@ const PlaceOrder = () => {
                     ${" "}
                     {cartItems
                       .reduce(
-                        (acc: any, item: any) => acc + item.qty * item.price,
+                        (acc: any, item: any) => acc + item.quantity * item.price,
                         0
                       )
                       .toFixed(2)}

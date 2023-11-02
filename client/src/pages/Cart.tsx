@@ -78,6 +78,7 @@ const Cart = () => {
         <div className="grid-container">
           {cartItems && cartItems.length ? (
             cartItems.map((item: any, index: number) => {
+              console.log( item )
               return (
                 <Card className="cart-card" key={index}>
                   <div className="grid-item">

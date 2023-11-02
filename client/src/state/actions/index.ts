@@ -1,5 +1,9 @@
 import { ActionType } from "../action-types";
 
+interface CartSetAction {
+  type: ActionType.CART_SET;
+  payload: any;
+}
 interface CartAddItemAction {
   type: ActionType.CART_ADD_ITEM;
   payload: any;
@@ -310,6 +314,7 @@ interface UpdateUserResetAction {
 }
 
 export type Action =
+  | CartSetAction
   | CartAddItemAction
   | CartRemoveItemAction
   | CartSaveShippingAction

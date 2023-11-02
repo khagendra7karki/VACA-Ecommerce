@@ -18,23 +18,31 @@ import createNewUser from "../../firebase/createNewUser";
 
 
 
-
+/**
+ * Adds an item to the cart
+ * by creating a whole new cart
+ * received from the backend
+ * 
+ * @param id - product Id
+ * @param qty - number of items
+ * @returns 
+ */
 export const addToCart = (id: string, qty: number) => {
   return async (dispatch: Dispatch<Action>, getState: any) => {
     
-    const { data } = await axios.get(`http://localhost:5000/getProduct/${id}`);
-    const product = {
-      product: data.payload._id,
-      title: data.payload.title,
-      image: data.payload.image,
-      price: data.payload.price,
-      availableQuantity: data.payload.availableQuantity,
-      quantity: qty,
-    }
-    dispatch({
-      type: ActionType.CART_ADD_ITEM,
-      payload: product
-    });
+    // const { data } = await axios.get(`http://localhost:5000/getProduct/${id}`);
+    // const product = {
+    //   product: data.payload._id,
+    //   title: data.payload.title,
+    //   image: data.payload.image,
+    //   price: data.payload.price,
+    //   availableQuantity: data.payload.availableQuantity,
+    //   quantity: qty,
+    // }
+    // dispatch({
+    //   type: ActionType.CART_ADD_ITEM,
+    //   payload: product
+    // });
     
   
     const token = store.getState().userLogin.userInfo.token;
@@ -46,13 +54,16 @@ export const addToCart = (id: string, qty: number) => {
         },
       };
 
-    const res = await axios.post(`http://localhost:5000/cart/addItem/${id}/${qty}`,{},config );
+    const { data } = await axios.post(`http://localhost:5000/cart/addItem/${id}/${qty}`,{},config );
 
-    console.log( res.data.payload );
-    
+    dispatch({
+      type: ActionType.CART_SET,
+      payload: data.payload.cart.items
+    })
+
     localStorage.setItem(
       "cartItems",
-      JSON.stringify(getState().cart.cartItems)
+      JSON.stringify(store.getState().cart.cartItems)
     );
   };
 };
@@ -72,13 +83,13 @@ export const removeFromCart = (id: string) => {
     console.log( data.payload );
 
     dispatch({
-      type: ActionType.CART_REMOVE_ITEM,
-      payload: id,
+      type: ActionType.CART_SET,
+      payload: data.payload.cart.items,
     });
 
     localStorage.setItem(
       "cartItems",
-      JSON.stringify(getState().cart.cartItems)
+      JSON.stringify(store.getState().cart.cartItems)
     );
   };
 };
@@ -293,17 +304,6 @@ export const login = (email: string, password: string) => {
       // response payload
       const { cart, wishList, ...user } = data.payload 
       
-      const cartItems = cart?.items?.map( (item: any) =>{
-        return {
-          product: item._id, 
-          title: item.title,
-          image: '',
-          price: '',
-          availableQuantity: '',
-          qty: ''
-        }
-      })
-      
 
       // add userInfo to 
       // redux store
@@ -312,18 +312,20 @@ export const login = (email: string, password: string) => {
         payload: user,
       });
       
+      // add to local storage
+      // as  " userInfo "
+      localStorage.setItem("userInfo", JSON.stringify( user ));
+      
       // add cart data to 
       // redux store
       dispatch({
-        type: ActionType.CART_ADD_ITEM,
-        payload: cart,
+        type: ActionType.CART_SET,
+        payload: cart.items,
       })
-
-
+      localStorage.setItem("cartItems", JSON.stringify( cart.items))
       console.log( 'login response payload', data )
       
       //add 
-      localStorage.setItem("userInfo", JSON.stringify( user ));
 
     } catch (error: any) {
       console.log( error )
@@ -768,7 +770,7 @@ export const updateUser = (id: string, isAdmin: boolean) => {
 export const logout = () => {
   return async (dispatch: Dispatch<Action>) => {
 
-    //remove info from the cache
+    //remove info from localStorage
 
     localStorage.removeItem( "cartItems")
     localStorage.removeItem("paymentMethod")
