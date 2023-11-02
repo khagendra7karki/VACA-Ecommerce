@@ -29,12 +29,13 @@ function Cardslide2() {
 
 
   const cards =
-  (Object.keys(products).includes("payload") )? (
-  products.payload.map((product : Product ) => (
+  products ? (
+  products.map((product : Product ) => (
     <Carousel.Slide >
       <Container style={{height:'600px', display:'flex', }}>
-    <ProductsCard  product = { product } key = { Number( product._id )}/></Container>
-    </Carousel.Slide>
+    <ProductsCard product = { product } key = { Number( product._id )}/>
+    </Container>
+     </Carousel.Slide>
      )))
     : (
       <>hello world</>
