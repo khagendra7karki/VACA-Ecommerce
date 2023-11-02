@@ -122,7 +122,7 @@ const Product = () => {
                     h={550}
                     w="auto"
                     fit="contain"
-                    src={product.payload.image}
+                    src={product.image}
                     alt="product image"
                   />
                 </Group>
@@ -138,9 +138,9 @@ const Product = () => {
                   <Group gap="lg">
                     {" "}
                     <Text fw={400} style={{ fontSize: "32px" }}>
-                      {product.payload.title}
+                      {product.title}
                     </Text>
-                    {product.payload.availableQuantity === 0 ? (
+                    {product.availableQuantity === 0 ? (
                       <Badge
                         color="red"
                         style={{ marginLeft: "10px" }}
@@ -162,7 +162,7 @@ const Product = () => {
                   </Group>
                   <Space h="xs" />
                   <Group gap="lg">
-                    <Text>Rs - {product.payload.price}</Text>
+                    <Text>Rs - {product.price}</Text>
                     <Badge variant="outline">25% off</Badge>
                   </Group>
                   <Divider my="sm" />
@@ -220,7 +220,7 @@ const Product = () => {
                       <Text fz="xl" fw={700} style={{ lineHeight: 1 }}>
                         $
                         {new Intl.NumberFormat().format(
-                          value * product.payload.price
+                          value * product.price
                         )}
                       </Text>
                       <Text
@@ -230,7 +230,7 @@ const Product = () => {
                         style={{ lineHeight: 1 }}
                         mt={3}
                       >
-                        {product.payload.oldPrice}
+                        {product.oldPrice}
                       </Text>
                     </div> */}
 
@@ -239,7 +239,7 @@ const Product = () => {
                       color="rgba(0, 0, 0, 0.71)"
                       //style={{ flex: 1 }}
                       onClick={() =>
-                        handlerAddToCart(value, product.payload._id)
+                        handlerAddToCart(value, product._id)
                       }
                     >
                       Add To Cart
@@ -258,7 +258,7 @@ const Product = () => {
 
                   <Group>
                     <Text size="md" c="dimmed">
-                      {product.payload.description}
+                      {product.description}
                     </Text>
                   </Group>
                 </Stack>
@@ -266,7 +266,7 @@ const Product = () => {
             </Grid>
           )}
           {Object.keys(product).length && (
-            <Review reviewM={product.payload.review.reviews} />
+            <Review reviewM={product.review.reviews} />
           )}
         </>
       )}
