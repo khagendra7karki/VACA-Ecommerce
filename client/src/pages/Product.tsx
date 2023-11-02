@@ -1,6 +1,23 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { ActionIcon, Alert, Badge, Button, Grid, Group, Image, NumberInput, NumberInputHandlers, Stack, Text } from '@mantine/core';
-import classes from './product.module.css';
+import React, { useEffect, useRef, useState } from "react";
+import {
+  ActionIcon,
+  Alert,
+  Badge,
+  Button,
+  Divider,
+  Grid,
+  Group,
+  Image,
+  InputBase,
+  NumberInput,
+  NumberInputHandlers,
+  Pill,
+  Select,
+  Space,
+  Stack,
+  Text,
+} from "@mantine/core";
+import classes from "./product.module.css";
 import { IoIosCloseCircle, IoIosUnlock } from "react-icons/io";
 
 import { useParams } from "react-router";
@@ -9,9 +26,10 @@ import { actionCreators, State } from "../state";
 import { useDispatch, useSelector } from "react-redux";
 import { notifications } from "@mantine/notifications";
 import { ActionType } from "../state/action-types";
-import Loading from '../components/Loading';
-import Layout from '../Layout/Layout';
-import Review from '../components/reviews/Review';
+import Loading from "../components/Loading";
+import Layout from "../Layout/Layout";
+import Review from "../components/reviews/Review";
+import { fontSizeResolver } from "@mantine/core/lib/core/Box/style-props/resolvers/font-size-resolver/font-size-resolver";
 
 const Product = () => {
   const params = useParams();
@@ -28,7 +46,7 @@ const Product = () => {
   const handlers = useRef<NumberInputHandlers>(null);
 
   const { product, loading } = useSelector((state: State) => state.product);
- 
+
   const { quickSearch } = useSelector((state: State) => state.quickSearch);
 
   const { userInfo } = useSelector((state: State) => state.userLogin);
@@ -38,7 +56,6 @@ const Product = () => {
     loading: reviewLoading,
     error: reviewError,
   } = useSelector((state: State) => state.review);
-
 
   // const handlerAddReview = (values: any) => {
   //   const { rating, comment } = values;
@@ -81,7 +98,15 @@ const Product = () => {
   useEffect(() => {
     getProduct(params.id as string);
   }, [dispatch, review, quickSearch]);
-  
+
+  const pills = Array(4)
+    .fill(0)
+    .map((_, index) => (
+      <Pill key={index} withRemoveButton>
+        size {index}
+      </Pill>
+    ));
+
   return (
     <Layout>
     {loading ? (
@@ -192,10 +217,13 @@ const Product = () => {
               <Review reviewM={product.review.reviews} />
            
           )}
-  </>
- )
-  }
-  </Layout>
-)}
+          {Object.keys(product).length && (
+            <Review reviewM={product.payload.review.reviews} />
+          )}
+        </>
+      )}
+    </Layout>
+  );
+};
 
-export default Product
+export default Product;
