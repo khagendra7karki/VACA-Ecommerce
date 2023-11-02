@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { ActionIcon, Alert, Badge, Button, Grid, Group, Image, NumberInput, NumberInputHandlers, Stack, Text } from '@mantine/core';
 import classes from './product.module.css';
 import { IoIosCloseCircle, IoIosUnlock } from "react-icons/io";
-import ReviewCard from '../components/ReviewCard';
+
 import { useParams } from "react-router";
 import { bindActionCreators } from "redux";
 import { actionCreators, State } from "../state";
@@ -11,7 +11,16 @@ import { notifications } from "@mantine/notifications";
 import { ActionType } from "../state/action-types";
 import Loading from '../components/Loading';
 import Layout from '../Layout/Layout';
+import Review from '../components/reviews/Review';
+interface Reviews {
+  createdAt : Date,
+  rating : Number,
+  review : String,
+  userId : String, 
+  _id : String,
+  updatedAt: Date
 
+}
 const Product = () => {
   const params = useParams();
   const dispatch = useDispatch();
@@ -80,7 +89,8 @@ const Product = () => {
   useEffect(() => {
     getProduct(params.id as string);
   }, [dispatch, review, quickSearch]);
-  
+  //console.log(product.payload.review.reviews, 'ffffffffffffffffffffffffffff')
+  const data : Reviews[] = product.payload.review.reviews
   return (
     <Layout>
     {loading ? (
@@ -186,31 +196,7 @@ const Product = () => {
    
   </Grid>
      )}
-  {/* <div style={{ marginTop: "1rem" }}>
-              {Object.keys(product).length && product.reviews.length ? (
-                product.reviews.map((review: any) => {
-                  return (
-                    <ReviewCard
-                      comment={review.comment}
-                      date={review.createdAt}
-                      id={review._id}
-                      name={review.name}
-                      rating={review.rating}
-                      key={review._id}
-                    />
-                  );
-                })
-              ) : (
-                <Alert
-                  icon={<IoIosCloseCircle size={16} />}
-                  style={{ marginTop: "1rem" }}
-                  color="blue"
-                  radius="lg"
-                >
-                  No reviews for this product
-                </Alert>
-              )}
-            </div> */}
+ <Review  reviewM={data}/>
   </>
  )
   }

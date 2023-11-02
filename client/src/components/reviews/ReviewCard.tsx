@@ -1,7 +1,11 @@
-import { Card, Grid, Text, Divider } from "@mantine/core";
 import React, { PropsWithChildren } from "react";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import moment from "moment";
+import {
+  Text,
+  Card,
+  Divider,
+} from "@mantine/core";
 
 interface IReviewCard {
   id: string;
@@ -11,21 +15,21 @@ interface IReviewCard {
   rating: number;
 }
 
-const renderRatingsList = (rating: number) => {
-  const stars = [];
+// const renderRatingsList = (rating: number) => {
+//   const stars = [];
 
-  for (let i = 1; i <= rating; i++) {
-    stars.push(<AiFillStar color="orange" />);
-  }
+//   for (let i = 1; i <= rating; i++) {
+//     stars.push(<AiFillStar color="orange" key={i} />);
+//   }
 
-  let remainingStars = 5 - stars.length;
+//   let remainingStars = 5 - stars.length;
 
-  for (let i = 1; i <= remainingStars; i++) {
-    stars.push(<AiOutlineStar />);
-  }
+//   for (let i = 1; i <= remainingStars; i++) {
+//     stars.push(<AiOutlineStar key={i} />);
+//   }
 
-  return <div>{stars}</div>;
-};
+//   return <div>{stars}</div>;
+// };
 
 const ReviewCard: React.FC<PropsWithChildren<IReviewCard>> = ({
   id,
@@ -36,43 +40,20 @@ const ReviewCard: React.FC<PropsWithChildren<IReviewCard>> = ({
 }) => {
   return (
     <>
-      <Grid>
-        <Grid.Col
-          // xs={12}
-          // sm={3}
-          // md={2}
-          // lg={2}
-          // xl={2}
-          style={{ display: "flex", alignItems: "center" }}
-          span={2}
-        >
-          <Grid.Col span={12}>
-            <Text style={{ marginBottom: "5px" }} >
-              {name}
-            </Text>
-            <Text
-              color="gray"
-              style={{ marginBottom: "5px" }}
-             // size="xs"
-            
-            >
-              {moment(date).format("DD-MMM-YYYY")}
-            </Text>
-            {renderRatingsList(rating)}
-          </Grid.Col>
-        </Grid.Col>
-        <Grid.Col
-          // xs={12}
-          // sm={9}
-          // md={10}
-          // lg={10}
-          // xl={10}
-          style={{ display: "flex", alignItems: "center" }}
-          span={10}
-        >
-          <Text >"{comment}"</Text>
-        </Grid.Col>
-      </Grid>
+      <div style={{ display: "flex" }}>
+        <div>
+          <Text size="lg" style={{ marginBottom: "5px" }}>
+            {name}
+          </Text>
+          <Text color="gray" size="xs">
+            {moment(date).format("DD-MMM-YYYY")}
+          </Text>
+          {/* {renderRatingsList(rating)} */}
+        </div>
+        <div style={{ flex: 1, display: "flex", alignItems: "center" }}>
+          <Text size="lg">"{comment}"</Text>
+        </div>
+      </div>
       <Divider />
     </>
   );
