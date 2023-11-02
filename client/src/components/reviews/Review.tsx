@@ -111,10 +111,10 @@ export const Review: FC<MyProps> = ({ reviewM }): JSX.Element => {
   return (
     <>
 
-      <Grid>
+      <Grid my = "20px" >
          
-         <Grid.Col span={{ base: 12, md: 6, lg: 3 }}>
-        <div>
+         <Grid.Col span={{ base: 12, md: 6, lg: 7 }}>
+       
           {" "}
           <Card
             style={{ marginTop: "1.5rem" }}
@@ -153,24 +153,19 @@ export const Review: FC<MyProps> = ({ reviewM }): JSX.Element => {
               )}
             </div>
           </Card>
-        </div></Grid.Col>
-        <Grid.Col span={{ base: 12, md: 6, lg: 3 }}>
-        <div>
+        </Grid.Col>
+        <Grid.Col span={{ base: 12, md: 6, lg: 5 }}>
+        
           {
-            <Group>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                }}
-              >
-                <Text  style={{ marginRight: "10px" }}>
+            <Group justify="flex-end" >
+             
+             
+                <Text>
                     {/* {product.rating.toFixed(1)} */}
                       5
                   </Text>
                 <AiFillStar color="orange" size="18" />
-              </div>
+             
             </Group>
           }
 
@@ -207,7 +202,7 @@ export const Review: FC<MyProps> = ({ reviewM }): JSX.Element => {
           </Box>
     
           )}
-        </div></Grid.Col>
+        </Grid.Col>
       </Grid>
     </>
   );
