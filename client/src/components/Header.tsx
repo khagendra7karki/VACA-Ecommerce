@@ -1,4 +1,4 @@
-import { Autocomplete, Group, Burger, rem } from '@mantine/core';
+import { Autocomplete, Group, Burger, rem, Divider } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { IconSearch } from '@tabler/icons-react';
 import { MantineLogo } from '@mantine/ds';
@@ -68,6 +68,7 @@ export function HeaderSearch() {
   ));
 
   return (
+    <>
     <header className={classes.header}>
       <div className={classes.inner}>
         <Group>
@@ -89,6 +90,6 @@ export function HeaderSearch() {
           />
         </Group>
       </div>
-    </header>
+    </header> <Divider my="sm" /></>
   );
 }
