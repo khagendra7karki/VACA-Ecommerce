@@ -15,21 +15,21 @@ interface IReviewCard {
   rating: number;
 }
 
-// const renderRatingsList = (rating: number) => {
-//   const stars = [];
+const renderRatingsList = (rating: number) => {
+  const stars = [];
 
-//   for (let i = 1; i <= rating; i++) {
-//     stars.push(<AiFillStar color="orange" key={i} />);
-//   }
+  for (let i = 1; i <= rating; i++) {
+    stars.push(<AiFillStar color="orange" key={i} />);
+  }
 
-//   let remainingStars = 5 - stars.length;
+  let remainingStars = 5 - stars.length;
 
-//   for (let i = 1; i <= remainingStars; i++) {
-//     stars.push(<AiOutlineStar key={i} />);
-//   }
+  for (let i = 1; i <= remainingStars; i++) {
+    stars.push(<AiOutlineStar key={i} />);
+  }
 
-//   return <div>{stars}</div>;
-// };
+  return <div>{stars}</div>;
+};
 
 const ReviewCard: React.FC<PropsWithChildren<IReviewCard>> = ({
   id,

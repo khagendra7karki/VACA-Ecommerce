@@ -12,15 +12,7 @@ import { ActionType } from "../state/action-types";
 import Loading from '../components/Loading';
 import Layout from '../Layout/Layout';
 import Review from '../components/reviews/Review';
-interface Reviews {
-  createdAt : Date,
-  rating : Number,
-  review : String,
-  userId : String, 
-  _id : String,
-  updatedAt: Date
 
-}
 const Product = () => {
   const params = useParams();
   const dispatch = useDispatch();
@@ -89,8 +81,7 @@ const Product = () => {
   useEffect(() => {
     getProduct(params.id as string);
   }, [dispatch, review, quickSearch]);
-  //console.log(product.payload.review.reviews, 'ffffffffffffffffffffffffffff')
-  const data : Reviews[] = product.payload.review.reviews
+  
   return (
     <Layout>
     {loading ? (
@@ -196,7 +187,11 @@ const Product = () => {
    
   </Grid>
      )}
- <Review  reviewM={data}/>
+ {Object.keys(product).length && (
+          
+              <Review reviewM={product.payload.review.reviews} />
+           
+          )}
   </>
  )
   }
