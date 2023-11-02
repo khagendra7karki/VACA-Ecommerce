@@ -5,12 +5,10 @@
  * 
  */
 import mongoose, { Schema } from 'mongoose'
+import { ProductWithoutReview } from './productSchema.js'
 
 const wishListItem = new mongoose.Schema({
-    productId: {
-        type:  mongoose.Schema.Types.ObjectId,
-        required: true
-    },
+    ...ProductWithoutReview,
 
     quantity: {
         type: Number,
@@ -27,10 +25,8 @@ const WishList = new mongoose.Schema({
 
 
 const cartItem = new mongoose.Schema({
-    productId: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true
-    },
+
+    ...ProductWithoutReview,
 
     quantity: {
         type: Number,
@@ -68,7 +64,7 @@ const userSchema = new mongoose.Schema( {
         type: String    
     },
     
-    whishlist: {
+    wishList: {
         type: WishList,
         default: { items: []}
 

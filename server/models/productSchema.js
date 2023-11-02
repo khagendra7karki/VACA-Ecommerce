@@ -12,20 +12,73 @@ const review = new Schema({
     },
     rating: { 
             type: Number,
+            default: 0,
             required: true
     
     }
 },{ timestamps: true})
 
-const Reviews = new Schema({
-    reviews: [ review ]
-}, { timestamps: true  })
+// const Reviews = new Schema({
+//     reviews: [ review ]
+// }, { timestamps: true  })
 
 //make a shopping item schema
 const ProductSchema = new Schema({
     title:{
         type: String,
-        requied: true,
+        required: true,
+    }, 
+
+    description:{
+        type: String,
+        required: true,
+    },
+    price: {
+        type: Number,
+        required: true,
+    },
+    category:{
+        type: String,
+        required: true
+    },
+    image:[{
+        type: String,
+        required: true,
+    }],
+    oldPrice: {
+        type: Number,
+    },
+    availableQuantity: {
+        type: Number,
+        required: true,
+        default: 0
+    },
+
+    reviews:[
+        {
+            type: review
+        }
+    ],
+
+    rating: {
+        type : Number,
+        required: true,
+        default: 0
+    
+    },
+},{ timestamps: true })
+
+const Product = mongoose.model('Product', ProductSchema);
+
+export default Product
+const ProductWithoutReview = {
+    productId: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true
+    },
+    title:{
+        type: String,
+        required: true,
     }, 
 
     description:{
@@ -53,16 +106,11 @@ const ProductSchema = new Schema({
         default: 0
     },
 
-    reviews: Reviews ,
-
     rating: {
         type : Number,
         required: true,
         default: 0
     
     },
-},{ timestamps: true })
-
-const Product = mongoose.model('Product', ProductSchema);
-
-export default Product
+}
+export { ProductWithoutReview } 

@@ -1,6 +1,7 @@
 import { ActionType } from "../action-types";
 import { Action } from "../actions/index";
-
+// INITIAL STATE of the store
+import INITIAL_STATE from "./initialState";
 const userInfoFromStorage = localStorage.getItem("userInfo")
   ? JSON.parse(localStorage.getItem("userInfo") || "{}")
   : null;

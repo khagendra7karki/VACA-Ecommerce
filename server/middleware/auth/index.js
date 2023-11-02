@@ -12,7 +12,6 @@ const SECRET = process.env.SECRET
  */
 
 export function createCustomToken( user, SECRET ){
-    console.log( user )
     
     return jwt.sign( user, SECRET)
 }
@@ -29,7 +28,7 @@ function verifyToken( token , SECRET) {
 
         const user = jwt.verify( token, SECRET );
         if ( !user ) return false
-        console.log( user )
+        const { _id, uid, email, fullName} = user
         return user;
 
     }catch( error ){

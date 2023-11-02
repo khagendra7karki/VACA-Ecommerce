@@ -86,7 +86,7 @@ const Cart = () => {
                       radius="lg"
                       height={50}
                       width={50}
-                      src={item.image}
+                      src={item.image[0]}
                     />
                   </div>
                   <div className="grid-item">
@@ -94,13 +94,13 @@ const Cart = () => {
                   </div>
                   <div className="grid-item">
                     <div className="item-price">
-                      ${item.price}x {item.qty}
+                      ${item.price}x {item.quantity}
                     </div>
                   </div>
                   <div className="grid-item">
                     <NumberInput
                       radius="lg"
-                      value={item.qty}
+                      value={item.quantity}
                       ref={numRef}
                       onChange={(e) =>
                         handlerUpdateCartItems(e as number, item.product)
@@ -141,13 +141,13 @@ const Cart = () => {
           <Card radius="lg" shadow="xl" withBorder>
             <Text style={{ marginBottom: "1rem" }}>
               Subtotal
-              ({cartItems.reduce((acc: any, item: any) => acc + item.qty, 0)})
+              ({cartItems.reduce((acc: any, item: any) => acc + item.quantity, 0)})
               Items
             </Text>
             <Text size="xl" style={{ marginTop: ".5rem" }}>
               $
               {cartItems
-                .reduce((acc: any, item: any) => acc + item.qty * item.price, 0)
+                .reduce((acc: any, item: any) => acc + item.quantity * item.price, 0)
                 .toFixed(2)
               }
             </Text>
@@ -172,13 +172,3 @@ const Cart = () => {
 };
 
 export default Cart;
-
-// import React from 'react'
-
-// function Cart() {
-//   return (
-//     <div>Cart</div>
-//   )
-// }
-
-// export default Cart

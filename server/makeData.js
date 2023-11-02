@@ -1,13 +1,13 @@
-// import db from './utils/db.js'
-// import productSchema from './models/productShema.js'
-// import dotenv from 'dotenv'
-// dotenv.config()
+import db from './utils/db.js'
+import productSchema from './models/productSchema.js'
+import dotenv from 'dotenv'
+dotenv.config()
 
-// const URI = process.env.MONGODB_URI
-// const database = new db()
-// const connections = await database.connectDB( URI )
+const URI = process.env.MONGODB_URI
+const database = new db()
+const connections = await database.connectDB( URI )
 
-// // await connections.connection.dropCollection('products')
+await connections.connection.dropCollection('products')
 // const returnValue  = fetch( 'https://fakestoreapi.com/products?limit=100').then( res => res.json()).then( res => res)
 
 

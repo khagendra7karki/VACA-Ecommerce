@@ -1,4 +1,4 @@
-import productSchema from "../../models/productShema.js"
+import productSchema from "../../models/productSchema.js"
 
 
 const productController = {

@@ -16,24 +16,27 @@ import { stringify } from "querystring";
 
 import createNewUser from "../../firebase/createNewUser";
 
+
+
+
 export const addToCart = (id: string, qty: number) => {
   return async (dispatch: Dispatch<Action>, getState: any) => {
-    {
-      const { data } = await axios.get(`http://localhost:5000/getProduct/${id}`);
+    
+    const { data } = await axios.get(`http://localhost:5000/getProduct/${id}`);
+    const product = {
+      product: data.payload._id,
+      title: data.payload.title,
+      image: data.payload.image,
+      price: data.payload.price,
+      availableQuantity: data.payload.availableQuantity,
+      quantity: qty,
+    }
     dispatch({
       type: ActionType.CART_ADD_ITEM,
-      payload: 
-      {
-        product: data.payload._id,
-        title: data.payload.title,
-        image: data.payload.image,
-        price: data.payload.price,
-        availableQuantity: data.payload.availableQuantity,
-        qty,
-      },
+      payload: product
     });
     
-  }
+  
     const token = store.getState().userLogin.userInfo.token;
 
     const config = {
@@ -43,8 +46,9 @@ export const addToCart = (id: string, qty: number) => {
         },
       };
 
-    const { data } = await axios.post(`http://localhost:5000/cart/addItem/${id}/${qty}`,{},config );
-    console.log( data.payload );
+    const res = await axios.post(`http://localhost:5000/cart/addItem/${id}/${qty}`,{},config );
+
+    console.log( res.data.payload );
     
     localStorage.setItem(
       "cartItems",
@@ -55,6 +59,18 @@ export const addToCart = (id: string, qty: number) => {
 
 export const removeFromCart = (id: string) => {
   return async (dispatch: Dispatch<Action>, getState: any) => {
+    const token = store.getState().userLogin.userInfo.token;
+
+    const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+    const { data } = await axios.post(`http://localhost:5000/cart/removeItem/${id}`,{},config );
+    console.log( data.payload );
+
     dispatch({
       type: ActionType.CART_REMOVE_ITEM,
       payload: id,
@@ -100,7 +116,7 @@ export const getProducts = () => {
 // console.log('kkkkkk',data)
       dispatch({
         type: ActionType.GET_PRODUCTS_SUCCESS,
-        payload: data,
+        payload: data.payload,
       });
     } catch (error: any) {
       dispatch({
@@ -267,19 +283,50 @@ export const login = (email: string, password: string) => {
         password,
       };
 
-      const res = await axios.post(
+      const { data } = await axios.post(
         "http://localhost:5000/login",
         formData,
         config
       );
 
+      //extract user data from the 
+      // response payload
+      const { cart, wishList, ...user } = data.payload 
+      
+      const cartItems = cart?.items?.map( (item: any) =>{
+        return {
+          product: item._id, 
+          title: item.title,
+          image: '',
+          price: '',
+          availableQuantity: '',
+          qty: ''
+        }
+      })
+      
+
+      // add userInfo to 
+      // redux store
       dispatch({
         type: ActionType.USER_LOGIN_SUCCESS,
-        payload: res.data.payload,
+        payload: user,
       });
-      console.log( 'login response payload', res.data )
-      localStorage.setItem("userInfo", JSON.stringify(res.data.payload));
+      
+      // add cart data to 
+      // redux store
+      dispatch({
+        type: ActionType.CART_ADD_ITEM,
+        payload: cart,
+      })
+
+
+      console.log( 'login response payload', data )
+      
+      //add 
+      localStorage.setItem("userInfo", JSON.stringify( user ));
+
     } catch (error: any) {
+      console.log( error )
       dispatch({
         type: ActionType.USER_LOGIN_FAIL,
         payload: error,
@@ -321,17 +368,17 @@ export const createOrder = (
         shippingPrice,
         totalPrice,
       };
-let _id : any = "65386caaf5f81f2689e95abb"
-//     const { data } = await axios.post("/api/v1/orders", formData, config);
-const data = {orderItems :orderItems,
-  shippingAddress :shippingAddress,
-  paymentMethod: paymentMethod,
-  itemsPrice :itemsPrice,
-  taxPrice :taxPrice,
-  shippingPrice :shippingPrice,
-  totalPrice : totalPrice,
-  _id
-}
+      let _id : any = "65386caaf5f81f2689e95abb"
+      //     const { data } = await axios.post("/api/v1/orders", formData, config);
+      const data = {orderItems :orderItems,
+        shippingAddress :shippingAddress,
+        paymentMethod: paymentMethod,
+        itemsPrice :itemsPrice,
+        taxPrice :taxPrice,
+        shippingPrice :shippingPrice,
+        totalPrice : totalPrice,
+        _id
+      }
  
       dispatch({
         type: ActionType.CREATE_ORDER_SUCCESS,
@@ -365,22 +412,22 @@ export const getOrder = (id: any) => {
      // const { data } = await axios.get(`/api/v1/orders/${id}`, config);
 
 
-const data = {
-  isPaid: true,
-  user: {
-    name: "dk",
-    email: "njdnck",
-  },
-  paymentMethod: "admnd",
-  orderItems: {},
-  isDelivered: false,
-  shippingAddress: {
-    address: "cdadc",
-    city: "casdac",
-    postalCode: "cadca",
-    country: "cadca",
-  },
-};
+      const data = {
+        isPaid: true,
+        user: {
+          name: "dk",
+          email: "njdnck",
+        },
+        paymentMethod: "admnd",
+        orderItems: {},
+        isDelivered: false,
+        shippingAddress: {
+          address: "cdadc",
+          city: "casdac",
+          postalCode: "cadca",
+          country: "cadca",
+        },
+      };
       dispatch({
         type: ActionType.GET_ORDER_SUCCESS,
         payload: data,
@@ -720,7 +767,14 @@ export const updateUser = (id: string, isAdmin: boolean) => {
 
 export const logout = () => {
   return async (dispatch: Dispatch<Action>) => {
+
+    //remove info from the cache
+
+    localStorage.removeItem( "cartItems")
+    localStorage.removeItem("paymentMethod")
     localStorage.removeItem("userInfo");
+    localStorage.removeItem("shippingAddress")
+    
     dispatch({ type: ActionType.USER_LOGOUT, payload: {} });
   };
 };
