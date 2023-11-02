@@ -1,49 +1,73 @@
+/**
+ * TODO
+ * 
+ * verify the sent user exists in the background
+ * 
+ */
+
 import productSchema from '../../models/productSchema.js'
 
 const reviewController = {
 
-/**
- * 
-    To add review the format of the review should be: 
-    const review = {
-        productId: { type: Mongoose.Schema.Types.ObjectId },
-        userId: { type; Mongoose.Schema.Types.ObjectId },
-        review: { type: String },
-        rating: { type: Number } //  between 1 - 5 ( integer )
-
-
-
-    }
-
-
-*/    
+    /**
+     * 
+     * Needs review in the body of the request
+     * const review = {
+     *      productId: { type: Mongoose.Schema.Types.ObjectId },
+     *      userId: { type; Mongoose.Schema.Types.ObjectId },
+     *      review: { type: String },
+     *      rating: { type: Number } //  between 1 - 5 ( integer )
+     * }
+     * 
+     * Returns the new product as the response 
+    */
 
     addReview: async ( req, res) =>{
         try{
-            const review = req.body.review;
-            console.log( review )
-            const product = await productSchema.findById( review._id )
-            product.reviews.push( review )
-            await product.save()
+            const { productId, review } = req.body;
 
-            res.status( 200).json( { status: 'successful', task: 'addReview', newValue: product})
+            console.log( review )
+            const product = await productSchema.findByIdAndUpdate( productId, {
+                $push: { "review.reviews": review }
+            }, { new: true } ).lean()
+
+            res.status( 200).json( { status: 'successful', task: 'addReview', payload: product})
         }
         catch( error){
             console.log( 'An error occurred', error )
         }
    },
 
-    // getReview: async ( req, res ) =>{
-    //     try{
-    //         const productId = req.params.id;
-    //         console.log( productId )
-    //         const review = await reviewSchema.find( { productId })             
-    //         res.status( 200 ).json( { status: 'successful', task: 'getreview', payload: review })
-    //     }
-    //     catch( error ){
-    //         console.log( 'An error occurred', error);
-    //     }
-    // } 
+   updateReview: async ( req, res ) =>{
+    try{
+
+        /**
+         * TODO
+         * 
+         * Complete this 
+         */
+        res.status( 200 ).json( { satus: 'successful', task: 'updateReview', payload: product })
+
+    }catch( error ){
+        console.log( 'An error occurred while updating review ', error )
+        res.status(500).json( { status: 'unsuccessful', task: 'addReview', reason: 'Internal Server Error '});
+    }
+   },
+
+   removeReview: async ( req, res) =>{
+        try{
+            const { productId,  reviewId } = req.body;
+            console.log( productId, reviewId )
+            const product = await productSchema.findByIdAndUpdate( productId, {
+                $pull: { "review.reviews": {_id: reviewId} }
+            }, { new: true} ).lean()
+
+            res.status( 200).json( { status: 'successful', task: 'addReview', payload: product})
+        }
+        catch( error){
+            console.log( 'An error occurred', error )
+        }
+   }
 }
 
 

@@ -10,11 +10,12 @@ import productRouter from './product/index.js'
 import userRouter from './user/index.js'
 
 import reviewController from '../controller/review/reviewController.js'
+
 import orderRouter from './order/index.js'
 
 import cartRouter from './cart/index.js'
 
-import { verificationMiddleware } from '../middleware/auth/index.js'
+import reviewRouter from './review/index.js'
 //
 // admin routes
 //
@@ -39,6 +40,7 @@ router.use('/cart/', cartRouter );
 //wishList routes
 router.use('/wishList/', cartRouter );
 
+//review routes
 /**
  * 
     To add review the format of the review should be: 
@@ -50,7 +52,9 @@ router.use('/wishList/', cartRouter );
     }
 
 */    
-router.post( '/addReview', reviewController.addReview )
+router.use( '/review', reviewRouter)
+
+
 
 //testing....
 

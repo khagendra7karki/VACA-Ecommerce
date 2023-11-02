@@ -9,7 +9,6 @@ productRouter.get('/getProduct/:id', productController.getProductById )
 
 
 
-
 //
 // Yet to be tested 
 //
