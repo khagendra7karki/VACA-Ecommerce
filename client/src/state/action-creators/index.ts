@@ -12,8 +12,6 @@ import { Dispatch } from "redux";
 import { ActionType } from "../action-types";
 import { Action } from "../actions/index";
 import { store } from "../store";
-import { stringify } from "querystring";
-
 import createNewUser from "../../firebase/createNewUser";
 
 
@@ -173,7 +171,7 @@ export const getProduct = (id: string) => {
 // console.log(data,"kkkkkkkkkkkkk", id, data.payload)
       dispatch({
         type: ActionType.GET_PRODUCT_SUCCESS,
-        payload: data,
+        payload: data.payload,
       });
     } catch (error: any) {
       dispatch({
@@ -200,16 +198,34 @@ export const addReview = (id: string, rating: number, comment: string) => {
         },
       };
 
+
+      //make reivew object
+      
+      const reviewObject = {
+        userId: store.getState().userLogin.userInfo._id,
+        review: comment,
+        rating: rating
+      }
+
+      // receive the updated product info
       const { data } = await axios.post(
-        `/api/v1/products/${id}/reviews`,
-        { rating, comment },
+        `http://localhost:5000/review/addReview`,
+        {   productId: id , review: reviewObject },
         config
       );
-
+      
+      //update the product 
+      dispatch({
+        type: ActionType.GET_PRODUCTS_SUCCESS,
+        payload: data.payload
+      })
+      
       dispatch({
         type: ActionType.ADD_REVIEW_SUCCESS,
         payload: data,
       });
+
+
     } catch (error: any) {
       dispatch({
         type: ActionType.ADD_REVIEW_FAIL,

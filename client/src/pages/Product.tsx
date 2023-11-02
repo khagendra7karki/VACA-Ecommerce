@@ -91,7 +91,7 @@ const Product = () => {
      {Object.keys(product).length && (
     <Grid gutter={{ base: 5, xs: 'md', md: 'xl', xl: 50 }}>
     <Grid.Col span={4}>
-    <Image src={product.payload.image} alt="Tesla Model S" />
+    <Image src={product.image} alt="Tesla Model S" />
     </Grid.Col>
     <Grid.Col span={4}>
         <Stack
@@ -100,8 +100,8 @@ const Product = () => {
       justify="flex-start"
     >
        <Group justify="space-between" mt="md">
-        <div> <Text fw={500}>{product.payload.title}</Text>
-        {product.payload.availableQuantity === 0 ? (
+        <div> <Text fw={500}>{product.title}</Text>
+        {product.availableQuantity === 0 ? (
                         <Badge
                           color="red"
                           style={{ marginLeft: "10px" }}
@@ -121,7 +121,7 @@ const Product = () => {
                         </Badge>
                       )}
           <Text fz="xs" c="dimmed">
-          {product.payload.description}
+          {product.description}
           </Text>
         </div>
         <Badge variant="outline">25% off</Badge>
@@ -167,15 +167,15 @@ const Product = () => {
             <Text fz="xl" fw={700} style={{ lineHeight: 1 }}>
             $
                           {new Intl.NumberFormat().format(
-                            value * product.payload.price
+                            value * product.price
                           )}
             </Text>
             <Text fz="sm" c="dimmed" fw={500} style={{ lineHeight: 1 }} mt={3}>
-            {product.payload.oldPrice}
+            {product.oldPrice}
             </Text>
           </div>
                             
-          <Button radius="xl" style={{ flex: 1 }} onClick={() => handlerAddToCart( value, product.payload._id)}>
+          <Button radius="xl" style={{ flex: 1 }} onClick={() => handlerAddToCart( value, product._id)}>
           
 
             Add To Cart
@@ -189,7 +189,7 @@ const Product = () => {
      )}
  {Object.keys(product).length && (
           
-              <Review reviewM={product.payload.review.reviews} />
+              <Review reviewM={product.review.reviews} />
            
           )}
   </>
