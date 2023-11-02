@@ -48,7 +48,7 @@ const ReviewCard: React.FC<PropsWithChildren<IReviewCard>> = ({
           <Text color="gray" size="xs">
             {moment(date).format("DD-MMM-YYYY")}
           </Text>
-          {/* {renderRatingsList(rating)} */}
+          {renderRatingsList(rating)}
         </div>
         <div style={{ flex: 1, display: "flex", alignItems: "center" }}>
           <Text size="lg">"{comment}"</Text>
