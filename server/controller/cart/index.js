@@ -19,7 +19,7 @@ const cartController = {
             console.log( product )
             let user = await userSchema.findByIdAndUpdate(userId, {
                 $push: { "cart.items": { productId: product._id, ...product , quantity: qty } }
-            }).lean();
+            }, { new: true }).lean();
 
             if( !user ) return res.status(500).json({ status:'unsuccessful', task: 'addItem', reason: 'Internal Error'})
 
@@ -40,11 +40,10 @@ const cartController = {
         try{
             const userId = res.locals.user._id;
             const { id } = req.params   // product Id
-            console.log('The product Id is ', req.body.productId )
+
             let user = await userSchema.findByIdAndUpdate(userId, {
                 $pull: {"cart.items": {"productId": id }},
-            }        
-            ).lean();
+            },{ new: true }).lean();
 
             if( !user ) return res.status(500).json({ status:'unsuccessful', task: 'addItem', reason: 'Internal Error'})
 

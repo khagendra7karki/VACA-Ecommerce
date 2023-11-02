@@ -2,10 +2,14 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 const review = new Schema({
-    userID: {
+    userId: {
         type: mongoose.Schema.Types.ObjectId,
         required: true
     },
+    // image: {
+    //     type: string, 
+    //     required: true
+    // },
     review: {
          type: String,
          required: true
@@ -18,9 +22,9 @@ const review = new Schema({
     }
 },{ timestamps: true})
 
-// const Reviews = new Schema({
-//     reviews: [ review ]
-// }, { timestamps: true  })
+const Reviews = new Schema({
+    reviews: [ review ]
+}, { timestamps: true  })
 
 //make a shopping item schema
 const ProductSchema = new Schema({
@@ -54,11 +58,10 @@ const ProductSchema = new Schema({
         default: 0
     },
 
-    reviews:[
-        {
-            type: review
-        }
-    ],
+    review: {
+        type: Reviews,
+        default: { reviews: [] },
+    },
 
     rating: {
         type : Number,
