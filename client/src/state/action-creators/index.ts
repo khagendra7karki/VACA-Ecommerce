@@ -53,10 +53,10 @@ export const addToCart = (id: string, qty: number) => {
       };
 
     const { data } = await axios.post(`http://localhost:5000/cart/addItem/${id}/${qty}`,{},config );
-
+    console.log( ' car items \n',data.payload )
     dispatch({
       type: ActionType.CART_SET,
-      payload: data.payload.cart.items
+      payload: data.payload.items
     })
 
     localStorage.setItem(
@@ -82,7 +82,7 @@ export const removeFromCart = (id: string) => {
 
     dispatch({
       type: ActionType.CART_SET,
-      payload: data.payload.cart.items,
+      payload: data.payload.items,
     });
 
     localStorage.setItem(
