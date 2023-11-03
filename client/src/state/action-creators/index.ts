@@ -76,7 +76,7 @@ export const removeFromCart = (id: string) => {
           Authorization: `Bearer ${token}`,
         },
       };
-
+    
     const { data } = await axios.post(`http://localhost:5000/cart/removeItem/${id}`,{},config );
     console.log( data.payload );
 
@@ -91,6 +91,33 @@ export const removeFromCart = (id: string) => {
     );
   };
 };
+
+export const updateCart = ( id: string, qty : number ) =>{
+    return async (dispatch: Dispatch<Action>, getState: any) => {
+    const token = store.getState().userLogin.userInfo.token;
+
+    const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+    
+    const { data } = await axios.post(`http://localhost:5000/cart/updateItem/${id}/${qty}`,{},config );
+    console.log( data.payload );
+    console.log( data.payload )
+    dispatch({
+      type: ActionType.CART_SET,
+      payload: data.payload.items,
+    });
+
+    localStorage.setItem(
+      "cartItems",
+      JSON.stringify(store.getState().cart.cartItems)
+    );
+  };
+
+}
 
 export const saveShippingAddress = (data: any) => {
   return async (dispatch: Dispatch<Action>) => {

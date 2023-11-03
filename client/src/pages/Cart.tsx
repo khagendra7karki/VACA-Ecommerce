@@ -25,13 +25,14 @@ const Cart = () => {
   const [selectedItem, setSelectedItem] = useState("");
   const { cartItems } = useSelector((state: State) => state.cart);
 
-  const { addToCart, removeFromCart } = bindActionCreators(
+  const { removeFromCart, updateCart } = bindActionCreators(
     actionCreators,
     dispatch
   );
 
   const handlerUpdateCartItems = (value: number, id: string) => {
-    addToCart(id, value);
+    console.log( 'from cart item update handler \n',  id, value )
+    updateCart(id, value);
     // dispatch( addToCart( id, value ))
   };
 
@@ -42,6 +43,7 @@ const Cart = () => {
 
   const handlerDeleteCartItem = (id: string) => {
     setOpened(false);
+    console.log( id )
     removeFromCart(id);
     // dispatch(removeFromCart(id));
   };
@@ -78,7 +80,7 @@ const Cart = () => {
         <div className="grid-container">
           {cartItems && cartItems.length ? (
             cartItems.map((item: any, index: number) => {
-              console.log( item )
+
               return (
                 <Card className="cart-card" key={index}>
                   <div className="grid-item">
@@ -103,8 +105,10 @@ const Cart = () => {
                       radius="lg"
                       value={item.quantity}
                       ref={numRef}
-                      onChange={(e) =>
-                        handlerUpdateCartItems(e as number, item.product)
+                      onChange={(e) =>{
+                        // console.log( 'From update Cart Items \n', e )
+                        handlerUpdateCartItems(e as number, item.productId)
+                      }
                       }
                       min={1}
                       //max={item.countInStock}
@@ -118,7 +122,7 @@ const Cart = () => {
                       radius="lg"
                       variant="filled"
                       color="red"
-                      onClick={() => selectItem(item.product)}
+                      onClick={() => selectItem(item._id)}
                       fullWidth
                     >
                       <BiTrashAlt />

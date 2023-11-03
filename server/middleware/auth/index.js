@@ -48,7 +48,7 @@ function verifyToken( token , SECRET) {
 export function verificationMiddleware( req, res, next ){
 
     const idToken = req.header('Authorization').split('Bearer ')[1];
-    console.log( idToken )
+    // console.log( idToken )
 
     const result =  verifyToken( idToken, SECRET )
 
