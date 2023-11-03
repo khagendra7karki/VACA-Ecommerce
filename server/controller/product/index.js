@@ -51,7 +51,7 @@ const productController = {
     },
     storeProduct: async( req, res) =>{
         
-        console.log("New Product received")
+        console.log("New Product received hhhhhh")
         
         // try {
         //     const product = req.body.product
@@ -64,7 +64,27 @@ const productController = {
         //     console.log ( error )
         //     return res.status( 500 ).json( { task: 'createProduct',status: 'unsuccessful',  reason: error })
         // }
-    }
+    },
+     getProductsForSearch : async(req, res) => {
+        const keyword = req.query.keyword
+          ? {
+              title: {
+                $regex: req.query.keyword,
+                $options: "i",
+              },
+            }
+          : {};
+        const products = await productSchema.find({ ...keyword });
+        const formattedProducts = [];
+      
+        products.map((product) => {
+          formattedProducts.push({
+            value: product._id,
+            label: product.title,
+          });
+        });
+        res.json(formattedProducts);
+      } 
 }
 
 export default productController

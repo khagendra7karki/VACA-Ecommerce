@@ -133,11 +133,9 @@ export const quickSearchProducts = (keyword: number) => {
       dispatch({
         type: ActionType.QUICK_SEARCH_REQUEST,
       });
-
       const { data } = await axios.get(
-        `/api/v1/products/search?keyword=${keyword}`
+        `http://localhost:5000/getProducts/search?keyword=${keyword}`
       );
-
       dispatch({
         type: ActionType.QUICK_SEARCH_SUCCESS,
         payload: data,
@@ -159,7 +157,6 @@ export const getProduct = (id: string) => {
       });
    
       const { data } = await axios.get(`http://localhost:5000/getProduct/${id}`);
-// console.log(data,"kkkkkkkkkkkkk", id, data.payload)
       dispatch({
         type: ActionType.GET_PRODUCT_SUCCESS,
         payload: data,
