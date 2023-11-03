@@ -13,6 +13,7 @@ import { actionCreators, State } from "../state";
 import Loading from "./Loading";
 import { useNavigate } from "react-router";
 import { ProductsCard } from './ProductsCard';
+import { v4 as uuidv4 } from 'uuid';
 
 interface Product {
   _id: string,  
@@ -80,7 +81,7 @@ export default function ArticlesCardsGrid() {
   const cards =
   products ? (
   products.map((product : Product ) => (
-    <ProductsCard product = { product } key = { Number( product._id )}/>
+    <ProductsCard product = { product } key = { uuidv4()}/>
      )))
     : (
       <>hello world</>

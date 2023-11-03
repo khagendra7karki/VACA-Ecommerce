@@ -1,6 +1,8 @@
 import React, { PropsWithChildren } from "react";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import moment from "moment";
+import { v4 as uuidv4 } from 'uuid';
+
 import {
   Text,
   Card,
@@ -19,13 +21,13 @@ const renderRatingsList = (rating: number) => {
   const stars = [];
 
   for (let i = 1; i <= rating; i++) {
-    stars.push(<AiFillStar color="orange" key={i} />);
+    stars.push(<AiFillStar color="orange" key={uuidv4()} />);
   }
 
   let remainingStars = 5 - stars.length;
 
   for (let i = 1; i <= remainingStars; i++) {
-    stars.push(<AiOutlineStar key={i} />);
+    stars.push(<AiOutlineStar key={uuidv4()} />);
   }
 
   return <div>{stars}</div>;

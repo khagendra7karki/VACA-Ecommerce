@@ -1,6 +1,7 @@
 import { Carousel } from "@mantine/carousel";
 import { Image } from "@mantine/core";
 import classes from './Carousel.module.css';
+import { v4 as uuidv4 } from 'uuid';
 
 const images: any = [
   "https://cdn.create.vista.com/api/media/medium/532262682/stock-photo-denim-jacket-pants-shirt-hat-shoes-autumn-leaves-color-background?token=",
@@ -10,7 +11,7 @@ const images: any = [
 ];
 const Slider = () => {
   const slides = images.map((url: any) => (
-    <Carousel.Slide key={url}>
+    <Carousel.Slide key={uuidv4()}>
       <Image src={url} />
     </Carousel.Slide>
   ));

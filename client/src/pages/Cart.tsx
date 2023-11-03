@@ -15,6 +15,8 @@ import {
 import { RiShoppingBagLine } from "react-icons/ri";
 import { BiTrashAlt } from "react-icons/bi";
 import Layout from "../Layout/Layout";
+import { v4 as uuidv4 } from 'uuid';
+
 
 const Cart = () => {
   const numRef = useRef(null);
@@ -80,7 +82,7 @@ const Cart = () => {
             cartItems.map((item: any, index: number) => {
               console.log( item )
               return (
-                <Card className="cart-card" key={index}>
+                <Card className="cart-card" key={uuidv4()}>
                   <div className="grid-item">
                     <Image
                       fit="contain"
