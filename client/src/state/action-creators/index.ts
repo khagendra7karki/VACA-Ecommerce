@@ -242,16 +242,11 @@ export const addReview = (id: string, rating: number, comment: string) => {
       );
       
       //update the product 
-      dispatch({
-        type: ActionType.GET_PRODUCTS_SUCCESS,
-        payload: data.payload
-      })
+      // dispatch({
+      //   type: ActionType.GET_PRODUCT_SUCCESS,
+      //   payload: data.payload
+      // })
       
-      dispatch({
-        type: ActionType.ADD_REVIEW_SUCCESS,
-        payload: data,
-      });
-
 
     } catch (error: any) {
       dispatch({

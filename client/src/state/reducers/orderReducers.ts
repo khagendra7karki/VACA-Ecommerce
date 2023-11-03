@@ -9,7 +9,6 @@ const createOrderReducer = (
   },
   action: Action
 ) => {
-  console.log(action.payload, "create order")
   switch (action.type) {
     case ActionType.CREATE_ORDER_REQUEST:
       return { ...state, loading: true, error: null };
