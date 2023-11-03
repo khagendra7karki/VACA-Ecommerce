@@ -38,18 +38,12 @@ function verifyToken( token , SECRET) {
 }
 
 
-// export function loginMiddleWare( req, res, next ){
-    
-//     const result = Promise.resolve(createCustomToken( req.body.uid )).
-//     catch( (error ) =>{
-//         console.log('An error at login Middleware has occurred', error )
-//         return
-//     })
-//     if ( !result ) return res.status( 500 ).json( { status: 'unsuccessful', task: 'login', reason: 'Internal errror'})
 
-//     next()
-// }
-
+/**
+ * 
+ * verification middleware
+ * 
+ */
 
 export function verificationMiddleware( req, res, next ){
 

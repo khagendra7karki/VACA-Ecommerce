@@ -3,6 +3,7 @@ import React, { FC, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { bindActionCreators } from "redux";
 import { State, actionCreators } from "../../state";
+import { store } from '../../state/store'
 import {
   Alert,
   Box,
@@ -49,7 +50,7 @@ export const Review: FC<MyProps> = ({ reviewM }): JSX.Element => {
   const handlers = useRef<NumberInputHandlers>(null);
 
   const { userInfo } = useSelector((state: State) => state.userLogin);
-
+  const productId = useSelector( ( state: State ) => state.product.product._id)
   // const {
   //   review,
   //   loading: reviewLoading,
@@ -100,14 +101,16 @@ export const Review: FC<MyProps> = ({ reviewM }): JSX.Element => {
   //     // eslint-disable-next-line
   //   }, [review]);
 
-  // const handlerAddReview = (values: any) => {
-  //   const { rating, comment } = values;
-  //  // addReview(params as string, parseInt(rating), comment);
-  //   setOpened(false);
-  //   dispatch({
-  //     type: ActionType.ADD_REVIEW_RESET,
-  //   });
-  // };
+
+  const handleSubmit = (values: any) => {
+    const { rating, comment } = values;
+   // addReview(params as string, parseInt(rating), comment);
+    setOpened(false);
+    addReview( productId, rating, comment )
+    dispatch({
+      type: ActionType.ADD_REVIEW_RESET,
+    });
+  };
 
 
   return (
@@ -182,7 +185,7 @@ export const Review: FC<MyProps> = ({ reviewM }): JSX.Element => {
             </Alert>
           ) : (
             <Box maw={340} mx="auto">
-            <form onSubmit={form.onSubmit((values) => console.log(values))}>
+            <form onSubmit={form.onSubmit((values) => handleSubmit(values))}>
               <TextInput
                 withAsterisk
                 label="Number"
@@ -198,7 +201,7 @@ export const Review: FC<MyProps> = ({ reviewM }): JSX.Element => {
     
       
               <Group justify="flex-end" mt="md">
-                <Button radius="lg" type="submit"  onClick={() => setOpened(true)}>Submit</Button>
+                <Button radius="lg" type="submit">Submit</Button>
               </Group>
             </form>
           </Box>

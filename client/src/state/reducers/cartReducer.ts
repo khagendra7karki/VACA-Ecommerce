@@ -22,6 +22,12 @@ const cartReducer = (
   action: Action
 ) => {
   switch (action.type) {
+    case ActionType.CART_SET:
+      const cartItems = action.payload;
+      return { 
+        ...state,
+        cartItems: [ ...cartItems ]
+      }
     case ActionType.CART_ADD_ITEM:
       const item = action.payload;
 
