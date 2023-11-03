@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { useDispatch } from 'react-redux';
 //handles general link click 
+import { v4 as uuidv4 } from 'uuid';
 
 export function HeaderSearch() {
   
@@ -50,7 +51,7 @@ export function HeaderSearch() {
   const items = links.map((link) => (
     <>
     <button 
-      key = { link.label }
+      key = { uuidv4() }
       onClick = { (e) => link.onClick( link.link) }
       className = { classes.link }
       >

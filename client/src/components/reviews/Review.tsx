@@ -19,6 +19,8 @@ import { ActionType } from "../../state/action-types";
 import { AiFillStar } from "react-icons/ai";
 import { IoIosCloseCircle, IoIosUnlock } from "react-icons/io";
 import ReviewCard from "./ReviewCard";
+import { v4 as uuidv4 } from 'uuid';
+
 
 interface Reviews {
   createdAt: Date;
@@ -137,7 +139,7 @@ export const Review: FC<MyProps> = ({ reviewM }): JSX.Element => {
                       // name={review.name}
                       name="sdsdcs"
                       rating={review.rating}
-                      key={review._id}
+                      key={uuidv4()}
                     />
                   );
                 })

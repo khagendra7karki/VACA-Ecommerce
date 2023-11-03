@@ -1,7 +1,7 @@
 import { Text, Container, ActionIcon, Group, rem, Space, SimpleGrid } from '@mantine/core';
 import { IconBrandTwitter, IconBrandYoutube, IconBrandInstagram } from '@tabler/icons-react';
-import { MantineLogo } from '@mantine/ds';
 import classes from './Footer.module.css';
+import { v4 as uuidv4 } from 'uuid';
 
 const data = [
   {
@@ -37,7 +37,7 @@ export function Footer() {
   const groups = data.map((group) => {
     const links = group.links.map((link, index) => (
       <><Text<'a'>
-        key={index}
+        key={uuidv4()}
         className={classes.link}
         component="a"
         href={link.link}
@@ -49,7 +49,7 @@ export function Footer() {
     ));
 
     return (
-      <div className={classes.wrapper} key={group.title}>
+      <div className={classes.wrapper} key={uuidv4()}>
         <SimpleGrid cols={3} spacing="xl">
         <Text className={classes.title}>{group.title}</Text></SimpleGrid>
         {links}

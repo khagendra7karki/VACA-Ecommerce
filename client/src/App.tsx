@@ -27,6 +27,7 @@ import Shipping from './pages/Shipping';
 import Payment from './pages/Payment';
 import PlaceOrder from './pages/PlaceOrder';
 import Order from './pages/Order';
+import { ContactUs } from './pages/Contact/ContactUs';
 
 const theme = createTheme({
   /** Put your mantine theme override here */
@@ -56,6 +57,7 @@ function App() {
               {/* <Route path="/profile" element={<Shop />} /> */}
               <Route index element={<Home />} />
               <Route path="/shop" element={<Shop />} />
+              <Route path="/contact" element={<ContactUs />} />
               <Route path="/cart" element={<Cart />} />
               <Route path="/product/:id" element={<Product />} />
                <Route path="/shipping" element={<Shipping />} />
