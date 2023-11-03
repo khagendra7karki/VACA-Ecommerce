@@ -1,6 +1,6 @@
 import { Autocomplete, Group, Burger, rem, Divider } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { IconSearch } from '@tabler/icons-react';
+
 import { MantineLogo } from '@mantine/ds';
 import classes from './HeaderSearch.module.css';
 import  Vaca from '../assets/img/vaca.png'
@@ -77,17 +77,11 @@ export function HeaderSearch() {
        
         </Group>
 
-        <Group>
-          <Group ml={50} gap={50} className={classes.links} visibleFrom="sm">
+        <Group mx = '500px'>
+          <Group gap={50} className={classes.links} visibleFrom="sm">
             {items}
           </Group>
-          <Autocomplete
-            className={classes.search}
-            placeholder="Search"
-            leftSection={<IconSearch style={{ width: rem(16), height: rem(16) }} stroke={1.5} />}
-            data={['React', 'Angular', 'Vue', 'Next.js', 'Riot.js', 'Svelte', 'Blitz.js']}
-            visibleFrom="xs"
-          />
+         
         </Group>
       </div>
     </header> <Divider my="sm" /></>
