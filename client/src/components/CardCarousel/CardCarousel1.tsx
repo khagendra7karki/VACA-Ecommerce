@@ -1,10 +1,12 @@
 import { Carousel } from '@mantine/carousel';
-import { ProductsCard } from '../../components/ProductsCard';
+import { ProductsCard } from '../ProductsCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { State, actionCreators } from '../../state';
 import { useEffect } from 'react';
 import { Container, MantineProvider, SimpleGrid, createTheme, rem } from '@mantine/core';
+import { v4 as uuidv4 } from 'uuid';
+
 
 interface Product {
     _id: string,  
@@ -15,7 +17,7 @@ interface Product {
   };
   
   
-function Cardslide2() {
+function Cardslide1() {
     const dispatch = useDispatch();
     const { getProducts } = bindActionCreators(actionCreators, dispatch);
     const { products, error, loading } = useSelector(
@@ -28,18 +30,19 @@ function Cardslide2() {
   }, [dispatch]);
 
 
-  const cards =
-  products ? (
-  products.map((product : Product ) => (
-    <Carousel.Slide >
-      <Container style={{height:'600px', display:'flex', }}>
-    <ProductsCard product = { product } key = { Number( product._id )}/>
-    </Container>
-     </Carousel.Slide>
-     )))
-    : (
-      <>hello world</>
-    )
+  
+    const cards =
+    products ? (
+    products.map((product : Product ) => (
+      <Carousel.Slide >
+        <Container style={{height:'600px', display:'flex', }}>
+      <ProductsCard product = { product } key = { uuidv4()}/>
+      </Container>
+       </Carousel.Slide>
+       )))
+      : (
+        <>hello world</>
+      )
  
   return (
    
@@ -64,4 +67,4 @@ function Cardslide2() {
   );
 }
 
-export default  Cardslide2
+export default  Cardslide1

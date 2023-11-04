@@ -1,5 +1,6 @@
 import { Stepper } from "@mantine/core";
 import React, { PropsWithChildren } from "react";
+import { v4 as uuidv4 } from 'uuid';
 
 interface IStepProps {
   active: number;
@@ -35,7 +36,7 @@ const Steps: React.FC<PropsWithChildren<IStepProps>> = ({
       {steps.map((step, i) => {
         return (
           <Stepper.Step
-            key={i}
+            key={uuidv4()}
             label={step.label}
             description={step.description}
           ></Stepper.Step>
