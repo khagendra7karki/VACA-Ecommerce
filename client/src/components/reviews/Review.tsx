@@ -90,16 +90,16 @@ export const Review: FC<MyProps> = ({ reviewM }): JSX.Element => {
   //   // eslint-disable-next-line
   // }, [reviewError]);
 
-  //   useEffect(() => {
-  //     if (review && Object.keys(review).includes("message")) {
-  //       notifications.showNotification({
-  //         title: "Success!",
-  //         message: review.message,
-  //         color: "green",
-  //       });
-  //     }
-  //     // eslint-disable-next-line
-  //   }, [review]);
+    // useEffect(() => {
+    //   if (review && Object.keys(review).includes("message")) {
+    //     notifications.showNotification({
+    //       title: "Success!",
+    //       message: review.message,
+    //       color: "green",
+    //     });
+    //   }
+    //   // eslint-disable-next-line
+    // }, [review]);
 
 
   const handleSubmit = (values: any) => {

@@ -238,11 +238,6 @@ export const addReview = (id: string, rating: number, comment: string) => {
         config
       );
       
-      //update the product 
-      // dispatch({
-      //   type: ActionType.GET_PRODUCT_SUCCESS,
-      //   payload: data.payload
-      // })
       
 
     } catch (error: any) {
@@ -405,21 +400,21 @@ export const createOrder = (
         shippingPrice,
         totalPrice,
       };
-      let _id : any = "65386caaf5f81f2689e95abb"
-      //     const { data } = await axios.post("/api/v1/orders", formData, config);
-      const data = {orderItems :orderItems,
-        shippingAddress :shippingAddress,
-        paymentMethod: paymentMethod,
-        itemsPrice :itemsPrice,
-        taxPrice :taxPrice,
-        shippingPrice :shippingPrice,
-        totalPrice : totalPrice,
-        _id
-      }
+      // let _id : any = "65386caaf5f81f2689e95abb"
+      const { data } = await axios.post("http://localhost:5000/order/", formData, config);
+      // const data = {orderItems :orderItems,
+      //   shippingAddress :shippingAddress,
+      //   paymentMethod: paymentMethod,
+      //   itemsPrice :itemsPrice,
+      //   taxPrice :taxPrice,
+      //   shippingPrice :shippingPrice,
+      //   totalPrice : totalPrice,
+      //   _id
+      // }
  
       dispatch({
         type: ActionType.CREATE_ORDER_SUCCESS,
-        payload: data,
+        payload: data.payload,
       });
     } catch (error: any) {
       dispatch({

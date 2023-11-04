@@ -1,5 +1,5 @@
 import asyncHandler from "express-async-handler";
-import Order from "../../models/OrderModel.js";
+import Order from "../../models/orderSchema.js";
 
 // @desc    Create new order
 // @route   POST /api/orders
@@ -15,6 +15,8 @@ const addOrderItems = asyncHandler(async (req, res) => {
     totalPrice,
   } = req.body;
 
+  const userId = res.locals.user._id
+
   if (orderItems && orderItems.length === 0) {
     res.status(400);
     throw new Error("No order items");
@@ -22,7 +24,7 @@ const addOrderItems = asyncHandler(async (req, res) => {
   } else {
     const order = new Order({
       orderItems,
-      user: req.user._id,
+      user: userId,
       shippingAddress,
       paymentMethod,
       itemsPrice,
@@ -33,7 +35,7 @@ const addOrderItems = asyncHandler(async (req, res) => {
 
     const createdOrder = await order.save();
 
-    res.status(201).json(createdOrder);
+    res.status(201).json({ status: 'successful', task: 'addOrderItems', payload: createdOrder});
   }
 });
 
@@ -102,7 +104,8 @@ const updateOrderToDelivered = asyncHandler(async (req, res) => {
 // @route   GET /api/orders/myorders
 // @access  Private
 const getMyOrders = asyncHandler(async (req, res) => {
-  const orders = await Order.find({ user: req.user._id });
+  const { userId } = res.locals.user._id;
+  const orders = await Order.find({ user: userId });
   res.json(orders);
 });
 

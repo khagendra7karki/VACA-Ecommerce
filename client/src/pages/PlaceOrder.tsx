@@ -28,7 +28,6 @@ const PlaceOrder = () => {
     return parseInt((Math.round(num * 100) / 100).toFixed(2));
   };
 
-  console.log( cartItems[0].price )
   cartItems.itemsPrice = addDecimals(
     cartItems.reduce((acc: any, item: any) => {
       console.log( item.price )
@@ -59,14 +58,14 @@ const PlaceOrder = () => {
       )
     
   };
-
   useEffect(() => {
+    console.log( orderCreate )
     if (Object.keys(orderCreate).length) {
       console.log(orderCreate,"lllllllllllllllllllllllllllllllllll")
       navigate(`/order/${orderCreate._id}`);
     }
     // eslint-disable-next-line
-  }, [createOrder]);
+  }, [orderCreate ]);
 
   return (
     <Layout>
