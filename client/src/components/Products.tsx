@@ -3,7 +3,7 @@ import classes from './Products.module.css';
 import {  MantineProvider, createTheme, rem } from '@mantine/core';
 
 import { useDispatch, useSelector } from "react-redux";
-import { FC, useEffect, useState } from "react";
+import { useEffect  } from "react";
 
 import { useNotifications } from "@mantine/notifications";
 
