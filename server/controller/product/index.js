@@ -5,9 +5,27 @@ const productController = {
     getProduct : async (req, res) => {
 
         try{
-            console.log( 'Request for product received')
-            const products = await productSchema.find({}).limit( 20 )
-            res.status(200).json({ task: 'getProduct', status:'successful', payload: products})
+            const pageSize = 8;
+            const page = Number(req.query.pageNumber) || 1;
+          
+            const keyword = req.query.keyword
+              ? {
+                  name: {
+                    $regex: req.query.keyword,
+                    $options: "i",
+                  },
+                }
+              : {};
+          
+            const count = await productSchema.countDocuments({ ...keyword });
+            const products = await productSchema.find({ ...keyword })
+              .limit(pageSize)
+              .skip(pageSize * (page - 1));
+          
+            res.json({ products, page, pages: Math.ceil(count / pageSize) });
+            
+            // const products = await productSchema.find({}).limit( 20 )
+            // res.status(200).json({ task: 'getProduct', status:'successful', payload: products})
         }
         catch( error ){
             console.log('An error from productController.js occurred', error)

@@ -141,18 +141,18 @@ export const savePaymentMethod = (data: any) => {
   };
 };
 
-export const getProducts = () => {
+export const getProducts = (page: number) => {
   return async (dispatch: Dispatch<Action>) => {
     try {
       dispatch({
         type: ActionType.GET_PRODUCTS_REQUEST,
       });
-
-      const { data } = await axios.get(`http://localhost:5000/getProducts`);
-// console.log('kkkkkk',data)
+      console.log('kkkkkk',page )
+      const { data } = await axios.get(`http://localhost:5000/getProducts?pageNumber=${page}`);
+ console.log('kkkkkk',page , data)
       dispatch({
         type: ActionType.GET_PRODUCTS_SUCCESS,
-        payload: data.payload,
+        payload: data,
       });
     } catch (error: any) {
       dispatch({

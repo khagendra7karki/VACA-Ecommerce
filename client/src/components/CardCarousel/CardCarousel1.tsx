@@ -25,15 +25,15 @@ function Cardslide1() {
       
       );
   useEffect(() => {
-    getProducts();
+    getProducts(1);
     
   }, [dispatch]);
 
 
   
     const cards =
-    products ? (
-    products.map((product : Product ) => (
+    products.products ? (
+    products.products.map((product : Product ) => (
       <Carousel.Slide >
         <Container style={{height:'600px', display:'flex', }}>
       <ProductsCard product = { product } key = { uuidv4()}/>
