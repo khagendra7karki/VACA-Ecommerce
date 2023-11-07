@@ -28,7 +28,8 @@ const reviewController = {
 
             console.log( review )
             const product = await productSchema.findByIdAndUpdate( productId, {
-                $push: { "review.reviews": review }
+                $push: { "review.reviews": review },
+                $inc: { rating : review.rating }
             }, { new: true } ).lean()
 
             res.status( 200).json( { status: 'successful', task: 'addReview', payload: product})

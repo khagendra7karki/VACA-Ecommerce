@@ -71,38 +71,38 @@ const productController = {
         
         console.log("New Product received hhhhhh")
         
-        // try {
-        //     const product = req.body.product
-        //     console.log( "New product is to be saved to the database")
-        //     console.log( req.body )
-        //     const producttModel = new  productSchema( product)
-        //     await producttModel.save()
-        //     res.status(200).json({ task: 'createProduct', status: 'successful'})
-        // }catch( error ){
-        //     console.log ( error )
-        //     return res.status( 500 ).json( { task: 'createProduct',status: 'unsuccessful',  reason: error })
-        // }
+        try {
+            const {product} = req.body
+            console.log( "New product is to be saved to the database")
+            console.log( req.body )
+            const producttModel = new  productSchema( product)
+            await producttModel.save()
+            res.status(200).json({ task: 'createProduct', status: 'successful'})
+        }catch( error ){
+            console.log ( error )
+            return res.status( 500 ).json( { task: 'createProduct',status: 'unsuccessful',  reason: error })
+        }
     },
-     getProductsForSearch : async(req, res) => {
-        const keyword = req.query.keyword
-          ? {
-              title: {
-                $regex: req.query.keyword,
-                $options: "i",
-              },
-            }
-          : {};
-        const products = await productSchema.find({ ...keyword });
-        const formattedProducts = [];
-      
-        products.map((product) => {
-          formattedProducts.push({
-            value: product._id,
-            label: product.title,
-          });
+    getProductsForSearch : async(req, res) => {
+    const keyword = req.query.keyword
+        ? {
+            title: {
+            $regex: req.query.keyword,
+            $options: "i",
+            },
+        }
+        : {};
+    const products = await productSchema.find({ ...keyword });
+    const formattedProducts = [];
+    
+    products.map((product) => {
+        formattedProducts.push({
+        value: product._id,
+        label: product.title,
         });
-        res.json(formattedProducts);
-      } 
+    });
+    res.json(formattedProducts);
+    } 
 }
 
 export default productController
