@@ -61,7 +61,7 @@ const productController = {
             console.log( 'An error occurred', error)
         }
     },
-    getProductById: async( req, res) =>{
+    getProductById: async( req, res) =>{    
         const productId  = req.params.id
         // res.status(500).json({message: 'An error occurred'})
         const product = await productSchema.findById( productId )
@@ -82,6 +82,16 @@ const productController = {
             console.log ( error )
             return res.status( 500 ).json( { task: 'createProduct',status: 'unsuccessful',  reason: error })
         }
+    },
+    getTopProducts:async (req, res ) => {
+        try{
+            const result = await productSchema.find({}).sort({ rating: -1}).limit( 20 ).lean()
+            res.status(200).json({ task: 'createProduct', status: 'successful', payload: result })
+        }catch( error ){
+            console.log ( error )
+            return res.status( 500 ).json( { task: 'createProduct',status: 'unsuccessful',  reason: error })
+        }
+
     },
     getProductsForSearch : async(req, res) => {
     const keyword = req.query.keyword

@@ -7,7 +7,7 @@ const productRouter = express.Router()
 productRouter.get('/getProducts', productController.getProduct)
 productRouter.get('/getProduct/:id', productController.getProductById )
 productRouter.get('/getProducts/search', productController.getProductsForSearch )
-
+productRouter.get('/getTopProducts', productController.getTopProducts )
 
 
 //

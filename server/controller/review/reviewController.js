@@ -4,8 +4,9 @@
  * verify the sent user exists in the background
  * 
  */
-
+import mongoose from 'mongoose';
 import productSchema from '../../models/productSchema.js'
+import { reviewSchema } from '../../models/productSchema.js';
 
 const reviewController = {
 
@@ -26,13 +27,56 @@ const reviewController = {
         try{
             const { productId, review } = req.body;
 
+            console.log(productId )
             console.log( review )
+            // review.rating = parseInt( review.rating )
             const product = await productSchema.findByIdAndUpdate( productId, {
-                $push: { "review.reviews": review },
-                $inc: { rating : review.rating }
-            }, { new: true } ).lean()
+                $push: { "review.reviews": review }
+            }, { new: true }).lean()
 
-            res.status( 200).json( { status: 'successful', task: 'addReview', payload: product})
+            const averageRating = product.review.reviews.reduce( ( acc, current) =>{
+                return acc + current.rating 
+            },0) / product.review.reviews.length
+            
+            const finalProduct = await productSchema.findByIdAndUpdate( productId, { 
+                $set: { rating: averageRating.toFixed(1)}
+            }, { new: true }).lean()
+            // .aggregate( [
+            //     {$match: { _id: new mongoose.Types.ObjectId(productId) }}, 
+            //     { $set: { "review.reviews": { $concatArrays: ["$review.reviews", [{ ...review, createdAt: new Date() , updatedAt: new Date() }] ]}}},
+            //     { $set: { 
+            //         "rating": { 
+            //             $divide: [
+            //                 {
+            //                     $reduce: {
+            //                         input: "$review.reviews",
+            //                         initialValue: 0,
+            //                         in: {$add: [ "$$value", "$$this.rating"] }
+            //                     }
+            //                 }, 
+            //                 {
+            //                     "$cond": [
+            //                                 { "$ne": [ { "$size": "$review.reviews" }, 0 ] },
+            //                                 { "$size": "$review.reviews" }, 
+            //                                 1
+            //                         ]
+            //                 }
+            //             ]
+            //         }
+            //     }
+            // }
+            
+            // ]
+            // ).exec()
+
+                // $push: { "review.reviews": review },
+                // $set: { "rating": { $avg : "$review.reviews.rating" }},
+                // "$set": { "rating": { "$avg": "$review.reviews.rating"}},
+                
+                // $inc: { rating : review.rating }
+
+
+            res.status( 200).json( { status: 'successful', task: 'addReview', payload: finalProduct})
         }
         catch( error){
             console.log( 'An error occurred', error )
