@@ -1,5 +1,6 @@
+import mongoose from "mongoose";
 import productSchema from "../../models/productSchema.js"
-
+import userModel from "../../models/userSchema.js";
 
 const productController = {
     getProduct : async (req, res) => {
@@ -54,18 +55,51 @@ const productController = {
     deleteProductById: async( req, res) =>{
         const productId = req.params.id
         try{
-            await productSchema.deleteOne( { _id: productId })
+            await productSchema.deleteOne( { _id: new mongoose.Types.ObjectId(productId) })
             res.status( 200).json( { task: 'deleteItem', status: 'successful'})
         }
         catch( error ){
             console.log( 'An error occurred', error)
         }
     },
-    getProductById: async( req, res) =>{    
-        const productId  = req.params.id
-        // res.status(500).json({message: 'An error occurred'})
-        const product = await productSchema.findById( productId )
-        res.status(200).json( {task : 'getProductId',status:'unsuccessful', payload: product })
+
+    /**
+     *
+     * sends the user info
+     * along with the review
+     *  
+     */
+    getProductByIdWithReview: async( req, res) =>{    
+        try{
+
+            const productId  = req.params.id
+            // res.status(500).json({message: 'An error occurred'})
+            const product = await productSchema.findById( productId ).lean()
+            const userIds = product.review.reviews.map( ( review ) => review.userId )
+
+            
+
+            // get the users' info
+            const associatedUsers = await userModel.find( { _id: {$in : userIds} }).lean()
+
+            //
+            // group user and product review
+            // that consists the same value
+            //
+
+            for ( const review of product.review.reviews ){
+                // console.log( associatedUsers  )
+                const user = associatedUsers.find( user => user._id.equals( review.userId))
+                review.fullName = user?.fullName
+            }
+    
+            res.status(200).json( {task : 'getProductId',status:'unsuccessful', payload: product })
+
+        }catch( error ){
+            console.log( 'An error occcurred at getproductByIdWithReview',error )
+            return res.status( 500 ).json( { task: 'getProductByIdWithReview',status: 'unsuccessful',  reason: error })
+
+        }
     },
     storeProduct: async( req, res) =>{
         

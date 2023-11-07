@@ -26,6 +26,7 @@ import { v4 as uuidv4 } from 'uuid';
 interface Reviews {
   createdAt: Date;
   rating: Number;
+  fullName: String;
   review: String;
   userId: String;
   _id: String;
@@ -50,7 +51,7 @@ export const Review: FC<MyProps> = ({ reviewM }): JSX.Element => {
   const handlers = useRef<NumberInputHandlers>(null);
 
   const { userInfo } = useSelector((state: State) => state.userLogin);
-  const productId = useSelector( ( state: State ) => state.product.product._id)
+  const product = useSelector( ( state: State ) => state.product.product)
   // const {
   //   review,
   //   loading: reviewLoading,
@@ -106,7 +107,7 @@ export const Review: FC<MyProps> = ({ reviewM }): JSX.Element => {
     const { rating, comment } = values;
    // addReview(params as string, parseInt(rating), comment);
     setOpened(false);
-    addReview( productId, rating, comment )
+    addReview( product.productId, rating, comment )
     dispatch({
       type: ActionType.ADD_REVIEW_RESET,
     });
@@ -140,7 +141,7 @@ export const Review: FC<MyProps> = ({ reviewM }): JSX.Element => {
                       date={review.createdAt}
                       id={review._id}
                       // name={review.name}
-                      name="sdsdcs"
+                      name={ review.fullName }
                       rating={review.rating}
                       key={uuidv4()}
                     />
@@ -166,8 +167,7 @@ export const Review: FC<MyProps> = ({ reviewM }): JSX.Element => {
              
              
                 <Text>
-                    {/* {product.rating.toFixed(1)} */}
-                      5
+                    {product.rating}
                   </Text>
                 <AiFillStar color="orange" size="18" />
              

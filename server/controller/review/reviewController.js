@@ -41,6 +41,10 @@ const reviewController = {
             const finalProduct = await productSchema.findByIdAndUpdate( productId, { 
                 $set: { rating: averageRating.toFixed(1)}
             }, { new: true }).lean()
+
+
+            //aggregate version of the code
+            
             // .aggregate( [
             //     {$match: { _id: new mongoose.Types.ObjectId(productId) }}, 
             //     { $set: { "review.reviews": { $concatArrays: ["$review.reviews", [{ ...review, createdAt: new Date() , updatedAt: new Date() }] ]}}},
@@ -68,13 +72,6 @@ const reviewController = {
             
             // ]
             // ).exec()
-
-                // $push: { "review.reviews": review },
-                // $set: { "rating": { $avg : "$review.reviews.rating" }},
-                // "$set": { "rating": { "$avg": "$review.reviews.rating"}},
-                
-                // $inc: { rating : review.rating }
-
 
             res.status( 200).json( { status: 'successful', task: 'addReview', payload: finalProduct})
         }
