@@ -3,7 +3,7 @@ import classes from './Products.module.css';
 import {  MantineProvider, createTheme, rem } from '@mantine/core';
 
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 
 import { useNotifications } from "@mantine/notifications";
 
@@ -22,6 +22,12 @@ interface Product {
   oldPrice?: Number,
   price: Number,
 };
+
+// interface PageNum {
+//   numb : Number
+// }
+
+
 
 const CONTAINER_SIZES: Record<string, string> = {
   xxs: rem(300),
@@ -50,11 +56,16 @@ const theme = createTheme({
 });
 
 
+interface PageNum {
+  page: number;
+  pages: (data: number) => void; // Define a callback prop
+};
 
 
 
-
-export default function ArticlesCardsGrid() {
+const ArticlesCardsGrid: React.FC<PageNum> = ({page, pages}): JSX.Element => 
+{
+  
   const dispatch = useDispatch();
   //const notifications = useNotifications();
 
@@ -71,28 +82,36 @@ export default function ArticlesCardsGrid() {
   //   //setActivePage(page);
   //   getProducts();
   // };
+useEffect(()=> {
+  getProducts(page);
+  
+  //pages(products.pages)
+}, [page])
 
   useEffect(() => {
-    getProducts();
-    
+    getProducts(1);
   }, [dispatch]);
 
-
+  if(!loading) {
+    pages(products.pages)
+  }
   const cards =
-  products ? (
-  products.map((product : Product ) => (
+  Object.keys(products).length 
+   ? (
+  products.products.map((product : Product ) => (
     <ProductsCard product = { product } key = { uuidv4()}/>
      )))
     : (
       <>hello world</>
     )
- 
-
   return (
     <MantineProvider theme={theme}>
       <Container py="md" size="xl">
         <SimpleGrid cols={{ base: 1, xs: 2, sm: 3, md: 4}} spacing="xl">{cards}</SimpleGrid>
+      
       </Container>  
     </MantineProvider>
   );
 }
+
+export default ArticlesCardsGrid
