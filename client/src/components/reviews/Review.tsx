@@ -3,7 +3,6 @@ import React, { FC, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { bindActionCreators } from "redux";
 import { State, actionCreators } from "../../state";
-import { store } from '../../state/store'
 import {
   Alert,
   Box,
@@ -11,8 +10,6 @@ import {
   Card,
   Grid,
   Group,
-  NumberInputHandlers,
-  SimpleGrid,
   Text,
   TextInput,
 } from "@mantine/core";
@@ -45,13 +42,12 @@ export const Review: FC<MyProps> = ({ reviewM }): JSX.Element => {
     dispatch
   );
 
-  const [value, setValue] = useState<any>(1);
   const [opened, setOpened] = useState(false);
 
-  const handlers = useRef<NumberInputHandlers>(null);
 
   const { userInfo } = useSelector((state: State) => state.userLogin);
   const product = useSelector( ( state: State ) => state.product.product)
+  console.log( product )
   // const {
   //   review,
   //   loading: reviewLoading,
@@ -107,7 +103,7 @@ export const Review: FC<MyProps> = ({ reviewM }): JSX.Element => {
     const { rating, comment } = values;
    // addReview(params as string, parseInt(rating), comment);
     setOpened(false);
-    addReview( product.productId, rating, comment )
+    addReview( product._id, rating, comment )
     dispatch({
       type: ActionType.ADD_REVIEW_RESET,
     });

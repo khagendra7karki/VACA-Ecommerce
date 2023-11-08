@@ -3,7 +3,7 @@ import productSchema from "../../models/productSchema.js"
 import userModel from "../../models/userSchema.js";
 
 const productController = {
-    getProduct : async (req, res) => {
+    getProducts : async (req, res) => {
 
         try{
             const pageSize = 8;
@@ -36,7 +36,7 @@ const productController = {
     updateProduct: async ( req, res) =>{
         try{
             const productId = req.params.id
-            const product = await productSchema.findById(productId)
+            const product = await productSchema.findById(productId).lean()
             if( product ){
                 product.title = req.body.title
                 product.description = req.body.description

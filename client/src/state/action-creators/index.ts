@@ -225,7 +225,6 @@ export const addReview = (id: string, rating: number, comment: string) => {
 
 
       //make reivew object
-      
       const reviewObject = {
         userId: store.getState().userLogin.userInfo._id,
         review: comment,
