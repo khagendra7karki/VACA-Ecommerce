@@ -23,7 +23,7 @@ const productController = {
               .limit(pageSize)
               .skip(pageSize * (page - 1));
           
-            res.json({ products, page, pages: Math.ceil(count / pageSize) });
+            res.status(200).json({ products, page, pages: Math.ceil(count / pageSize) });
             
             // const products = await productSchema.find({}).limit( 20 )
             // res.status(200).json({ task: 'getProduct', status:'successful', payload: products})
@@ -35,8 +35,8 @@ const productController = {
 
     updateProduct: async ( req, res) =>{
         try{
-            const productId = req.params.id
-            const product = await productSchema.findById(productId).lean()
+            const { id } = req.params
+            const product = await productSchema.findById( id ).lean()
             if( product ){
                 product.title = req.body.title
                 product.description = req.body.description
@@ -52,10 +52,11 @@ const productController = {
 
         }
     },
+
     deleteProductById: async( req, res) =>{
-        const productId = req.params.id
+        const { id } = req.params
         try{
-            await productSchema.deleteOne( { _id: new mongoose.Types.ObjectId(productId) })
+            await productSchema.deleteOne( { _id: new mongoose.Types.ObjectId( id ) })
             res.status( 200).json( { task: 'deleteItem', status: 'successful'})
         }
         catch( error ){
@@ -72,9 +73,9 @@ const productController = {
     getProductByIdWithReview: async( req, res) =>{    
         try{
 
-            const productId  = req.params.id
+            const { id } = req.params
             // res.status(500).json({message: 'An error occurred'})
-            const product = await productSchema.findById( productId ).lean()
+            const product = await productSchema.findById( id ).lean()
             const userIds = product.review.reviews.map( ( review ) => review.userId )
 
             
@@ -92,7 +93,7 @@ const productController = {
                 const user = associatedUsers.find( user => user._id.equals( review.userId))
                 review.fullName = user?.fullName
             }
-    
+            console.log( product.rating )
             res.status(200).json( {task : 'getProductId',status:'unsuccessful', payload: product })
 
         }catch( error ){

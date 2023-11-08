@@ -193,7 +193,7 @@ export const getProduct = (id: string) => {
       });
    
       const { data } = await axios.get(`http://localhost:5000/getProduct/${id}`);
-      console.log( data )
+      console.log( data.payload )
       dispatch({
         type: ActionType.GET_PRODUCT_SUCCESS,
         payload: data.payload,
