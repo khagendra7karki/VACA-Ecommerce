@@ -27,22 +27,7 @@ import createNewUser from "../../firebase/createNewUser";
  */
 export const addToCart = (id: string, qty: number) => {
   return async (dispatch: Dispatch<Action>, getState: any) => {
-    
-    // const { data } = await axios.get(`http://localhost:5000/getProduct/${id}`);
-    // const product = {
-    //   product: data.payload._id,
-    //   title: data.payload.title,
-    //   image: data.payload.image,
-    //   price: data.payload.price,
-    //   availableQuantity: data.payload.availableQuantity,
-    //   quantity: qty,
-    // }
-    // dispatch({
-    //   type: ActionType.CART_ADD_ITEM,
-    //   payload: product
-    // });
-    
-  
+      
     const token = store.getState().user.userInfo.token;
 
     const config = {

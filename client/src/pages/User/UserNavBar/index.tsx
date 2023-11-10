@@ -1,27 +1,59 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
+import { State } from '../../../state'
+import { Link } from 'react-router-dom'
 
 const UserNavBar = () => {
-
+    const { userInfo } = useSelector( ( state: State ) =>   state.user )
+  
   return <>
     <nav>
         <ul>
-            <li>
-                <a href="">My Profile</a>
+            <li> Manage My Account
+                <ul>
+                    <li>
+                        <Link to = {`myProfile`}>
+                            My Profile
+                        </Link>
+
+                    </li>
+                    <li>
+                        <Link to = {`/addressBook`}>
+                            Address Book
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to = {``}>
+                            My payment Option
+                        </Link>
+                    </li>
+                </ul>
+            </li>
+
+            <li>My Orders
+                <ul>
+                    <li>
+                        <Link to = {`myReturn`}>
+                            My Returns
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to = {`myCancellation`}>
+                            My Cancellation
+                        </Link>
+                    </li>        
+
+                </ul>
             </li>
             <li>
-                <a href="">Item 1</a>
+                <Link to = {`myWishList`}>
+                    My Wishlist
+                </Link>
             </li>
             <li>
-                <a href="">Item 2</a>
-            </li>
-            <li>
-                <a href="">Item 3</a>
-            </li>
-            <li>
-                <a href="">Item 4</a>
-            </li>
-            <li>
-                <a href="">Item 5</a>
+                <Link to = {`myCart`}>
+                    My Cart
+                </Link>
             </li>
         </ul>
     </nav>

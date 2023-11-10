@@ -27,17 +27,15 @@ import { useForm } from "@mantine/form";
 export default function Signin() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const location = useLocation();
 
   // auth provider for google
   const Provider = new GoogleAuthProvider();
   const auth = getAuth();
 
-  const redirectTo = location.search;
   const { login  } = bindActionCreators(actionCreators, dispatch);
 
-  const { userInfo, loading, error } = useSelector(
-    (state: State) => state.user
+  const { isLoggedIn, loading, error } = useSelector(
+    (state: State) => state.userLogin
   );
 
   const form = useForm({
@@ -57,15 +55,11 @@ export default function Signin() {
   });
 
   useEffect(() => {
-    if (userInfo) {
-      if (redirectTo === "?redirect=shipping") {
-        navigate("/shipping");
-      } else {
-        navigate("/");
-      }
+    if (isLoggedIn) {
+      navigate('/')
     }
     // eslint-disable-next-line
-  }, [userInfo]);
+  }, [isLoggedIn]);
 
   const handlerLogin = (values: any) => {
     
@@ -87,14 +81,14 @@ export default function Signin() {
 
   const googleLogin = ( e: React.MouseEvent ) =>{
     e.preventDefault()
-    // signInWithPopup( auth, Provider ).then( ( result ) =>{
-    //   const userInfo = {
-    //     id: result.user.uid,
-    //     name: result.user.displayName,
-    //     email: result.user.email,
-    //     image: result.user.photoURL
-    //   }
-    // })
+    signInWithPopup( auth, Provider ).then( ( result ) =>{
+      const userInfo = {
+        id: result.user.uid,
+        name: result.user.displayName,
+        email: result.user.email,
+        image: result.user.photoURL
+      }
+    })
   }
 
   return (
