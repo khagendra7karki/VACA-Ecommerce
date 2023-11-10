@@ -1,17 +1,16 @@
 import React, { useEffect } from 'react'
-import 
-    import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { State } from '../../../state'
 
 const UserProfile: React.FC = () =>{
-    const { userInfo } = useSelector( ( state: State) = > state.userInfo)
+    const { userLogin } = useSelector( ( state: State) => state )
     useEffect( () => {
 
 
     })
     return <>
     
-    </>
+    </>    
 
 }
 export default UserProfile

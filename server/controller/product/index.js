@@ -93,7 +93,6 @@ const productController = {
                 const user = associatedUsers.find( user => user._id.equals( review.userId))
                 review.fullName = user?.fullName
             }
-            console.log( product.rating )
             res.status(200).json( {task : 'getProductId',status:'unsuccessful', payload: product })
 
         }catch( error ){

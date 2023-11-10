@@ -23,7 +23,7 @@ export function HeaderSearch() {
     dispatch
     )
     const [opened, { toggle }] = useDisclosure(false);
-    const { userInfo } = useSelector( (state: State) => state.userLogin )
+    const { isLoggedIn } = useSelector( (state: State) => state.userLogin )
     
     const handleLinkClick = ( url: string ) =>{
       navigate( url )
@@ -44,8 +44,8 @@ export function HeaderSearch() {
   const [ links, setLinks ] = useState( initialLinks )
 
   useEffect( () =>{
-    setLinks( [ ...initialLinks, ( userInfo ? { link: '/logout', label: 'logout', onClick : handleLogout }: { link: '/login', label: 'login', onClick: handleLinkClick} ) ])
-  }, [ userInfo ])
+    setLinks( [ ...initialLinks, ( isLoggedIn ? { link: '/logout', label: 'logout', onClick : handleLogout }: { link: '/login', label: 'login', onClick: handleLinkClick} ) ])
+  }, [ isLoggedIn ])
 
 
   const items = links.map((link) => (

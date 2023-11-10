@@ -43,7 +43,7 @@ export const addToCart = (id: string, qty: number) => {
     // });
     
   
-    const token = store.getState().userLogin.userInfo.token;
+    const token = store.getState().user.userInfo.token;
 
     const config = {
         headers: {
@@ -68,7 +68,7 @@ export const addToCart = (id: string, qty: number) => {
 
 export const removeFromCart = (id: string) => {
   return async (dispatch: Dispatch<Action>, getState: any) => {
-    const token = store.getState().userLogin.userInfo.token;
+    const token = store.getState().user.userInfo.token;
 
     const config = {
         headers: {
@@ -94,7 +94,7 @@ export const removeFromCart = (id: string) => {
 
 export const updateCart = ( id: string, qty : number ) =>{
     return async (dispatch: Dispatch<Action>, getState: any) => {
-    const token = store.getState().userLogin.userInfo.token;
+    const token = store.getState().user.userInfo.token;
 
     const config = {
         headers: {
@@ -214,7 +214,7 @@ export const addReview = (id: string, rating: number, comment: string) => {
         type: ActionType.ADD_REVIEW_REQUEST,
       });
 
-      const token = store.getState().userLogin.userInfo.token;
+      const token = store.getState().user.userInfo.token;
 
       const config = {
         headers: {
@@ -226,7 +226,7 @@ export const addReview = (id: string, rating: number, comment: string) => {
 
       //make reivew object
       const reviewObject = {
-        userId: store.getState().userLogin.userInfo._id,
+        userId: store.getState().user.userInfo._id,
         review: comment,
         rating: rating
       }
@@ -282,16 +282,24 @@ export const register = (fullName: string, email: string, password: string) => {
         axios.post("http://localhost:5000/registerUser", user , config)
         .then( res =>{
           console.log( 'Payload', res.data.payload )
+          
+          // dispatch register action
           dispatch({
               type: ActionType.USER_REGISTER_SUCCESS,
-              payload: res.data.payload,
+              payload: {},
             });
 
-            dispatch({
-              type: ActionType.USER_LOGIN_SUCCESS,
-              payload: res.data.payload,
-            });
-      
+          // dispatch login action
+          dispatch({
+            type: ActionType.USER_LOGIN_SUCCESS,
+            payload: {},
+          });
+          
+          // dispatch get user action
+          dispatch({
+            type: ActionType.GET_USER_SUCCESS,
+            payload: res.data.payload
+          })
             localStorage.setItem("userInfo", JSON.stringify(res.data.payload ));
             })
       })
@@ -331,7 +339,7 @@ export const login = (email: string, password: string) => {
       );
 
       //extract user data from the 
-      // response payload
+      // response
       const { cart, wishList, ...user } = data.payload 
       
 
@@ -341,6 +349,14 @@ export const login = (email: string, password: string) => {
         type: ActionType.USER_LOGIN_SUCCESS,
         payload: user,
       });
+
+
+      // add userInfo to
+      // redux store
+      dispatch({
+        type: ActionType.GET_USER_SUCCESS,
+        payload: user,
+      })
       
       // add to local storage
       // as  " userInfo "
@@ -352,12 +368,14 @@ export const login = (email: string, password: string) => {
         type: ActionType.CART_SET,
         payload: cart.items,
       })
+
       localStorage.setItem("cartItems", JSON.stringify( cart.items))
       console.log( 'login response payload', data )
       
       //add 
 
     } catch (error: any) {
+
       console.log( error )
       dispatch({
         type: ActionType.USER_LOGIN_FAIL,
@@ -382,7 +400,7 @@ export const createOrder = (
         type: ActionType.CREATE_ORDER_REQUEST,
       });
 
-      const token = store.getState().userLogin.userInfo.token;
+      const token = store.getState().user.userInfo.token;
 
       const config = {
         headers: {
@@ -400,17 +418,8 @@ export const createOrder = (
         shippingPrice,
         totalPrice,
       };
-      // let _id : any = "65386caaf5f81f2689e95abb"
-      const { data } = await axios.post("http://localhost:5000/order/", formData, config);
-      // const data = {orderItems :orderItems,
-      //   shippingAddress :shippingAddress,
-      //   paymentMethod: paymentMethod,
-      //   itemsPrice :itemsPrice,
-      //   taxPrice :taxPrice,
-      //   shippingPrice :shippingPrice,
-      //   totalPrice : totalPrice,
-      //   _id
-      // }
+      const { data } = await axios.post("http://localhost:5000/order", formData, config);
+
  
       dispatch({
         type: ActionType.CREATE_ORDER_SUCCESS,
@@ -432,7 +441,7 @@ export const getOrder = (id: any) => {
         type: ActionType.GET_ORDER_REQUEST,
       });
 
-      const token = store.getState().userLogin.userInfo.token;
+      const token = store.getState().user.userInfo.token;
 
       const config = {
         headers: {
@@ -480,7 +489,7 @@ export const payOrder = (id: any, paymentResult: any) => {
         type: ActionType.ORDER_PAY_REQUEST,
       });
 
-      const token = store.getState().userLogin.userInfo.token;
+      const token = store.getState().user.userInfo.token;
 
       const config = {
         headers: {
@@ -494,11 +503,12 @@ export const payOrder = (id: any, paymentResult: any) => {
       //   paymentResult,
       //   config
       // );
-const data = {}
-      dispatch({
-        type: ActionType.ORDER_PAY_SUCCESS,
-        payload: data,
-      });
+      const data = {}
+        dispatch({
+          type: ActionType.ORDER_PAY_SUCCESS,
+          payload: data,
+        });
+
     } catch (error: any) {
       dispatch({
         type: ActionType.ORDER_PAY_FAIL,
@@ -515,7 +525,7 @@ export const getUser = () => {
         type: ActionType.GET_USER_REQUEST,
       });
 
-      const token = store.getState().userLogin.userInfo.token;
+      const token = store.getState().user.userInfo.token;
 
       const config = {
         headers: {
@@ -546,7 +556,7 @@ export const getOrders = () => {
         type: ActionType.GET_ORDERS_REQUEST,
       });
 
-      const token = store.getState().userLogin.userInfo.token;
+      const token = store.getState().user.userInfo.token;
 
       const config = {
         headers: {
@@ -577,7 +587,7 @@ export const deliverOrder = (id: string) => {
         type: ActionType.ORDER_DELIVER_REQUEST,
       });
 
-      const token = store.getState().userLogin.userInfo.token;
+      const token = store.getState().user.userInfo.token;
 
       const config = {
         headers: {
@@ -621,7 +631,7 @@ export const createProduct = (
         type: ActionType.CREATE_PRODUCT_REQUEST,
       });
 
-      const token = store.getState().userLogin.userInfo.token;
+      const token = store.getState().user.userInfo.token;
 
       const config = {
         headers: {
@@ -685,7 +695,7 @@ export const getMyOrders = () => {
         type: ActionType.GET_MY_ORDERS_REQUEST,
       });
 
-      const token = store.getState().userLogin.userInfo.token;
+      const token = store.getState().user.userInfo.token;
 
       const config = {
         headers: {
@@ -720,7 +730,7 @@ export const updateProfile = (
         type: ActionType.UPDATE_PROFILE_REQUEST,
       });
 
-      const token = store.getState().userLogin.userInfo.token;
+      const token = store.getState().user.userInfo.token;
 
       const config = {
         headers: {
@@ -765,7 +775,7 @@ export const updateUser = (id: string, isAdmin: boolean) => {
         type: ActionType.UPDATE_USER_REQUEST,
       });
 
-      const token = store.getState().userLogin.userInfo.token;
+      const token = store.getState().user.userInfo.token;
 
       const config = {
         headers: {
@@ -802,11 +812,13 @@ export const logout = () => {
 
     //remove info from localStorage
 
-    localStorage.removeItem( "cartItems")
+    localStorage.removeItem("cartItems")
     localStorage.removeItem("paymentMethod")
     localStorage.removeItem("userInfo");
     localStorage.removeItem("shippingAddress")
     
+    
     dispatch({ type: ActionType.USER_LOGOUT, payload: {} });
+    dispatch({ type: ActionType.GET_USER_SUCCESS, payload: {} })
   };
 };

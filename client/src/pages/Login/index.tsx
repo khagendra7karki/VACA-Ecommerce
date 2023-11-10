@@ -37,7 +37,7 @@ export default function Signin() {
   const { login  } = bindActionCreators(actionCreators, dispatch);
 
   const { userInfo, loading, error } = useSelector(
-    (state: State) => state.userLogin
+    (state: State) => state.user
   );
 
   const form = useForm({

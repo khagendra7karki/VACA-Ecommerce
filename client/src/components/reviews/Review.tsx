@@ -45,7 +45,7 @@ export const Review: FC<MyProps> = ({ reviewM }): JSX.Element => {
   const [opened, setOpened] = useState(false);
 
 
-  const { userInfo } = useSelector((state: State) => state.userLogin);
+  const { userInfo } = useSelector((state: State) => state.user );
   const product = useSelector( ( state: State ) => state.product.product)
   // const {
   //   review,

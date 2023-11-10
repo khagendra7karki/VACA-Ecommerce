@@ -15,7 +15,7 @@ interface LayoutProps {
 }
 
 const Layout: React.FC<PropsWithChildren<LayoutProps>> = ({ children }) => {
-  const { userInfo } = useSelector((state: State) => state.userLogin);
+  const { userInfo } = useSelector((state: State) => state.user);
   const { cartItems } = useSelector((state: State) => state.cart);
   const { quickSearch } = useSelector((state: State) => state.quickSearch);
   const [opened, setOpened] = useState(false);

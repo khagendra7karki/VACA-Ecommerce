@@ -27,8 +27,6 @@ const reviewController = {
         try{
             const { productId, review } = req.body;
 
-            console.log(productId )
-            console.log( review )
             // review.rating = parseInt( review.rating )
             const product = await productSchema.findByIdAndUpdate( productId, {
                 $push: { "review.reviews": review }

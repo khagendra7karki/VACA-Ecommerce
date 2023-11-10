@@ -8,7 +8,7 @@ const userInfoFromStorage = localStorage.getItem("userInfo")
 
 const registerReducer = (
   state = {
-    userInfo: userInfoFromStorage,
+    hasJustRegistered: false,
     error: null,
     loading: false,
   },
@@ -20,7 +20,7 @@ const registerReducer = (
     case ActionType.USER_REGISTER_SUCCESS:
       return {
         ...state,
-        userInfo: action.payload,
+        hasJustRegistered: true,
         loading: false,
         error: null,
       };
@@ -33,7 +33,7 @@ const registerReducer = (
 
 const loginReducer = (
   state = {
-    userInfo: userInfoFromStorage,
+    isLoggedIn: userInfoFromStorage ? true : false ,
     error: null,
     loading: false,
   },
@@ -45,7 +45,7 @@ const loginReducer = (
     case ActionType.USER_LOGIN_SUCCESS:
       return {
         ...state,
-        userInfo: action.payload,
+        isLoggedIn: true,
         loading: false,
         error: null,
       };
@@ -53,7 +53,7 @@ const loginReducer = (
       return { ...state, loading: false, error: action.payload };
 
     case ActionType.USER_LOGOUT:
-      return { ...state, userInfo: null, loading: false, error: null };
+      return { ...state, isLoggedIn: false, loading: false, error: null };
     default:
       return state;
   }
@@ -61,7 +61,7 @@ const loginReducer = (
 
 const getUserReducer = (
   state = {
-    users: [],
+    userInfo: userInfoFromStorage,
     error: null,
     loading: false,
   },
@@ -73,7 +73,7 @@ const getUserReducer = (
     case ActionType.GET_USER_SUCCESS:
       return {
         ...state,
-        user: action.payload,
+        userInfo: action.payload,
         loading: false,
         error: null,
       };

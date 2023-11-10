@@ -49,7 +49,7 @@ const Product = () => {
 
   const { quickSearch } = useSelector((state: State) => state.quickSearch);
 
-  const { userInfo } = useSelector((state: State) => state.userLogin);
+  const { userInfo } = useSelector((state: State) => state.user);
 
   const {
     review,
