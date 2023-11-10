@@ -28,6 +28,8 @@ import Payment from './pages/Payment';
 import PlaceOrder from './pages/PlaceOrder';
 import Order from './pages/Order';
 import { ContactUs } from './pages/Contact/ContactUs';
+import User from './pages/User';
+import UserProfile from './pages/User/UserProfile';
 
 const theme = createTheme({
   /** Put your mantine theme override here */
@@ -64,6 +66,14 @@ function App() {
               <Route path="/payment" element={<Payment />} />
               <Route path="/placeorder" element={<PlaceOrder />} />
               <Route path="/order/:order" element={<Order />} />
+
+
+              {/* User Routes */}
+              <Route path = '/user/' element = {< User /> } >
+                <Route path = '/user/myProfile/:id' element = { <UserProfile /> } />
+                
+              </Route>
+              
 
               </Routes></BrowserRouter>
     </MantineProvider>
