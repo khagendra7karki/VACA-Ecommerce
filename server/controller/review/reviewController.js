@@ -37,7 +37,9 @@ const reviewController = {
             
             const finalProduct = await productSchema.findByIdAndUpdate( productId, { 
                 $set: { rating: averageRating.toFixed(1)}
-            }, { new: true }).product({ path: 'reviews.user', select: ['+fullName']}).lean()
+            },{new: true }).populate({ path: 'reviews.user', select: ['+fullName']}).lean()
+
+            console.log( finalProduct.rating  )
 
 
             //aggregate version of the code

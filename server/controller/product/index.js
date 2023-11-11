@@ -77,7 +77,6 @@ const productController = {
             const { id } = req.params
             // res.status(500).json({message: 'An error occurred'})
             const product = await productSchema.findById( id ).populate({path: 'reviews.user' }).lean()
-            console.log( product )
             res.status(200).json( {task : 'getProductId',status:'unsuccessful', payload: product })
 
         }catch( error ){
@@ -86,9 +85,10 @@ const productController = {
 
         }
     },
+
     storeProduct: async( req, res) =>{
         
-        console.log("New Product received hhhhhh")
+        console.log("New Product received")
         
         try {
             const {product} = req.body
@@ -102,6 +102,7 @@ const productController = {
             return res.status( 500 ).json( { task: 'createProduct',status: 'unsuccessful',  reason: error })
         }
     },
+
     getTopProducts:async (req, res ) => {
         try{
             const result = await productSchema.find({}).sort({ rating: -1}).limit( 20 ).lean()
@@ -112,6 +113,7 @@ const productController = {
         }
 
     },
+
     getProductsForSearch : async(req, res) => {
     const keyword = req.query.keyword
         ? {
@@ -121,16 +123,16 @@ const productController = {
             },
         }
         : {};
-    const products = await productSchema.find({ ...keyword });
-    const formattedProducts = [];
-    
-    products.map((product) => {
-        formattedProducts.push({
-        value: product._id,
-        label: product.title,
+        const products = await productSchema.find({ ...keyword });
+        const formattedProducts = [];
+        
+        products.map((product) => {
+            formattedProducts.push({
+            value: product._id,
+            label: product.title,
+            });
         });
-    });
-    res.json(formattedProducts);
+        res.status(200).json({formattedProducts});
     } 
 }
 

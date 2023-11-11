@@ -8,6 +8,8 @@ import User from "../../models/User.js";
 import bcrypt from 'bcrypt';
 import dotenv from  'dotenv';
 import { createCustomToken } from "../../middleware/auth/index.js";
+import Product from "../../models/Product.js";
+import mongoose from "mongoose";
 
 dotenv.config();
 const SALT_ROUND = parseInt( process.env.SALT_ROUND )
@@ -141,9 +143,15 @@ const userController = {
         try{    
             const { _id } = res.locals.user;
 
-            const products = await productsSchema.find( { 'reviews.user': _id  }).lean()
+            const reviews = await Product.aggregate([
+                {$match: {'reviews.user': new mongoose.Types.ObjectId(_id) }},
+                {$unwind:  '$reviews'},
+
+                {$project: {_id: false, reviews: 1}}
+
+            ]).exec()
             
-            return res.status(200).json({ status: 'successful', task: 'updateUser', payload: { ...newUser._doc, token : products.reviews }})
+            return res.status(200).json({ status: 'successful', task: 'getReviews', payload:  reviews || 'no Reviews' })
 
 
 

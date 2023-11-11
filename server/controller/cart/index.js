@@ -20,8 +20,6 @@ const cartController = {
             const userId = res.locals.user._id;
 
             const { id , qty } = req.params;
-            console.log( id, qty  )
-            console.log( userId )
             //find the product from the database
             let product = await productSchema.findById( id ).lean()
 
@@ -51,7 +49,6 @@ const cartController = {
         try{
             const userId = res.locals.user._id;
             const { id } = req.params   // product Id
-            console.log( 'The product Id is', id )
             let user = await userSchema.findByIdAndUpdate(userId, {
                 $pull: {"cart": {"product": id }},
             },{ new: true }).populate({ path: 'cart.product' }).lean();
