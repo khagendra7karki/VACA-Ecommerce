@@ -1,15 +1,65 @@
 import React, { SyntheticEvent, useEffect } from 'react'
-import { useSelector } from 'react-redux'
-import { State } from '../../../state'
+import { useDispatch, useSelector } from 'react-redux'
+import { State, actionCreators, store } from '../../../state'
+import { useForm } from '@mantine/form'
+import { PasswordInput, TextInput } from '@mantine/core'
+import { bindActionCreators } from 'redux'
 
+
+const EditForm = ({ fullName, email, password }: { fullName: string, email: string, password: string}) =>{
+
+    const dispatch = useDispatch();
+
+    const { updateProfile } = bindActionCreators( actionCreators, dispatch )
+
+    const handleSubmit = (values: any) =>{
+        const { fullName, email, password } = values
+        console.log('Submitted values are ', fullName, email, password )
+        updateProfile( fullName, email, password )
+
+
+    }
+    const form = useForm({
+        initialValues: {
+            fullName,
+            email,
+            password 
+        }})
+
+    
+    return <>
+        <form onSubmit = { form.onSubmit(( values )=> handleSubmit( values ) )}>
+            <TextInput 
+                withAsterisk
+                label = 'Full Name'
+                placeholder = 'Enter your full Name'    
+                {...form.getInputProps('fullName')}
+            />
+            <TextInput
+                withAsterisk
+                label = 'Email'
+                placeholder = 'Enter your Email'
+                { ...form.getInputProps('email')}
+            />
+
+            {/* <PasswordInput
+                withAsterisk
+                label = 'Password'
+                { ...form.getInputProps('password')}
+            /> */}
+            <button type = 'submit'>
+                Submit
+            </button>
+            
+
+        </form>
+    </>
+}
 const UserProfile: React.FC = () =>{
     const { userInfo } = useSelector( ( state: State) => state.user )
 
 
-    useEffect( () => {
-        
 
-    })
 
     const handleClick = (e: SyntheticEvent ) =>{
         console.log('Edit Profile Button has been clicked')
@@ -30,6 +80,12 @@ const UserProfile: React.FC = () =>{
 
         <button onClick = { handleClick }>
             Edit Profile
+        </button>
+
+        <EditForm {...userInfo} />
+
+        <button onClick = { handleClick }>
+            Change Password
         </button>
     </div>   
     </>    

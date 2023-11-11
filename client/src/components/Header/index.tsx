@@ -3,9 +3,9 @@ import { useDisclosure } from '@mantine/hooks';
 
 import { MantineLogo } from '@mantine/ds';
 import classes from './HeaderSearch.module.css';
-import  Vaca from '../assets/img/vaca.png'
+import  Vaca from '../../assets/img/vaca.png'
 import { useEffect, useState } from 'react';
-import {  actionCreators, State } from '../state';
+import {  actionCreators, State } from '../../state';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
@@ -57,14 +57,7 @@ export function HeaderSearch() {
       >
       { link.label }
     </button>
-    {/* <a
-      key={link.label}
-      href={link.link  == 'Login' && true ? '/' : '/login'}
-      className={classes.link}
-      // onClick={(event) => event.preventDefault()}
-    >
-      {link.label}
-    </a> */}
+
     </>
   ));
 

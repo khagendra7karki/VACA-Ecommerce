@@ -42,10 +42,9 @@ export const Review: FC<MyProps> = ({ reviewM }): JSX.Element => {
     dispatch
   );
 
-  const [opened, setOpened] = useState(false);
 
 
-  const { userInfo } = useSelector((state: State) => state.user );
+  const { isLoggedIn } = useSelector((state: State) => state.userLogin );
   const product = useSelector( ( state: State ) => state.product.product)
   // const {
   //   review,
@@ -72,36 +71,12 @@ export const Review: FC<MyProps> = ({ reviewM }): JSX.Element => {
     //   email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
     // },
   });
-  // useEffect(() => {
-  //   // if (reviewError !== null) {
-  //   //   notifications.showNotification({
-  //   //     title: "Error!",
-  //   //     message: reviewError,
-  //   //     color: "red",
-  //   //   });
-  //   // }
-  //   dispatch({
-  //     type: ActionType.ADD_REVIEW_RESET,
-  //   });
-  //   // eslint-disable-next-line
-  // }, [reviewError]);
 
-    // useEffect(() => {
-    //   if (review && Object.keys(review).includes("message")) {
-    //     notifications.showNotification({
-    //       title: "Success!",
-    //       message: review.message,
-    //       color: "green",
-    //     });
-    //   }
-    //   // eslint-disable-next-line
-    // }, [review]);
 
 
   const handleSubmit = (values: any) => {
     const { rating, comment } = values;
-   // addReview(params as string, parseInt(rating), comment);
-    setOpened(false);
+
     addReview( product._id, rating, comment )
     dispatch({
       type: ActionType.ADD_REVIEW_RESET,
@@ -169,7 +144,7 @@ export const Review: FC<MyProps> = ({ reviewM }): JSX.Element => {
             </Group>
           }
 
-          {!userInfo ? (
+          {!isLoggedIn ? (
             <Alert
               icon={<IoIosUnlock size={16} />}
               style={{ marginTop: "1rem" }}

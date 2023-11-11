@@ -23,7 +23,6 @@ import createNewUser from "../../firebase/createNewUser";
  * 
  * @param id - product Id
  * @param qty - number of items
- * @returns 
  */
 export const addToCart = (id: string, qty: number) => {
   return async (dispatch: Dispatch<Action>, getState: any) => {
@@ -132,9 +131,7 @@ export const getProducts = (page: number) => {
       dispatch({
         type: ActionType.GET_PRODUCTS_REQUEST,
       });
-      console.log('kkkkkk',page )
       const { data } = await axios.get(`http://localhost:5000/getProducts?pageNumber=${page}`);
- console.log('kkkkkk',page , data)
       dispatch({
         type: ActionType.GET_PRODUCTS_SUCCESS,
         payload: data,
@@ -435,7 +432,6 @@ export const getOrder = (id: any) => {
         },
       };
 
-     // const { data } = await axios.get(`/api/v1/orders/${id}`, config);
 
 
       const data = {
@@ -658,7 +654,7 @@ export const getTopProducts = () => {
         type: ActionType.GET_TOP_PRODUCTS_REQUEST,
       });
 
-      const { data } = await axios.get(`/api/v1/products/top`);
+      const { data } = await axios.get(`http://localhost:/5000/getTopProducts`);
 
       dispatch({
         type: ActionType.GET_TOP_PRODUCTS_SUCCESS,
@@ -705,7 +701,7 @@ export const getMyOrders = () => {
 };
 
 export const updateProfile = (
-  name: string,
+  fullName: string,
   email: string,
   password: string
 ) => {
@@ -714,7 +710,8 @@ export const updateProfile = (
       dispatch({
         type: ActionType.UPDATE_PROFILE_REQUEST,
       });
-
+      
+      const id = store.getState().user.userInfo._id;
       const token = store.getState().user.userInfo.token;
 
       const config = {
@@ -725,20 +722,20 @@ export const updateProfile = (
       };
 
       const formData = {
-        name,
+        fullName,
         email,
         password,
       };
 
       const { data } = await axios.put(
-        `/api/v1/users/profile`,
+        `http://localhost:5000/${id}/updateProfile`,
         formData,
         config
       );
 
       dispatch({
         type: ActionType.UPDATE_PROFILE_SUCCESS,
-        payload: data,
+        payload: data.payload,
       });
 
       dispatch({

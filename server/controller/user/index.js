@@ -2,7 +2,6 @@
  * TODO
  * create a utils files that saves the documents
  */
-import mongoose from "mongoose";
 import userSchema from "../../models/userSchema.js";
 import bcrypt from 'bcrypt';
 import dotenv from  'dotenv';
@@ -34,7 +33,6 @@ const hashPassword = async (password, SALT_ROUND) => {
 const createUser = async (user, token) => {
     const newUser = new userSchema(user);
     const result = await newUser.save();
-    console.log('Lean applied result ', result );
     return { status: 'successful', task: 'addUser', payload: {...result._doc, token } };
 };
 
@@ -72,27 +70,43 @@ const userController = {
      * @returns user id
      */
     login: async( req, res ) =>{
-        try{
-            
-            console.log( req.body ) 
+        try{            
             const user = await userSchema.findOne( {email: req.body.email} ).lean()
             // console.log( 'User object', user );
             if( !user ) return res.status( 401 ).json( {status: 'unsuccessful', task: 'login', reason: 'Invalid Credentials'} )
             
             const result = await bcrypt.compare( req.body.password, user.password)
-            console.log( 'Hash result ', result)
+        
             if ( !result ) return res.status( 401 ).json( { status: 'unsuccessful', task: 'login', reason: 'Incorrect Password'})
             
             //generate the access Token for the corresponding user
-            const { _id, uid, email, password, fullName, cart, wishList } = user
+            const { _id, uid, email,  fullName, cart, wishList } = user
             
-            const token = await createCustomToken( { _id, uid, email, password, fullName } , SECRET );
+            const token = await createCustomToken( { _id, uid, email,  fullName } , SECRET );
             res.status( 200 ).json( { status: 'successful', task: 'login', payload: {...user , cart, wishList, token } })
 
         }catch( error ) {
             console.log('An error occurred', error)
         }
     },
+
+    updateProfile: async( req, res ) =>{
+        try{
+            const { fullName, email, oldPassword, newPassword } = req.body
+            if( fullName && email ){
+                console.log( fullName, email )
+                return res.status(200).json({ status: 'successful', task: 'login'})
+            }
+            if ( oldPassword && newPassword ) return res.status(200).json({ status: 'successful', task: 'login'})
+
+            
+
+
+        }catch( error ){
+            console.log('An errorr occurred at updateProfile', error )
+            res.status(500).json({status: 'successful', task: 'login', reason: 'Internal Server Error '})
+        }
+    }
 
 }
 
