@@ -7,8 +7,8 @@
  * 
  */
 import mongoose from 'mongoose'
-import userSchema from "../../models/userSchema.js";
-import productSchema from '../../models/productSchema.js'
+import userSchema from "../../models/User.js";
+import productSchema from '../../models/Product.js'
 const cartController = {
 
     /**
@@ -25,15 +25,15 @@ const cartController = {
             //find the product from the database
             let product = await productSchema.findById( id ).lean()
 
-            console.log( product )
             let user = await userSchema.findByIdAndUpdate(userId, {
                 $push: { "cart": { product: product._id, quantity: qty } }
             }, { new: true }).populate({
-                path: 'cart'
+                path: 'cart.product'
             }).lean();
 
             if( !user ) return res.status(500).json({ status:'unsuccessful', task: 'addItem', reason: 'Internal Error'})
 
+            console.log( user.cart )
             return res.status(200).json({status: 'successful', task: 'addItem', payload: user.cart })
         }
         catch( error ){
@@ -54,7 +54,7 @@ const cartController = {
             console.log( 'The product Id is', id )
             let user = await userSchema.findByIdAndUpdate(userId, {
                 $pull: {"cart": {"product": id }},
-            },{ new: true }).populate({ path: 'cart' }).lean();
+            },{ new: true }).populate({ path: 'cart.product' }).lean();
 
             if( !user ) return res.status(500).json({ status:'unsuccessful', task: 'addItem', reason: 'Internal Error'})
 
@@ -82,7 +82,7 @@ const cartController = {
             let user = await userSchema.findByIdAndUpdate( userId, 
                 {$set: { "cart.$[inner].quantity": qty }},
                 { arrayFilters: [ {"inner.product" : new mongoose.Types.ObjectId( id ) }], new: true}
-                ).populate({path: 'cart'}).lean()
+                ).populate({path: 'cart.product'}).lean()
             res.status( 200 ).json({status: 'successful', task: 'update Cart', payload: user.cart })
         }catch( error ){
             console.log('Error while pushing item to cart', error );

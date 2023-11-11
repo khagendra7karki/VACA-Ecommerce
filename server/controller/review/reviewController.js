@@ -5,7 +5,7 @@
  * 
  */
 import mongoose from 'mongoose';
-import productSchema from '../../models/productSchema.js'
+import productSchema from '../../models/Product.js'
 
 const reviewController = {
 

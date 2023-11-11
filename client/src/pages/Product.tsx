@@ -170,8 +170,8 @@ const Product = () => {
                     <Text>Color</Text>
                     <Select
                       // label="Your favorite color"
-                      placeholder="Pick value"
-                      data={["Blue", "Yellow", "Red", "Green"]}
+                      placeholder="Choose a color"
+                      data={ product.color }
                     />
                   </Group>
                   <Group>
@@ -216,23 +216,6 @@ const Product = () => {
                         +
                       </ActionIcon>
                     </Group>
-                    {/* <div>
-                      <Text fz="xl" fw={700} style={{ lineHeight: 1 }}>
-                        $
-                        {new Intl.NumberFormat().format(
-                          value * product.price
-                        )}
-                      </Text>
-                      <Text
-                        fz="sm"
-                        c="dimmed"
-                        fw={500}
-                        style={{ lineHeight: 1 }}
-                        mt={3}
-                      >
-                        {product.oldPrice}
-                      </Text>
-                    </div> */}
 
                     <Button
                       variant="outline"

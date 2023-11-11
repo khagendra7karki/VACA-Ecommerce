@@ -152,9 +152,9 @@ const Cart = () => {
               Items
             </Text>
             <Text size="xl" style={{ marginTop: ".5rem" }}>
-              $
+              Rs. 
               {cartItems
-                .reduce((acc: any, item: any) => acc + item.product.quantity * item.product.price, 0)
+                .reduce((acc: any, item: any) => acc + item.quantity * item.product.price, 0)
                 .toFixed(2)
               }
             </Text>

@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
-import productSchema from "../../models/productSchema.js"
-import userModel from "../../models/userSchema.js";
+import productSchema from "../../models/Product.js"
+import userModel from "../../models/User.js";
+
 
 const productController = {
     getProducts : async (req, res) => {

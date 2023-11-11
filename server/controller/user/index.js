@@ -4,7 +4,7 @@
  * 
  * Maybe reviews are not suited here
  */
-import userSchema from "../../models/userSchema.js";
+import User from "../../models/User.js";
 import bcrypt from 'bcrypt';
 import dotenv from  'dotenv';
 import { createCustomToken } from "../../middleware/auth/index.js";
@@ -33,7 +33,7 @@ const hashPassword = async (password, SALT_ROUND) => {
 
 
 const createUser = async (user, token) => {
-    const newUser = new userSchema(user);
+    const newUser = new User(user);
     const result = await newUser.save();
     return { status: 'successful', task: 'addUser', payload: {...result._doc, token } };
 };
@@ -45,14 +45,15 @@ const userController = {
         try{
             const { accessToken , ...user } = req.body;
             console.log( user )            
-            console.log( `The access token is`, accessToken )
 
+            // console.log( `The access token is`, accessToken )
             //hash user password
             if( user.password ){
                 user.password = await hashPassword( user.password, SALT_ROUND );
             }
 
-            const result = await createUser( user, accessToken );
+            const token = createCustomToken( user, SECRET)
+            const result = await createUser( user, token );
             
             res.status( 200 ).json( result )
 
@@ -74,7 +75,7 @@ const userController = {
      */
     login: async( req, res ) =>{
         try{            
-            const user = await userSchema.findOne( {email: req.body.email} ).populate({path: 'cart.product', select: '-reviews'}).select('+password').lean()
+            const user = await User.findOne( {email: req.body.email} ).populate({path: 'cart.product', select: '-reviews'}).select('+password').lean()
             // console.log( 'User object', user );
             if( !user ) return res.status( 401 ).json( {status: 'unsuccessful', task: 'login', reason: 'Invalid Credentials'} )
             
@@ -108,7 +109,7 @@ const userController = {
             const { fullName, email, oldPassword, newPassword, phoneNumber } = req.body
             
             console.log( fullName, email, oldPassword, newPassword, phoneNumber ) 
-            const user = await userSchema.findById( _id ).select('+password').lean()
+            const user = await User.findById( _id ).select('+password').lean()
 
             user.fullName = fullName;
             user.email = email
@@ -132,18 +133,24 @@ const userController = {
 
         }catch( error ){
             console.log('An errorr occurred at updateProfile', error )
-            return res.status(500).json({status: 'successful', task: 'login', reason: 'Internal Server Error '})
+            return res.status(500).json({status: 'successful', task: 'updateProfile', reason: 'Internal Server Error '})
         }
     },
 
     getReviews: async ( req, res ) =>{
         try{    
+            const { _id } = res.locals.user;
+
+            const products = await productsSchema.find( { 'reviews.user': _id  }).lean()
+            
+            return res.status(200).json({ status: 'successful', task: 'updateUser', payload: { ...newUser._doc, token : products.reviews }})
+
 
 
 
         }catch( error ){
-            console.log('An errorr occurred at updateProfile', error )
-            return res.status(500).json({status: 'successful', task: 'login', reason: 'Internal Server Error '})
+            console.log('An errorr occurred at getReviews', error )
+            return res.status(500).json({status: 'successful', task: 'getReviewsById', reason: 'Internal Server Error '})
         }
 
     }

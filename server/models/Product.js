@@ -6,10 +6,6 @@ const review = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
-    // image: {
-    //     type: string, 
-    //     required: true
-    // },
     review: {
          type: String,
          required: true
@@ -79,57 +75,4 @@ const ProductSchema = new Schema({
 const Product = mongoose.model('Product', ProductSchema);
 
 export default Product
-const ProductWithoutReview = {
-    productId: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true
-    },
-    title:{
-        type: String,
-        required: true,
-    }, 
 
-    description:{
-        type: String,
-        requied: true,
-    },
-    price: {
-        type: Number,
-        required: true,
-    },
-    category:{
-        type: String,
-        required: true
-    },
-    image:[{
-        type: String,
-        required: true,
-    }],
-    oldPrice: {
-        type: Number,
-    },
-    availableQuantity: {
-        type: Number,
-        required: true,
-        default: 0
-    },
-    size: [
-        {
-            type: String
-        }
-    ],
-
-    color: [
-        {
-            type: String
-        }
-    ],
-
-    rating: {
-        type : Number,
-        required: true,
-        default: 0
-    
-    },
-}
-export { ProductWithoutReview } 

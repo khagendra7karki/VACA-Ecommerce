@@ -38,6 +38,7 @@ export const addToCart = (id: string, qty: number) => {
 
     const { data } = await axios.post(`http://localhost:5000/cart/addItem/${id}/${qty}`,{},config );
     console.log( ' car items \n',data.payload )
+    
     dispatch({
       type: ActionType.CART_SET,
       payload: data.payload
@@ -281,8 +282,8 @@ export const register = (fullName: string, email: string, password: string) => {
             type: ActionType.GET_USER_SUCCESS,
             payload: res.data.payload
           })
-            localStorage.setItem("userInfo", JSON.stringify(res.data.payload ));
-            })
+          localStorage.setItem("userInfo", JSON.stringify(res.data.payload ));
+        })
       })
 
 

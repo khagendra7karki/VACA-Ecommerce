@@ -1,5 +1,5 @@
 import db from './utils/db.js'
-import productSchema from './models/productSchema.js'
+import productSchema from './models/Product.js'
 import dotenv from 'dotenv'
 dotenv.config()
 
@@ -37,7 +37,7 @@ function getRandomElements(arr, num) {
 
 await returnValue.then( async (products) =>{
     for( let i = 0; i < products.length ;i++){
-
+        products[i].price *= 100;
         const product = {
                             title: products[i].title,
                             price: products[i].price,
@@ -51,10 +51,13 @@ await returnValue.then( async (products) =>{
                             availableQuantity: getRandomElements( [...randomQuantity], 1)
                             
                         }
-        console.log( product )
+        // console.log( product )
         const item = new productSchema( product )
         
-        await item.save()
+        const savedProduct = await item.save()
+
+        console.log( savedProduct._doc )
+        
 
         
     }
