@@ -75,24 +75,8 @@ const productController = {
 
             const { id } = req.params
             // res.status(500).json({message: 'An error occurred'})
-            const product = await productSchema.findById( id ).lean()
-            const userIds = product.review.reviews.map( ( review ) => review.userId )
-
-            
-
-            // get the users' info
-            const associatedUsers = await userModel.find( { _id: {$in : userIds} }).lean()
-
-            //
-            // group user and product review
-            // that consists the same value
-            //
-
-            for ( const review of product.review.reviews ){
-                // console.log( associatedUsers  )
-                const user = associatedUsers.find( user => user._id.equals( review.userId))
-                review.fullName = user?.fullName
-            }
+            const product = await productSchema.findById( id ).populate({path: 'reviews.user' }).lean()
+            console.log( product )
             res.status(200).json( {task : 'getProductId',status:'unsuccessful', payload: product })
 
         }catch( error ){

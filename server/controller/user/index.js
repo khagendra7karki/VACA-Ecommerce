@@ -1,6 +1,8 @@
 /**
  * TODO
  * create a utils files that saves the documents
+ * 
+ * Maybe reviews are not suited here
  */
 import userSchema from "../../models/userSchema.js";
 import bcrypt from 'bcrypt';
@@ -67,11 +69,12 @@ const userController = {
      * @param { * } req - request object
      * @param { string } req.body.email - user email
      * @param { stirng } req.body.password - user password 
-     * @returns user id
+     * 
+     * @description does something i dont konw about
      */
     login: async( req, res ) =>{
         try{            
-            const user = await userSchema.findOne( {email: req.body.email} ).lean()
+            const user = await userSchema.findOne( {email: req.body.email} ).populate({path: 'cart.product', select: '-reviews'}).select('+password').lean()
             // console.log( 'User object', user );
             if( !user ) return res.status( 401 ).json( {status: 'unsuccessful', task: 'login', reason: 'Invalid Credentials'} )
             
@@ -90,24 +93,60 @@ const userController = {
         }
     },
 
+
+    /**
+     * 
+     * @param { * } res - response object
+     * @param { * } req - request object
+     * @param { string } req.body.email - user email
+     * @param { stirng } req.body.password - user password 
+     */
     updateProfile: async( req, res ) =>{
         try{
-            const { fullName, email, oldPassword, newPassword } = req.body
-            if( fullName && email ){
-                console.log( fullName, email )
-                return res.status(200).json({ status: 'successful', task: 'login'})
-            }
-            if ( oldPassword && newPassword ) return res.status(200).json({ status: 'successful', task: 'login'})
-
             
+            const { _id } = res.locals.user;
+            const { fullName, email, oldPassword, newPassword, phoneNumber } = req.body
+            
+            console.log( fullName, email, oldPassword, newPassword, phoneNumber ) 
+            const user = await userSchema.findById( _id ).select('+password').lean()
+
+            user.fullName = fullName;
+            user.email = email
+
+
+            if ( oldPassword && newPassword ){
+                const passwordMatchStatus = await bcrypt.compare( oldPassword, user.password )
+                if ( !passwordMatchStatus ) return res.status( 500 ).json({status: 'unsuccessful', task: 'userUpdate', reason: 'Old Password and new Password do not match'})
+                user.password = await hashPassword( newPassword , SALT_ROUND)
+            }
+
+            const newUser = await user.save()
+            {
+                const { _id, fullName, email,  uid } = newUser
+                const newToken = createCustomToken( { _id, fullName, email, uid }, SECRET)
+                return res.status(200).json({ status: 'successful', task: 'updateUser', payload: { ...newUser._doc, token : newToken }})
+
+            }
+ 
 
 
         }catch( error ){
             console.log('An errorr occurred at updateProfile', error )
-            res.status(500).json({status: 'successful', task: 'login', reason: 'Internal Server Error '})
+            return res.status(500).json({status: 'successful', task: 'login', reason: 'Internal Server Error '})
         }
-    }
+    },
 
+    getReviews: async ( req, res ) =>{
+        try{    
+
+
+
+        }catch( error ){
+            console.log('An errorr occurred at updateProfile', error )
+            return res.status(500).json({status: 'successful', task: 'login', reason: 'Internal Server Error '})
+        }
+
+    }
 }
 
 export default userController

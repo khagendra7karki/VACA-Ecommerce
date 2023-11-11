@@ -8,7 +8,10 @@ import mongoose, { Schema } from 'mongoose'
 import { ProductWithoutReview } from './productSchema.js'
 
 const wishListItem = new mongoose.Schema({
-    ...ProductWithoutReview,
+    product: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Product'
+    },
 
     quantity: {
         type: Number,
@@ -16,27 +19,18 @@ const wishListItem = new mongoose.Schema({
     }
 
 }, { timestamps: true })
-
-
-const WishList = new mongoose.Schema({
-    items: [ wishListItem ],
-
-}, { timestamps: true })
-
 
 const cartItem = new mongoose.Schema({
 
-    ...ProductWithoutReview,
+    product: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Product'
+    },
 
     quantity: {
         type: Number,
         required: true
     }
-
-}, { timestamps: true })
-
-const Cart = new mongoose.Schema({
-    items: [ cartItem ],
 
 }, { timestamps: true })
 
@@ -52,6 +46,7 @@ const userSchema = new mongoose.Schema( {
     },
     password:{
         type: String,
+        select: false
     },
     fullName:{
         type: String,
@@ -61,21 +56,15 @@ const userSchema = new mongoose.Schema( {
         type: String,
     },
     phoneNumber: {
-        type: String    
+        type: String,
+        select: false    
     },
     
-    wishList: {
-        type: WishList,
-        default: { items: []}
+    wishList: [ wishListItem ],
 
-    },
-    
-    cart: {
-        type: Cart,
-        default: { items: []}
-    } ,
+    cart: [ cartItem ]
 
 }, { timestamps: true } )
 
-const userModel = mongoose.model( 'user', userSchema )
+const userModel = mongoose.model( 'User', userSchema )
 export default userModel

@@ -266,7 +266,7 @@ const Product = () => {
             </Grid>
           )}
           {Object.keys(product).length && (
-            <Review reviewM={product.review.reviews} />
+            <Review reviewM={product.reviews} />
           )}
         </>
       )}

@@ -1,10 +1,10 @@
 import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
-const reviewSchema = new Schema({
-    userId: {
+const review = new Schema({
+    user: {
         type: mongoose.Schema.Types.ObjectId,
-        required: true
+        ref: 'User'
     },
     // image: {
     //     type: string, 
@@ -22,11 +22,6 @@ const reviewSchema = new Schema({
     }
 },{ timestamps: true})
 
-const Reviews = new Schema({
-    reviews: [ reviewSchema ]
-}, { timestamps: true  })
-
-export {reviewSchema }
 
 //make a shopping item schema
 const ProductSchema = new Schema({
@@ -60,10 +55,19 @@ const ProductSchema = new Schema({
         default: 0
     },
 
-    review: {
-        type: Reviews,
-        default: { reviews: [] },
-    },
+    reviews: [ review ],
+
+    size: [
+        {
+            type: String
+        }
+    ],
+
+    color: [
+        {
+            type: String
+        }
+    ],
 
     rating: {
         type : Number,
@@ -109,6 +113,17 @@ const ProductWithoutReview = {
         required: true,
         default: 0
     },
+    size: [
+        {
+            type: String
+        }
+    ],
+
+    color: [
+        {
+            type: String
+        }
+    ],
 
     rating: {
         type : Number,

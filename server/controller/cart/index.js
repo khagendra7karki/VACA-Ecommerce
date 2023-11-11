@@ -27,8 +27,10 @@ const cartController = {
 
             console.log( product )
             let user = await userSchema.findByIdAndUpdate(userId, {
-                $push: { "cart.items": { productId: product._id, ...product , quantity: qty } }
-            }, { new: true }).lean();
+                $push: { "cart": { product: product._id, quantity: qty } }
+            }, { new: true }).populate({
+                path: 'cart'
+            }).lean();
 
             if( !user ) return res.status(500).json({ status:'unsuccessful', task: 'addItem', reason: 'Internal Error'})
 
@@ -51,8 +53,8 @@ const cartController = {
             const { id } = req.params   // product Id
             console.log( 'The product Id is', id )
             let user = await userSchema.findByIdAndUpdate(userId, {
-                $pull: {"cart.items": {"productId": id }},
-            },{ new: true }).lean();
+                $pull: {"cart": {"product": id }},
+            },{ new: true }).populate({ path: 'cart' }).lean();
 
             if( !user ) return res.status(500).json({ status:'unsuccessful', task: 'addItem', reason: 'Internal Error'})
 
@@ -78,9 +80,9 @@ const cartController = {
             const userId = res.locals.user._id
             const { id, qty } = req.params
             let user = await userSchema.findByIdAndUpdate( userId, 
-                {$set: { "cart.items.$[inner].quantity": qty }},
-                { arrayFilters: [ {"inner.productId" : new mongoose.Types.ObjectId( id ) }], new: true}
-                ).lean()
+                {$set: { "cart.$[inner].quantity": qty }},
+                { arrayFilters: [ {"inner.product" : new mongoose.Types.ObjectId( id ) }], new: true}
+                ).populate({path: 'cart'}).lean()
             res.status( 200 ).json({status: 'successful', task: 'update Cart', payload: user.cart })
         }catch( error ){
             console.log('Error while pushing item to cart', error );

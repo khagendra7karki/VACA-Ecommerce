@@ -25,7 +25,9 @@ interface Reviews {
   rating: Number;
   fullName: String;
   review: String;
-  userId: String;
+  user: {
+    fullName: String,
+  };
   _id: String;
 }
 
@@ -111,7 +113,7 @@ export const Review: FC<MyProps> = ({ reviewM }): JSX.Element => {
                       date={review.createdAt}
                       id={review._id}
                       // name={review.name}
-                      name={ review.fullName }
+                      name={ review.user.fullName }
                       rating={review.rating}
                       key={uuidv4()}
                     />

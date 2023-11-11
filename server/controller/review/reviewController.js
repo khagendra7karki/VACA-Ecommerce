@@ -6,7 +6,6 @@
  */
 import mongoose from 'mongoose';
 import productSchema from '../../models/productSchema.js'
-import { reviewSchema } from '../../models/productSchema.js';
 
 const reviewController = {
 
@@ -29,16 +28,16 @@ const reviewController = {
 
             // review.rating = parseInt( review.rating )
             const product = await productSchema.findByIdAndUpdate( productId, {
-                $push: { "review.reviews": review }
+                $push: { "reviews": review }
             }, { new: true }).lean()
 
-            const averageRating = product.review.reviews.reduce( ( acc, current) =>{
+            const averageRating = product.reviews.reduce( ( acc, current) =>{
                 return acc + current.rating 
-            },0) / product.review.reviews.length
+            },0) / product.reviews.length
             
             const finalProduct = await productSchema.findByIdAndUpdate( productId, { 
                 $set: { rating: averageRating.toFixed(1)}
-            }, { new: true }).lean()
+            }, { new: true }).product({ path: 'reviews.user', select: ['+fullName']}).lean()
 
 
             //aggregate version of the code
@@ -99,7 +98,7 @@ const reviewController = {
             const { productId,  reviewId } = req.body;
             console.log( productId, reviewId )
             const product = await productSchema.findByIdAndUpdate( productId, {
-                $pull: { "review.reviews": {_id: reviewId} }
+                $pull: { "reviews": {_id: reviewId} }
             }, { new: true} ).lean()
 
             res.status( 200).json( { status: 'successful', task: 'addReview', payload: product})

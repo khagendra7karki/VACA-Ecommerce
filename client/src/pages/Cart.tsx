@@ -91,15 +91,15 @@ const Cart = () => {
                       radius="lg"
                       height={50}
                       width={50}
-                      src={item.image[0]}
+                      src={item.product.image[0]}
                     />
                   </div>
                   <div className="grid-item">
-                    <div className="item-name">{item.title}</div>
+                    <div className="item-name">{item.product.title}</div>
                   </div>
                   <div className="grid-item">
                     <div className="item-price">
-                      ${item.price}x {item.quantity}
+                      ${item.product.price}x {item.quantity}
                     </div>
                   </div>
                   <div className="grid-item">
@@ -109,7 +109,7 @@ const Cart = () => {
                       ref={numRef}
                       onChange={(e) =>{
                         // console.log( 'From update Cart Items \n', e )
-                        handlerUpdateCartItems(e as number, item.productId)
+                        handlerUpdateCartItems(e as number, item.product._id)
                       }
                       }
                       min={1}
@@ -124,7 +124,7 @@ const Cart = () => {
                       radius="lg"
                       variant="filled"
                       color="red"
-                      onClick={() => selectItem(item._id)}
+                      onClick={() => selectItem(item.product._id)}
                       fullWidth
                     >
                       <BiTrashAlt />
@@ -154,7 +154,7 @@ const Cart = () => {
             <Text size="xl" style={{ marginTop: ".5rem" }}>
               $
               {cartItems
-                .reduce((acc: any, item: any) => acc + item.quantity * item.price, 0)
+                .reduce((acc: any, item: any) => acc + item.product.quantity * item.product.price, 0)
                 .toFixed(2)
               }
             </Text>

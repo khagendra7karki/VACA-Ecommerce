@@ -40,7 +40,7 @@ export const addToCart = (id: string, qty: number) => {
     console.log( ' car items \n',data.payload )
     dispatch({
       type: ActionType.CART_SET,
-      payload: data.payload.items
+      payload: data.payload
     })
 
     localStorage.setItem(
@@ -66,7 +66,7 @@ export const removeFromCart = (id: string) => {
 
     dispatch({
       type: ActionType.CART_SET,
-      payload: data.payload.items,
+      payload: data.payload,
     });
 
     localStorage.setItem(
@@ -88,11 +88,10 @@ export const updateCart = ( id: string, qty : number ) =>{
       };
     
     const { data } = await axios.post(`http://localhost:5000/cart/updateItem/${id}/${qty}`,{},config );
-    console.log( data.payload );
-    console.log( data.payload )
+
     dispatch({
       type: ActionType.CART_SET,
-      payload: data.payload.items,
+      payload: data.payload,
     });
 
     localStorage.setItem(
@@ -208,7 +207,7 @@ export const addReview = (id: string, rating: number, comment: string) => {
 
       //make reivew object
       const reviewObject = {
-        userId: store.getState().user.userInfo._id,
+        user: store.getState().user.userInfo._id,
         review: comment,
         rating: rating
       }
@@ -324,7 +323,7 @@ export const login = (email: string, password: string) => {
       // response
       const { cart, wishList, ...user } = data.payload 
       
-
+      console.log( 'from action creator', cart, wishList)
       // add userInfo to 
       // redux store
       dispatch({
@@ -348,10 +347,10 @@ export const login = (email: string, password: string) => {
       // redux store
       dispatch({
         type: ActionType.CART_SET,
-        payload: cart.items,
+        payload: cart,
       })
 
-      localStorage.setItem("cartItems", JSON.stringify( cart.items))
+      localStorage.setItem("cartItems", JSON.stringify( cart ))
       console.log( 'login response payload', data )
       
       //add 
@@ -728,7 +727,7 @@ export const updateProfile = (
       };
 
       const { data } = await axios.put(
-        `http://localhost:5000/${id}/updateProfile`,
+        `http://localhost:5000/updateProfile`,
         formData,
         config
       );
