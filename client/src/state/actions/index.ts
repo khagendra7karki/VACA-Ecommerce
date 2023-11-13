@@ -114,9 +114,25 @@ interface UserLogoutAction {
   payload: any;
 }
 
+interface GetUserReviewRequestActino{
+  type: ActionType.GET_USER_REVIEW_REQUEST;
+  payload?: any;
+}
+
+interface GetUserReviewSuccessActino{
+  type: ActionType.GET_USER_REVIEW_SUCCESS;
+  payload: any;
+}
+
+interface GetUserReviewFailActino{
+  type: ActionType.GET_USER_REVIEW_FAIL;
+  payload: any;
+}
+
 interface CreateOrderRequestAction {
   type: ActionType.CREATE_ORDER_REQUEST;
   payload?: any;
+
 }
 
 interface CreateOrderSuccessAction {
@@ -337,6 +353,9 @@ export type Action =
   | UserRegisterSuccessAction
   | UserRegisterFailAction
   | UserLogoutAction
+  | GetUserReviewRequestActino
+  | GetUserReviewSuccessActino
+  | GetUserReviewFailActino
   | CreateOrderRequestAction
   | CreateOrderSuccessAction
   | CreateOrderFailAction

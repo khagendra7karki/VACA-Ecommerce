@@ -46,6 +46,11 @@ const UserNavBar = () => {
                 </ul>
             </li>
             <li>
+                <Link to = {`myReviews`}>
+                    My Reviews
+                </Link>
+            </li>
+            <li>
                 <Link to = {`myWishList`}>
                     My Wishlist
                 </Link>

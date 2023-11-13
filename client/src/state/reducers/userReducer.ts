@@ -148,10 +148,32 @@ const updateUserReducer = (
   }
 };
 
+const getUserReview = (state = { 
+    userReview: [] as Array<any>,
+    error: null, 
+    loading: false,
+  },
+  action: Action
+) =>{
+  switch( action.type ){
+    case ActionType.GET_USER_REVIEW_REQUEST:
+      return { ...state, loading: true, error: null}
+    case ActionType.GET_USER_REVIEW_SUCCESS:
+      return { ...state, userReview: action.payload, loading: false, error: null }
+    case ActionType.GET_USER_REVIEW_FAIL:
+      return { ...state, userReview: [], loading: false, error: action.payload }
+    default: 
+      return state
+  }
+}
+
+// const updateUserReview
+// const 
 export {
   registerReducer,
   loginReducer,
   getUserReducer,
   updateProfileReducer,
   updateUserReducer,
+  getUserReview,
 };

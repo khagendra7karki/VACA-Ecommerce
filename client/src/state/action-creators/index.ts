@@ -423,7 +423,7 @@ export const createOrder = (
 
 export const getOrder = (id: any) => {
   return async (dispatch: Dispatch<Action>, getState: any) => {
-    try {
+    try { 
       dispatch({
         type: ActionType.GET_ORDER_REQUEST,
       });
@@ -484,11 +484,6 @@ export const payOrder = (id: any, paymentResult: any) => {
         },
       };
 
-      // const { data } = await axios.put(
-      //   `/api/v1/orders/${id}/pay`,
-      //   paymentResult,
-      //   config
-      // );
       const data = {}
         dispatch({
           type: ActionType.ORDER_PAY_SUCCESS,
@@ -524,7 +519,7 @@ export const getUser = () => {
 
       dispatch({
         type: ActionType.GET_USER_SUCCESS,
-        payload: data,
+        payload: data.payload,
       });
     } catch (error: any) {
       dispatch({
@@ -534,6 +529,37 @@ export const getUser = () => {
     }
   };
 };
+
+export const getUserReviews = () =>{
+  return async (dispatch: Dispatch<Action>) => {
+    try {
+      dispatch({
+        type: ActionType.GET_USER_REVIEW_REQUEST,
+      });
+
+      const token = store.getState().user.userInfo.token;
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      const { data } = await axios.get(`http://localhost:5000/reviews`, config);
+
+      dispatch({
+        type: ActionType.GET_USER_REVIEW_SUCCESS,
+        payload: data.payload,
+      });
+    } catch (error: any) {
+      dispatch({
+        type: ActionType.GET_USER_REVIEW_FAIL,
+        payload: error,
+      });
+    }
+  };
+}
 
 export const getOrders = () => {
   return async (dispatch: Dispatch<Action>) => {

@@ -70,7 +70,7 @@ function App() {
                 <Route path = 'addressBook'/>
                 <Route path = 'myReturns' element = { <UserProfile /> } />
                 <Route path = 'myCancellation' element = { <UserProfile /> } />
-                <Route path = 'reviews' element = { <MyReviews /> } />
+                <Route path = 'myReviews' element = { <MyReviews /> } />
                 <Route path = 'myWishlist' element = { <MyWishList /> } />
                 <Route path = 'myCart' element = { <MyCart /> } />
 
