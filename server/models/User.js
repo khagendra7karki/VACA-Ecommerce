@@ -12,6 +12,20 @@ const wishListItem = new mongoose.Schema({
         ref: 'Product'
     },
 
+    title: {
+        type: String,
+        requried: true
+    },
+    price: {
+        type: Number,
+        required: true
+    },
+
+    image: {
+        type: String,
+        requried: true
+    },
+    
     quantity: {
         type: Number,
         required: true
@@ -24,6 +38,20 @@ const cartItem = new mongoose.Schema({
     product: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Product'
+    },
+
+    title: {
+        type: String,
+        requried: true
+    },
+    price: {
+        type: Number,
+        required: true
+    },
+
+    image: {
+        type: String,
+        requried: true
     },
 
     quantity: {

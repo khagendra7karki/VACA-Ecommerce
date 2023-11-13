@@ -37,40 +37,9 @@ const reviewController = {
             
             const finalProduct = await productSchema.findByIdAndUpdate( productId, { 
                 $set: { rating: averageRating.toFixed(1)}
-            },{new: true }).populate({ path: 'reviews.user', select: ['+fullName']}).lean()
+            },{new: true }).lean()
 
             console.log( finalProduct.rating  )
-
-
-            //aggregate version of the code
-            
-            // .aggregate( [
-            //     {$match: { _id: new mongoose.Types.ObjectId(productId) }}, 
-            //     { $set: { "review.reviews": { $concatArrays: ["$review.reviews", [{ ...review, createdAt: new Date() , updatedAt: new Date() }] ]}}},
-            //     { $set: { 
-            //         "rating": { 
-            //             $divide: [
-            //                 {
-            //                     $reduce: {
-            //                         input: "$review.reviews",
-            //                         initialValue: 0,
-            //                         in: {$add: [ "$$value", "$$this.rating"] }
-            //                     }
-            //                 }, 
-            //                 {
-            //                     "$cond": [
-            //                                 { "$ne": [ { "$size": "$review.reviews" }, 0 ] },
-            //                                 { "$size": "$review.reviews" }, 
-            //                                 1
-            //                         ]
-            //                 }
-            //             ]
-            //         }
-            //     }
-            // }
-            
-            // ]
-            // ).exec()
 
             res.status( 200).json( { status: 'successful', task: 'addReview', payload: finalProduct})
         }

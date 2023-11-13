@@ -112,8 +112,7 @@ export const Review: FC<MyProps> = ({ reviewM }): JSX.Element => {
                       comment={review.review}
                       date={review.createdAt}
                       id={review._id}
-                      // name={review.name}
-                      name={ review.user.fullName }
+                      name={ review.fullName }
                       rating={review.rating}
                       key={uuidv4()}
                     />

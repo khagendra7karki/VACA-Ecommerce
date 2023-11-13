@@ -6,6 +6,13 @@ const review = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
+
+    fullName: {
+        type: String,
+        requried: true
+    },
+
+
     review: {
          type: String,
          required: true

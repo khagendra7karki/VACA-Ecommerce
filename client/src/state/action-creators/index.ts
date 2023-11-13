@@ -196,7 +196,7 @@ export const addReview = (id: string, rating: number, comment: string) => {
         type: ActionType.ADD_REVIEW_REQUEST,
       });
 
-      const token = store.getState().user.userInfo.token;
+      const {token, fullName} = store.getState().user.userInfo;
 
       const config = {
         headers: {
@@ -210,7 +210,8 @@ export const addReview = (id: string, rating: number, comment: string) => {
       const reviewObject = {
         user: store.getState().user.userInfo._id,
         review: comment,
-        rating: rating
+        rating: rating,
+        fullName
       }
 
       // receive the updated product info

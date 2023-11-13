@@ -20,8 +20,9 @@ const MyReviews = () =>{
         <div>
             This one from my Reviews
             { userReview ? userReview?.map( (review: any )=>{
+                console.log( review )
                 return <ReviewCard key = { review.reviews._id } id = { review.reviews.id }
-                                   name = { 'Random Person'}
+                                   name = { review.reviews.fullName }
                                    date = { review.reviews.createdAt }
                                    comment = { review.reviews.review }
                                    rating = { review.reviews.rating } />

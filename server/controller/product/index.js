@@ -76,7 +76,7 @@ const productController = {
 
             const { id } = req.params
             // res.status(500).json({message: 'An error occurred'})
-            const product = await productSchema.findById( id ).populate({path: 'reviews.user' }).lean()
+            const product = await productSchema.findById( id ).lean()
             res.status(200).json( {task : 'getProductId',status:'unsuccessful', payload: product })
 
         }catch( error ){
