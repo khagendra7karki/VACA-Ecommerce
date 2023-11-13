@@ -30,8 +30,7 @@ const PlaceOrder = () => {
 
   cartItems.itemsPrice = addDecimals(
     cartItems.reduce((acc: any, item: any) => {
-      console.log( item.price )
-      return acc + item.price * item.quantity}, 0)
+      return acc + item.product.price * item.quantity}, 0)
   );
   cartItems.shippingPrice = addDecimals(cartItems.itemsPrice > 100 ? 0 : 100);
   cartItems.taxPrice = addDecimals(
@@ -152,7 +151,7 @@ const PlaceOrder = () => {
                               fit="contain"
                               height={40}
                               width={40}
-                              src={item.image}
+                              src={item.product.image[0]}
                             />
                           </Grid.Col>
                           <Grid.Col
@@ -160,7 +159,7 @@ const PlaceOrder = () => {
                             span={3}
                           >
                             <Text  style={{alignContent:"left"}} color="gray" >
-                              {item.title}
+                              {item.product.title}
                             </Text>
                           </Grid.Col>
                           <Grid.Col
@@ -172,7 +171,7 @@ const PlaceOrder = () => {
                             span={4}
                           >
                             <Text  style={{alignContent:"right"}} >
-                              {item.qty} x ${item.price}
+                              {item.quantity} x Rs. {item.product.price}
                             </Text>
                           </Grid.Col>
                         </Grid>
@@ -196,10 +195,10 @@ const PlaceOrder = () => {
                 </Grid.Col>
                 <Grid.Col span={6}>
                   <Text  style={{alignContent:"right"}}>
-                    ${" "}
+                    Rs. {" "}
                     {cartItems
                       .reduce(
-                        (acc: any, item: any) => acc + item.quantity * item.price,
+                        (acc: any, item: any) => acc + item.quantity * item.product.price,
                         0
                       )
                       .toFixed(2)}
@@ -213,7 +212,7 @@ const PlaceOrder = () => {
                   <Text>Tax (2%)</Text>
                 </Grid.Col>
                 <Grid.Col span={6}>
-                  <Text style={{alignContent:"right"}}>${cartItems.taxPrice}</Text>
+                  <Text style={{alignContent:"right"}}>Rs. {cartItems.taxPrice}</Text>
                 </Grid.Col>
               </Grid>
 
@@ -222,7 +221,7 @@ const PlaceOrder = () => {
                   <Text>Total</Text>
                 </Grid.Col>
                 <Grid.Col span={6}>
-                  <Text  style={{alignContent:"right"}}>${cartItems.totalPrice}</Text>
+                  <Text  style={{alignContent:"right"}}>Rs. {cartItems.totalPrice}</Text>
                 </Grid.Col>
               </Grid>
             </Card>

@@ -38,7 +38,7 @@ export const addToCart = (id: string, qty: number) => {
 
     const { data } = await axios.post(`http://localhost:5000/cart/addItem/${id}/${qty}`,{},config );
     console.log( ' car items \n',data.payload )
-    
+
     dispatch({
       type: ActionType.CART_SET,
       payload: data.payload
@@ -220,7 +220,10 @@ export const addReview = (id: string, rating: number, comment: string) => {
         config
       );
       
-      
+      dispatch({
+        type: ActionType.ADD_REVIEW_SUCCESS,
+        payload:data.payload 
+      })
 
     } catch (error: any) {
       dispatch({
@@ -400,6 +403,8 @@ export const createOrder = (
         shippingPrice,
         totalPrice,
       };
+
+      console.log(formData)
       const { data } = await axios.post("http://localhost:5000/order", formData, config);
 
  

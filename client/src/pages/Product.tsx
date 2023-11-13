@@ -18,7 +18,6 @@ import {
   Text,
 } from "@mantine/core";
 import classes from "./product.module.css";
-import { IoIosCloseCircle, IoIosUnlock } from "react-icons/io";
 
 import { useParams } from "react-router";
 import { bindActionCreators } from "redux";
@@ -29,7 +28,6 @@ import { ActionType } from "../state/action-types";
 import Loading from "../components/Loading";
 import Layout from "../Layout/Layout";
 import Review from "../components/reviews/Review";
-import { fontSizeResolver } from "@mantine/core/lib/core/Box/style-props/resolvers/font-size-resolver/font-size-resolver";
 
 const Product = () => {
   const params = useParams();
@@ -84,26 +82,14 @@ const Product = () => {
     // eslint-disable-next-line
   }, [reviewError]);
 
-  // useEffect(() => {
-  //   if (review && Object.keys(review).includes("message")) {
-  //     notifications.show({
-  //       title: "Success!",
-  //       message: review.message,
-  //       color: "green",
-  //     });
-  //   }
-  //   // eslint-disable-next-line
-  // }, [review]);
 
   useEffect(() => {
     getProduct(params.id as string);
   }, [dispatch, review, quickSearch]);
 
-  const pills = Array(4)
-    .fill(0)
-    .map((_, index) => (
+  const pills = product.size?.map(( size : string, index : number ) => (
       <Pill key={index} withRemoveButton>
-        size {index}
+        size {size}
       </Pill>
     ));
 
@@ -162,7 +148,7 @@ const Product = () => {
                   </Group>
                   <Space h="xs" />
                   <Group gap="lg">
-                    <Text>Rs - {product.price}</Text>
+                    <Text>Rs.  {product.price}</Text>
                     <Badge variant="outline">25% off</Badge>
                   </Group>
                   <Divider my="sm" />
