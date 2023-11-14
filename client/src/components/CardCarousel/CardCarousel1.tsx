@@ -20,7 +20,7 @@ interface Product {
 function Cardslide1() {
     const dispatch = useDispatch();
     const { getProducts } = bindActionCreators(actionCreators, dispatch);
-    const { products, error, loading } = useSelector(
+    const { products } = useSelector(
         (state: State) => state.products
       
       );
@@ -32,8 +32,8 @@ function Cardslide1() {
 
   
     const cards =
-    products.products ? (
-    products.products.map((product : Product ) => (
+    products ? (
+    products.map((product : Product ) => (
       <Carousel.Slide >
         <Container style={{height:'600px', display:'flex', }}>
       <ProductsCard product = { product } key = { uuidv4()}/>
@@ -57,11 +57,6 @@ function Cardslide1() {
     >
        
         {cards}
-    
-       {/* {cards} */}
-      {/* <Carousel.Slide>1</Carousel.Slide>
-       <Carousel.Slide>2</Carousel.Slide>
-      <Carousel.Slide>3</Carousel.Slide> */}
    
     </Carousel>
   );

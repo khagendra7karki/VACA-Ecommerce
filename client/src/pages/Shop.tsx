@@ -1,16 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React, {  useState } from 'react'
 import { Group, Pagination, Space } from '@mantine/core'
 import Products from '../components/Products'
+
 export default function Shop() {
   const [activePage, setPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
+  
   const pageFunction = (data: number) => {
     setTotalPages(data);
   };
-  useEffect(() => {
-    // Update the document title using the browser API
-    console.log(activePage)
-  });
+
   return (
     <div >
       <Products page = {activePage} pages = {pageFunction} />

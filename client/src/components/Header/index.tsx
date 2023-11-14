@@ -1,7 +1,6 @@
-import { Autocomplete, Group, Burger, rem, Divider } from '@mantine/core';
+import { Group, Burger, rem, Divider } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 
-import { MantineLogo } from '@mantine/ds';
 import classes from './HeaderSearch.module.css';
 import  Vaca from '../../assets/img/vaca.png'
 import { useEffect, useState } from 'react';

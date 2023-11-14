@@ -52,14 +52,6 @@ const Product = () => {
     error: reviewError,
   } = useSelector((state: State) => state.review);
 
-  // const handlerAddReview = (values: any) => {
-  //   const { rating, comment } = values;
-  //   addReview(params.id as string, parseInt(rating), comment);
-  //   setOpened(false);
-  //   dispatch({
-  //     type: ActionType.ADD_REVIEW_RESET,
-  //   });
-  // };
 
   const handlerAddToCart = (quantity: number, id: string) => {
     addToCart(id, quantity);

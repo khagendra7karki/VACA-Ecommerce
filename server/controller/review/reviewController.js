@@ -39,12 +39,11 @@ const reviewController = {
                 $set: { rating: averageRating.toFixed(1)}
             },{new: true }).lean()
 
-            console.log( finalProduct.rating  )
 
             res.status( 200).json( { status: 'successful', task: 'addReview', payload: finalProduct})
         }
         catch( error){
-            console.log( 'An error occurred', error )
+            console.log( 'An error occurred in addReiew', error )
         }
    },
 
@@ -75,7 +74,7 @@ const reviewController = {
             res.status( 200).json( { status: 'successful', task: 'addReview', payload: product})
         }
         catch( error){
-            console.log( 'An error occurred', error )
+            console.log( 'An error occurred occurred in removeRevieww', error )
         }
    }
 }

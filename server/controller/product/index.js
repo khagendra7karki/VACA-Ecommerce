@@ -24,7 +24,7 @@ const productController = {
               .limit(pageSize)
               .skip(pageSize * (page - 1));
           
-            res.status(200).json({ products, page, pages: Math.ceil(count / pageSize) });
+            res.status(200).json( {payload : { products, page, pages: Math.ceil(count / pageSize) }});
             
             // const products = await productSchema.find({}).limit( 20 )
             // res.status(200).json({ task: 'getProduct', status:'successful', payload: products})

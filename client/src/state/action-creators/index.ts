@@ -137,7 +137,7 @@ export const getProducts = (page: number) => {
       const { data } = await axios.get(`http://localhost:5000/getProducts?pageNumber=${page}`);
       dispatch({
         type: ActionType.GET_PRODUCTS_SUCCESS,
-        payload: data,
+        payload: data.payload,
       });
     } catch (error: any) {
       dispatch({

@@ -16,7 +16,6 @@ const User : React.FC = () =>{
         <div style = {{display:"flex"}}>
             <UserNavBar/>
             <Outlet/>
-
         </div>
     </>
 
