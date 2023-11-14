@@ -1,8 +1,8 @@
-import { useDispatch, useSelector } from "react-redux"
-import { State, actionCreators } from "../../../state"
-import { bindActionCreators } from "redux"
-import { useEffect } from "react"
-import ReviewCard from "../../../components/reviews/ReviewCard"
+import { useDispatch, useSelector } from "react-redux";
+import { State, actionCreators } from "../../../state";
+import { bindActionCreators } from "redux";
+import { useEffect } from "react";
+import ReviewCard from "../../../components/reviews/ReviewCard";
 
 const MyReviews = () =>{
     const dispatch = useDispatch()
@@ -21,11 +21,12 @@ const MyReviews = () =>{
             This one from my Reviews
             { userReview ? userReview?.map( (review: any )=>{
                 console.log( review )
-                return <ReviewCard key = { review.reviews._id } id = { review.reviews.id }
-                                   name = { review.reviews.fullName }
-                                   date = { review.reviews.createdAt }
-                                   comment = { review.reviews.review }
-                                   rating = { review.reviews.rating } />
+                return <ReviewCard key = { review._id } id = { review.id }
+                                   name = { review.fullName }
+                                   date = { review.createdAt }
+                                   comment = { review.review }
+                                   rating = { review.rating }
+                        />
 
             }): ''}
         </div>

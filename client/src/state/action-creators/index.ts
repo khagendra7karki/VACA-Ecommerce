@@ -86,8 +86,11 @@ export const updateCart = ( id: string, qty : number ) =>{
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-      };
+    };
+    console.log( { id , token })
     
+
+  
     const { data } = await axios.post(`http://localhost:5000/cart/updateItem/${id}/${qty}`,{},config );
 
     dispatch({
@@ -170,16 +173,18 @@ export const quickSearchProducts = (keyword: number) => {
 export const getProduct = (id: string) => {
   return async (dispatch: Dispatch<Action>) => {
     try {
+
       dispatch({
         type: ActionType.GET_PRODUCT_REQUEST,
       });
    
       const { data } = await axios.get(`http://localhost:5000/getProduct/${id}`);
-      console.log( data.payload )
+
       dispatch({
         type: ActionType.GET_PRODUCT_SUCCESS,
         payload: data.payload,
       });
+
     } catch (error: any) {
       dispatch({
         type: ActionType.GET_PRODUCT_FAIL,

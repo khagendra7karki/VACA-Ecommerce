@@ -33,9 +33,7 @@ const Cart = () => {
   );
 
   const handlerUpdateCartItems = (value: number, id: string) => {
-    console.log( 'from cart item update handler \n',  id, value )
     updateCart(id, value);
-    // dispatch( addToCart( id, value ))
   };
 
   const selectItem = (id: string) => {
@@ -47,7 +45,6 @@ const Cart = () => {
     setOpened(false);
     console.log( id )
     removeFromCart(id);
-    // dispatch(removeFromCart(id));
   };
 
   return (
@@ -108,7 +105,6 @@ const Cart = () => {
                       value={item.quantity}
                       ref={numRef}
                       onChange={(e) =>{
-                        // console.log( 'From update Cart Items \n', e )
                         handlerUpdateCartItems(e as number, item.product )
                       }
                       }

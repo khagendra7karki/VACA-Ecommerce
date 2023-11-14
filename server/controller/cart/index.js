@@ -74,14 +74,19 @@ const cartController = {
         try{
             const userId = res.locals.user._id
             const { id, qty } = req.params
+
             let user = await userSchema.findByIdAndUpdate( userId, 
                 {$set: { "cart.$[inner].quantity": qty }},
                 { arrayFilters: [ {"inner.product" : new mongoose.Types.ObjectId( id ) }], new: true}
                 ).lean()
+            
             res.status( 200 ).json({status: 'successful', task: 'update Cart', payload: user.cart })
+        
         }catch( error ){
+            
             console.log('Error while pushing item to cart', error );
             res.status(500).json({ status:'unsuccessful', task: 'addItem', reason: 'Internal Error'})
+            
         }
     
     }

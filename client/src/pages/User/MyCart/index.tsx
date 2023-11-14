@@ -1,6 +1,9 @@
+import Cart from "../../Cart"
+
 const MyCart = () =>{
     return<>
         <div>
+            <Cart />
             Hello World
         </div>
     </>

@@ -48,8 +48,6 @@ const userController = {
             const { accessToken , ...user } = req.body;
             console.log( user )            
 
-            // console.log( `The access token is`, accessToken )
-            //hash user password
             if( user.password ){
                 user.password = await hashPassword( user.password, SALT_ROUND );
             }
@@ -77,7 +75,7 @@ const userController = {
      */
     login: async( req, res ) =>{
         try{            
-            const user = await User.findOne( {email: req.body.email} ).populate({path: 'cart.product', select: '-reviews'}).select('+password').lean()
+            const user = await User.findOne( {email: req.body.email} ).select('+password').lean()
             // console.log( 'User object', user );
             if( !user ) return res.status( 401 ).json( {status: 'unsuccessful', task: 'login', reason: 'Invalid Credentials'} )
             
@@ -111,7 +109,7 @@ const userController = {
             const { fullName, email, oldPassword, newPassword, phoneNumber } = req.body
             
             console.log( fullName, email, oldPassword, newPassword, phoneNumber ) 
-            const user = await User.findById( _id ).select('+password').lean()
+            const user = await User.findById( _id ).select('+password')
 
             user.fullName = fullName;
             user.email = email
@@ -131,7 +129,7 @@ const userController = {
 
             }
  
-
+ 
 
         }catch( error ){
             console.log('An errorr occurred at updateProfile', error )
@@ -145,16 +143,16 @@ const userController = {
 
             const reviews = await Product.aggregate([
                 {$match: {'reviews.user': new mongoose.Types.ObjectId(_id) }},
-                {$unwind:  '$reviews'},
-
-                {$project: {_id: false, reviews: 1}}
+                {$unwind: '$reviews'},
+                {$project:  {id: '$reviews._id',
+                             user :'$reviews.user',
+                             rating: '$reviews.rating',
+                             review: '$reviews.review',
+                             fullName: '$reviews.fullName'}},
 
             ]).exec()
             
             return res.status(200).json({ status: 'successful', task: 'getReviews', payload:  reviews || 'no Reviews' })
-
-
-
 
         }catch( error ){
             console.log('An errorr occurred at getReviews', error )
