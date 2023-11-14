@@ -29,7 +29,6 @@ const cartController = {
 
             if( !user ) return res.status(500).json({ status:'unsuccessful', task: 'addItem', reason: 'Internal Error'})
 
-            console.log( user.cart )
             return res.status(200).json({status: 'successful', task: 'addItem', payload: user.cart })
         }
         catch( error ){

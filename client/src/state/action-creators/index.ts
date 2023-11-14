@@ -44,10 +44,6 @@ export const addToCart = (id: string, qty: number) => {
       payload: data.payload
     })
 
-    localStorage.setItem(
-      "cartItems",
-      JSON.stringify(store.getState().cart.cartItems)
-    );
   };
 };
 
@@ -70,10 +66,6 @@ export const removeFromCart = (id: string) => {
       payload: data.payload,
     });
 
-    localStorage.setItem(
-      "cartItems",
-      JSON.stringify(store.getState().cart.cartItems)
-    );
   };
 };
 
@@ -98,10 +90,6 @@ export const updateCart = ( id: string, qty : number ) =>{
       payload: data.payload,
     });
 
-    localStorage.setItem(
-      "cartItems",
-      JSON.stringify(store.getState().cart.cartItems)
-    );
   };
 
 }
@@ -113,7 +101,6 @@ export const saveShippingAddress = (data: any) => {
       payload: data,
     });
 
-    localStorage.setItem("shippingAddress", JSON.stringify(data));
   };
 };
 
@@ -291,7 +278,6 @@ export const register = (fullName: string, email: string, password: string) => {
             type: ActionType.GET_USER_SUCCESS,
             payload: res.data.payload
           })
-          localStorage.setItem("userInfo", JSON.stringify(res.data.payload ));
         })
       })
 
@@ -333,7 +319,6 @@ export const login = (email: string, password: string) => {
       // response
       const { cart, wishList, ...user } = data.payload 
       
-      console.log( 'from action creator', cart, wishList)
       // add userInfo to 
       // redux store
       dispatch({
@@ -359,11 +344,6 @@ export const login = (email: string, password: string) => {
         type: ActionType.CART_SET,
         payload: cart,
       })
-
-      localStorage.setItem("cartItems", JSON.stringify( cart ))
-      console.log( 'login response payload', data )
-      
-      //add 
 
     } catch (error: any) {
 
@@ -831,10 +811,7 @@ export const logout = () => {
 
     //remove info from localStorage
 
-    localStorage.removeItem("cartItems")
-    localStorage.removeItem("paymentMethod")
     localStorage.removeItem("userInfo");
-    localStorage.removeItem("shippingAddress")
     
     
     dispatch({ type: ActionType.USER_LOGOUT, payload: {} });
