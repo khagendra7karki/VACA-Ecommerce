@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { bindActionCreators } from "redux";
 
@@ -19,7 +19,6 @@ import {
   Anchor,
 } from "@mantine/core";
 import classes from "./Signin.module.css";
-import Layout from "../../Layout/Layout";
 import { notifications } from "@mantine/notifications";
 import { useForm } from "@mantine/form";
 
@@ -92,63 +91,61 @@ export default function Signin() {
   }
 
   return (
-    <Layout>
-      <form
-       onSubmit={form.onSubmit((values) => handlerLogin(values))}
-       //onSubmit={form.onSubmit(console.log)}
-       >
-        <div className={classes.wrapper}>
-          <Paper className={classes.form} radius={0} p={30}>
-            <Title
-              order={2}
-              className={classes.title}
-              ta="center"
-              mt="md"
-              mb={50}
-            >
-              Welcome back to VACA
-            </Title>
+    <form
+      onSubmit={form.onSubmit((values) => handlerLogin(values))}
+      //onSubmit={form.onSubmit(console.log)}
+      >
+      <div className={classes.wrapper}>
+        <Paper className={classes.form} radius={0} p={30}>
+          <Title
+            order={2}
+            className={classes.title}
+            ta="center"
+            mt="md"
+            mb={50}
+          >
+            Welcome back to VACA
+          </Title>
 
-            <TextInput
-              label="Email address"
-              placeholder="hello@gmail.com"
-              size="md"
-              {...form.getInputProps("email")}
-            />
-            <PasswordInput
-              label="Password"
-              placeholder="Your password"
-              mt="md"
-              size="md"
-              {...form.getInputProps("password")}
-            />
-            <Checkbox label="Keep me logged in" mt="xl" size="md" />
-            <Button fullWidth type="submit" mt="xl" size="md">
-              Login
-            </Button>
+          <TextInput
+            label="Email address"
+            placeholder="hello@gmail.com"
+            size="md"
+            {...form.getInputProps("email")}
+          />
+          <PasswordInput
+            label="Password"
+            placeholder="Your password"
+            mt="md"
+            size="md"
+            {...form.getInputProps("password")}
+          />
+          <Checkbox label="Keep me logged in" mt="xl" size="md" />
+          <Button fullWidth type="submit" mt="xl" size="md">
+            Login
+          </Button>
 
-            <Button fullWidth mt = 'xl' onClick = { googleLogin }>
-              Login With Google
-            </Button>
+          <Button fullWidth mt = 'xl' onClick = { googleLogin }>
+            Login With Google
+          </Button>
 
-            <Text ta="center" mt="md">
-              Don&apos;t have an account?{" "}
-              <Anchor
-               // href="/signup"
-                //target="_blank"
-                underline="hover"
-                onClick={(event) => {
-                 // event.preventDefault()
-                  navigate("/signup")
-                }
+          <Text ta="center" mt="md">
+            Don&apos;t have an account?{" "}
+            <Anchor
+              // href="/signup"
+              //target="_blank"
+              underline="hover"
+              onClick={(event) => {
+                // event.preventDefault()
+                navigate("/signup")
               }
-              >
-                Register
-              </Anchor>
-            </Text>
-          </Paper>
-        </div>
-      </form>
-    </Layout>
+            }
+            >
+              Register
+            </Anchor>
+          </Text>
+        </Paper>
+      </div>
+    </form>
   );
 }

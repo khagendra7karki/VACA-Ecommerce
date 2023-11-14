@@ -14,7 +14,6 @@ import {
 } from "@mantine/core";
 import { RiShoppingBagLine } from "react-icons/ri";
 import { BiTrashAlt } from "react-icons/bi";
-import Layout from "../Layout/Layout";
 import { v4 as uuidv4 } from 'uuid';
 
 
@@ -48,129 +47,127 @@ const Cart = () => {
   };
 
   return (
-    <Layout>
-      <div className="cart-container">
-        <Modal
-          title="Delete Item?"
-          size="lg"
-          onClose={() => setOpened(false)}
-          opened={opened}
-        >
-          <Text size="sm">Are you sure that you want to remove this item?</Text>
-          <div className="button-container">
-            <Button
-              onClick={() => setOpened(false)}
-              color="gray"
-              size="lg"
-              fullWidth
-            >
-              Cancel
-            </Button>
-            <Button
-              onClick={() => handlerDeleteCartItem(selectedItem)}
-              color="red"
-              size="lg"
-              fullWidth
-            >
-              Yes
-            </Button>
-          </div>
-        </Modal>
-        <div className="grid-container">
-          {cartItems && cartItems.length ? (
-            cartItems.map((item: any, index: number) => {
+    <div className="cart-container">
+      <Modal
+        title="Delete Item?"
+        size="lg"
+        onClose={() => setOpened(false)}
+        opened={opened}
+      >
+        <Text size="sm">Are you sure that you want to remove this item?</Text>
+        <div className="button-container">
+          <Button
+            onClick={() => setOpened(false)}
+            color="gray"
+            size="lg"
+            fullWidth
+          >
+            Cancel
+          </Button>
+          <Button
+            onClick={() => handlerDeleteCartItem(selectedItem)}
+            color="red"
+            size="lg"
+            fullWidth
+          >
+            Yes
+          </Button>
+        </div>
+      </Modal>
+      <div className="grid-container">
+        {cartItems && cartItems.length ? (
+          cartItems.map((item: any, index: number) => {
 
-              return (
-                <Card className="cart-card" key={uuidv4()}>
-                  <div className="grid-item">
-                    <Image
-                      fit="contain"
-                      radius="lg"
-                      height={50}
-                      width={50}
-                      src={item.image}
-                    />
+            return (
+              <Card className="cart-card" key={uuidv4()}>
+                <div className="grid-item">
+                  <Image
+                    fit="contain"
+                    radius="lg"
+                    height={50}
+                    width={50}
+                    src={item.image}
+                  />
+                </div>
+                <div className="grid-item">
+                  <div className="item-name">{item.title}</div>
+                </div>
+                <div className="grid-item">
+                  <div className="item-price">
+                    Rs. {item.price}x {item.quantity}
                   </div>
-                  <div className="grid-item">
-                    <div className="item-name">{item.title}</div>
-                  </div>
-                  <div className="grid-item">
-                    <div className="item-price">
-                      Rs. {item.price}x {item.quantity}
-                    </div>
-                  </div>
-                  <div className="grid-item">
-                    <NumberInput
-                      radius="lg"
-                      value={item.quantity}
-                      ref={numRef}
-                      onChange={(e) =>{
-                        handlerUpdateCartItems(e as number, item.product )
-                      }
-                      }
-                      min={1}
-                      //max={item.countInStock}
-                      max={5}
-                      required
-                    />
-                  </div>
-                  <div className="grid-item">
-                    <Button
-                      size="sm"
-                      radius="lg"
-                      variant="filled"
-                      color="red"
-                      onClick={() => selectItem(item.product)}
-                      fullWidth
-                    >
-                      <BiTrashAlt />
-                    </Button>
-                  </div>
-                </Card>
-              );
-            })
-          ) : (
-            <Alert
-              icon={<RiShoppingBagLine size={16} />}
-              style={{ marginTop: "1rem" }}
-              color="blue"
-              radius="lg"
-            >
-              No items in the cart
-            </Alert>
-          )}
-        </div>
-        <div className="subtotal-container">
-          <Card radius="lg" shadow="xl" withBorder>
-            <Text style={{ marginBottom: "1rem" }}>
-              Subtotal
-              ({cartItems.reduce((acc: any, item: any) => acc + item.quantity, 0)})
-              Items
-            </Text>
-            <Text size="xl" style={{ marginTop: ".5rem" }}>
-              Rs. 
-              {cartItems
-                .reduce((acc: any, item: any) => acc + item.quantity * item.price, 0)
-                .toFixed(2)
-              }
-            </Text>
-            {cartItems && cartItems.length ? (
-              <Button
-                style={{ marginTop: ".5rem" }}
-                color="dark"
-                size="lg"
-                fullWidth
-                onClick={() => navigate("/shipping")}
-              >
-                Proceed to Checkout
-              </Button>
-            ) : (
-              <></>
-            )}
-          </Card>
-        </div>
+                </div>
+                <div className="grid-item">
+                  <NumberInput
+                    radius="lg"
+                    value={item.quantity}
+                    ref={numRef}
+                    onChange={(e) =>{
+                      handlerUpdateCartItems(e as number, item.product )
+                    }
+                    }
+                    min={1}
+                    //max={item.countInStock}
+                    max={5}
+                    required
+                  />
+                </div>
+                <div className="grid-item">
+                  <Button
+                    size="sm"
+                    radius="lg"
+                    variant="filled"
+                    color="red"
+                    onClick={() => selectItem(item.product)}
+                    fullWidth
+                  >
+                    <BiTrashAlt />
+                  </Button>
+                </div>
+              </Card>
+            );
+          })
+        ) : (
+          <Alert
+            icon={<RiShoppingBagLine size={16} />}
+            style={{ marginTop: "1rem" }}
+            color="blue"
+            radius="lg"
+          >
+            No items in the cart
+          </Alert>
+        )}
       </div>
-    </Layout>
+      <div className="subtotal-container">
+        <Card radius="lg" shadow="xl" withBorder>
+          <Text style={{ marginBottom: "1rem" }}>
+            Subtotal
+            ({cartItems.reduce((acc: any, item: any) => acc + item.quantity, 0)})
+            Items
+          </Text>
+          <Text size="xl" style={{ marginTop: ".5rem" }}>
+            Rs. 
+            {cartItems
+              .reduce((acc: any, item: any) => acc + item.quantity * item.price, 0)
+              .toFixed(2)
+            }
+          </Text>
+          {cartItems && cartItems.length ? (
+            <Button
+              style={{ marginTop: ".5rem" }}
+              color="dark"
+              size="lg"
+              fullWidth
+              onClick={() => navigate("/shipping")}
+            >
+              Proceed to Checkout
+            </Button>
+          ) : (
+            <></>
+          )}
+        </Card>
+      </div>
+    </div>
   );
 };
 

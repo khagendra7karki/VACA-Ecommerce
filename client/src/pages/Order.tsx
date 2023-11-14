@@ -26,7 +26,6 @@ import { useEffect, useState } from "react";
 
 
 import { ActionType } from "../state/action-types";
-import Layout from "../Layout/Layout";
 
 const Order = () => {
   const params = useParams();
@@ -79,7 +78,7 @@ const Order = () => {
   }, [dispatch, success]);
 
   return (
-    <Layout>
+    <>
       {/* <Head title={`Order ${params.order}`} /> */}
       {order && Object.keys(order).length ? (
         <Card withBorder shadow="sm" radius="lg" padding="xl">
@@ -337,7 +336,7 @@ const Order = () => {
       ) : (
         <Loader />
       )}
-    </Layout>
+    </>
   );
 };
 

@@ -16,7 +16,6 @@ import { useForm } from '@mantine/form';
 import { useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { State, actionCreators } from '../../state'
-import Layout from '../../Layout/Layout';
   
 interface credential {
   email: string,
@@ -46,56 +45,54 @@ export function Signup() {
   }
 
   return (
-    <Layout>
-      <form onSubmit = { form.onSubmit(( values ) => { handleSubmit( values )})}>
-        <div className={classes.wrapper}>
-          <Paper className={classes.form} radius={0} p={30}>
-            <Title order={2} className={classes.title} ta="center" mt="md" mb={50}>
-              Welcome back to Mantine!
-            </Title>
+    <form onSubmit = { form.onSubmit(( values ) => { handleSubmit( values )})}>
+      <div className={classes.wrapper}>
+        <Paper className={classes.form} radius={0} p={30}>
+          <Title order={2} className={classes.title} ta="center" mt="md" mb={50}>
+            Welcome back to Mantine!
+          </Title>
 
-            <TextInput 
-              label="Email address" 
-              placeholder="Ram Sharma" 
-              size="md"
-              {...form.getInputProps("fullName")}
-              />
-            
-            <TextInput 
-              label="Email address" 
-              placeholder="hello@gmail.com" 
-              size="md"
-              {...form.getInputProps("email")}
-              />
-            
-            <PasswordInput 
-              label="Password" 
-              placeholder="Your password" 
-              mt="md"
-              size="md"
-              {...form.getInputProps("password")} 
-              />
-            
-            <Checkbox label="Keep me logged in" mt="xl" size="md" />
-            <Button 
-              fullWidth mt="xl" 
-              size="md"
-              type = 'submit'
-              >
-                      
-              Register
-            </Button>
+          <TextInput 
+            label="Email address" 
+            placeholder="Ram Sharma" 
+            size="md"
+            {...form.getInputProps("fullName")}
+            />
+          
+          <TextInput 
+            label="Email address" 
+            placeholder="hello@gmail.com" 
+            size="md"
+            {...form.getInputProps("email")}
+            />
+          
+          <PasswordInput 
+            label="Password" 
+            placeholder="Your password" 
+            mt="md"
+            size="md"
+            {...form.getInputProps("password")} 
+            />
+          
+          <Checkbox label="Keep me logged in" mt="xl" size="md" />
+          <Button 
+            fullWidth mt="xl" 
+            size="md"
+            type = 'submit'
+            >
+                    
+            Register
+          </Button>
 
-            <Text ta="center" mt="md">
-              Alread have an account?{' '}
-              <Anchor<'a'> href="#" fw={700} onClick={(event) => navigate('/login')}>
-                Login
-              </Anchor>
-            </Text>
-          </Paper>
-        </div>
-      </form>
+          <Text ta="center" mt="md">
+            Alread have an account?{' '}
+            <Anchor<'a'> href="#" fw={700} onClick={(event) => navigate('/login')}>
+              Login
+            </Anchor>
+          </Text>
+        </Paper>
+      </div>
+    </form>
 
-    </Layout>
   );
 }

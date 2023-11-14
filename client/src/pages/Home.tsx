@@ -1,8 +1,5 @@
 import React from 'react'
 
-
-import { Footer } from '../components/Footer'
-import Products from '../components/Products'
 import Layout from '../Layout/Layout'
 import Slider from '../components/Carousel'
 import Cardslide1 from '../components/CardCarousel/CardCarousel1'
@@ -10,7 +7,6 @@ import Cardslide2 from '../components/CardCarousel/CardCarousel2'
 import { Space, Stack, Text } from '@mantine/core'
 export default function Home() {
   return (
-  <Layout> 
     <Stack
       //h={300}
       bg="var(--mantine-color-blue-light)"
@@ -28,7 +24,6 @@ export default function Home() {
    <Space h="xl" />
     </Stack>
     
-   </Layout>
  
   )
 }

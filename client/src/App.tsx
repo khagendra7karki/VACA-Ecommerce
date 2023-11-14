@@ -3,7 +3,7 @@ import './App.css';
 import Login from './pages/Login'
 import {Signup} from './pages/SignUp'
 import Home from './pages/Home'
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 import Shop from './pages/Shop';
 import { Notifications } from '@mantine/notifications';
 import '@mantine/core/styles.css';
@@ -25,10 +25,17 @@ import UserProfile from './pages/User/UserProfile';
 import MyWishList from './pages/User/MyWishList';
 import MyCart from './pages/User/MyCart';
 import MyReviews from './pages/User/MyReviews';
+import Layout from './Layout/Layout';
 
-const theme = createTheme({
-  /** Put your mantine theme override here */
-});
+const Root = () =>{ 
+  return <>
+    <Layout>
+      <Outlet />
+    </Layout>
+  </>
+}
+
+
 
 function App() {
   /**
@@ -44,43 +51,47 @@ function App() {
   return (
     <div >
       <Provider store={store} >
-      <MantineProvider theme={theme}>
+      <MantineProvider>
     <Notifications />
     <BrowserRouter>
             <Routes>
-              <Route index element={<Home />} />
-              <Route path="/" element={<Home />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<Signup />} />
-              {/* <Route path="/profile" element={<Shop />} /> */}
-              <Route path="/shop" element={<Shop />} />
-              <Route path="/contact" element={<ContactUs />} />
-              <Route path="/cart" element={<Cart />} />
-              <Route path="/product/:id" element={<Product />} />
-               <Route path="/shipping" element={<Shipping />} />
-              <Route path="/payment" element={<Payment />} />
-              <Route path="/placeorder" element={<PlaceOrder />} />
-              <Route path="/order/:order" element={<Order />} />
+              <Route path = '/' element = { <Root /> } >
+                <Route index element={<Home />} />
+                <Route path="/" element={<Home />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<Signup />} />
+                {/* <Route path="/profile" element={<Shop />} /> */}
+                <Route path="/shop" element={<Shop />} />
+                <Route path="/contact" element={<ContactUs />} />
+                <Route path="/cart" element={<Cart />} />
+                <Route path="/product/:id" element={<Product />} />
+                <Route path="/shipping" element={<Shipping />} />
+                <Route path="/payment" element={<Payment />} />
+                <Route path="/placeorder" element={<PlaceOrder />} />
+                <Route path="/order/:order" element={<Order />} />
 
 
-              {/* User Routes */}
-              <Route path = '/user/:id/' element = {< User /> } >
+                {/* User Routes */}
+                <Route path = '/user/:id/' element = {< User /> } >
 
-                <Route path = 'myProfile' element = { <UserProfile /> } />
-                <Route path = 'addressBook'/>
-                <Route path = 'myReturns' element = { <UserProfile /> } />
-                <Route path = 'myCancellation' element = { <UserProfile /> } />
-                <Route path = 'myReviews' element = { <MyReviews /> } />
-                <Route path = 'myWishlist' element = { <MyWishList /> } />
-                <Route path = 'myCart' element = { <MyCart /> } />
+                  <Route path = 'myProfile' element = { <UserProfile /> } />
+                  <Route path = 'addressBook'/>
+                  <Route path = 'myReturns' element = { <UserProfile /> } />
+                  <Route path = 'myCancellation' element = { <UserProfile /> } />
+                  <Route path = 'myReviews' element = { <MyReviews /> } />
+                  <Route path = 'myWishlist' element = { <MyWishList /> } />
+                  <Route path = 'myCart' element = { <MyCart /> } />
 
-                
+                  
+                </Route>
+
               </Route>
               
 
-              </Routes></BrowserRouter>
+              </Routes>
+      </BrowserRouter>
     </MantineProvider>
-      </Provider>
+    </Provider>
      
      
     </div>
