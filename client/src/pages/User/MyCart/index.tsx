@@ -2,9 +2,8 @@ import Cart from "../../Cart"
 
 const MyCart = () =>{
     return<>
-        <div>
+        <div style = {{width: '100%',height: '100%', margin: 'auto', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
             <Cart />
-            Hello World
         </div>
     </>
 }

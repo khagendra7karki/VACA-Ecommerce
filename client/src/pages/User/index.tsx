@@ -2,7 +2,7 @@
  * TODO
  * 
  * Add frontend Authentication 
- * 
+* 
  */
 import React from 'react'
 import { Outlet } from 'react-router-dom'
@@ -13,13 +13,11 @@ import Layout from '../../Layout/Layout'
 const User : React.FC = () =>{
     
     return <>
-        <Layout>
-            <div style = {{display:"flex"}}>
-                <UserNavBar/>
-                <Outlet/>
+        <div style = {{display:"flex"}}>
+            <UserNavBar/>
+            <Outlet/>
 
-            </div>
-        </Layout>
+        </div>
     </>
 
 }

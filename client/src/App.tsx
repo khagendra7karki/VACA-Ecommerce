@@ -72,6 +72,7 @@ function App() {
 
 
                 {/* User Routes */}
+                
                 <Route path = '/user/:id/' element = {< User /> } >
 
                   <Route path = 'myProfile' element = { <UserProfile /> } />
