@@ -27,20 +27,20 @@ const PlaceOrder = () => {
     return parseInt((Math.round(num * 100) / 100).toFixed(2));
   };
 
-  cartItems.itemsPrice = addDecimals(
+  const itemsPrice = addDecimals(
     cartItems.reduce((acc: any, item: any) => {
-      return acc + item.product.price * item.quantity}, 0)
+      return acc + item.price * item.quantity}, 0)
   );
-  cartItems.shippingPrice = addDecimals(cartItems.itemsPrice > 100 ? 0 : 100);
-  cartItems.taxPrice = addDecimals(
-    Number((0.15 * cartItems.itemsPrice).toFixed(2))
+  const shippingPrice = addDecimals(itemsPrice > 100 ? 0 : 100);
+  
+  const taxPrice = addDecimals(
+    Number((0.15 * itemsPrice).toFixed(2))
   );
-  const { itemsPrice , shippingPrice, taxPrice } = cartItems
-  // console.log( itemsPrice, shippingPrice, taxPrice )
-  cartItems.totalPrice = (
-    Number(cartItems.itemsPrice) +
-    Number(cartItems.shippingPrice) +
-    Number(cartItems.taxPrice)
+
+  const totalPrice = (
+    Number(itemsPrice) +
+    Number(shippingPrice) +
+    Number(taxPrice)
   ).toFixed(2);
   
   const handlerOrderCreate = () => {
@@ -49,15 +49,14 @@ const PlaceOrder = () => {
         cartItems,
         shippingAddress,
         paymentMethod,
-        cartItems.itemsPrice,
-        cartItems.taxPrice,
-        cartItems.shippingPrice,
-        cartItems.totalPrice
+        itemsPrice,
+        taxPrice,
+        shippingPrice,
+        totalPrice
       )
     
   };
   useEffect(() => {
-    console.log( orderCreate )
     if (Object.keys(orderCreate).length) {  
       navigate(`/order/${orderCreate._id}`);
     }
@@ -147,7 +146,7 @@ const PlaceOrder = () => {
                             fit="contain"
                             height={40}
                             width={40}
-                            src={item.product.image[0]}
+                            src={item.image }
                           />
                         </Grid.Col>
                         <Grid.Col
@@ -155,7 +154,7 @@ const PlaceOrder = () => {
                           span={3}
                         >
                           <Text  style={{alignContent:"left"}} color="gray" >
-                            {item.product.title}
+                            {item.title}
                           </Text>
                         </Grid.Col>
                         <Grid.Col
@@ -167,7 +166,7 @@ const PlaceOrder = () => {
                           span={4}
                         >
                           <Text  style={{alignContent:"right"}} >
-                            {item.quantity} x Rs. {item.product.price}
+                            {item.quantity} x Rs. {item.price}
                           </Text>
                         </Grid.Col>
                       </Grid>
@@ -194,7 +193,7 @@ const PlaceOrder = () => {
                   Rs. {" "}
                   {cartItems
                     .reduce(
-                      (acc: any, item: any) => acc + item.quantity * item.product.price,
+                      (acc: any, item: any) => acc + item.quantity * item.price,
                       0
                     )
                     .toFixed(2)}
@@ -208,7 +207,7 @@ const PlaceOrder = () => {
                 <Text>Tax (2%)</Text>
               </Grid.Col>
               <Grid.Col span={6}>
-                <Text style={{alignContent:"right"}}>Rs. {cartItems.taxPrice}</Text>
+                <Text style={{alignContent:"right"}}>Rs. {taxPrice}</Text>
               </Grid.Col>
             </Grid>
 
@@ -217,7 +216,7 @@ const PlaceOrder = () => {
                 <Text>Total</Text>
               </Grid.Col>
               <Grid.Col span={6}>
-                <Text  style={{alignContent:"right"}}>Rs. {cartItems.totalPrice}</Text>
+                <Text  style={{alignContent:"right"}}>Rs. {totalPrice}</Text>
               </Grid.Col>
             </Grid>
           </Card>

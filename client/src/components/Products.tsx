@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { bindActionCreators } from "redux";
 import { actionCreators, State } from "../state";
-import { useNavigate } from "react-router";
 import { ProductsCard } from './ProductsCard';
 import { v4 as uuidv4 } from 'uuid';
 

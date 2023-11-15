@@ -4,7 +4,7 @@ import { Action } from "../actions/index";
 
 const cartReducer = (
   state = {
-    cartItems: [],
+    cartItems: [] as Array<any>,
     shippingAddress: {},
     paymentMethod: {},
   },
