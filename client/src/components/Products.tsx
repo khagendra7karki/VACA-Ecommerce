@@ -12,6 +12,7 @@ interface Product {
   image: string[],
   oldPrice?: Number,
   price: Number,
+  rating: number,
 };
 
 

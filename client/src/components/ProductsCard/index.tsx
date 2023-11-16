@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 
 import './productStyle.css';
+import RatingStars from '../reviews/RatingStars';
 
 interface Product {
     _id: string,
@@ -8,6 +9,7 @@ interface Product {
     image: string[],
     oldPrice?: Number,
     price: Number,
+    rating : number,
 };
 
 
@@ -26,6 +28,7 @@ export function ProductsCard( {product} : { product: Product} ){
                 <p className = 'price'>{`Rs. ${String(product.price)}` }</p>
                 <p className = 'oldPrice'>{`Rs. ${String(product.oldPrice)}`}</p>
             </div>
+            <RatingStars rating = {product.rating || 0} />
         </div>
     </div>
     </>
