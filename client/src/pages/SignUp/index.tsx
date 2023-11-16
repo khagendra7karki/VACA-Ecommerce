@@ -9,13 +9,11 @@ import {
     Anchor,
   } from '@mantine/core';
 import classes from './Signup.module.css';
-import createNewUser from '../../firebase/createNewUser';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
 import { useForm } from '@mantine/form';
 import { useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { State, actionCreators } from '../../state'
+import { actionCreators } from '../../state'
   
 interface credential {
   email: string,

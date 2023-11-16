@@ -12,7 +12,6 @@ const Shipping = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { userInfo } = useSelector((state: State) => state.user);
 
   const { saveShippingAddress } = bindActionCreators(actionCreators, dispatch);
 

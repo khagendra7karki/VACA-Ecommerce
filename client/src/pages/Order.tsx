@@ -11,7 +11,6 @@ import {
 import { BiUser } from "react-icons/bi";
 import { HiOutlineMail } from "react-icons/hi";
 // import { PayPalButton } from "react-paypal-button-v2";
-import axios from "axios";
 import {
   BsBox,
   BsCreditCard2Front,
@@ -34,7 +33,7 @@ const Order = () => {
 
   const [sdkReady, setSdkReady] = useState(false);
 
-  const { getOrder, payOrder } = bindActionCreators(actionCreators, dispatch);
+  const { getOrder } = bindActionCreators(actionCreators, dispatch);
 
   const { order } = useSelector((state: State) => state.order);
 

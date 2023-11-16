@@ -1,6 +1,5 @@
 import { Carousel } from "@mantine/carousel";
 import { Image } from "@mantine/core";
-import classes from './Carousel.module.css';
 import { v4 as uuidv4 } from 'uuid';
 
 const images: any = [
@@ -21,7 +20,6 @@ const Slider = () => {
       withIndicators 
       loop
       height={500} 
-      classNames={classes}
     >
       {slides}
     </Carousel>

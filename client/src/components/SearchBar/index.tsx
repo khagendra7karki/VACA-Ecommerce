@@ -1,4 +1,4 @@
-import { Group, Select, Text } from "@mantine/core"
+import {  Select } from "@mantine/core"
 import { IconSearch } from '@tabler/icons-react';
 import { bindActionCreators } from "redux";
 import { State, actionCreators } from "../../state";

@@ -1,4 +1,4 @@
-import { MouseEventHandler, SyntheticEvent } from "react";
+import { MouseEventHandler } from "react";
 
 interface Iprops{
     onClick: MouseEventHandler<HTMLButtonElement>,
