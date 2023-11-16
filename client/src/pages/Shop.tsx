@@ -13,10 +13,10 @@ export default function Shop() {
   return (
     <div >
       <Products page = {activePage} pages = {pageFunction} />
-    <Space/>
-    <Space/>
-    <Space/>
-    <Group justify="center" my = '20px'><Pagination value={activePage} onChange={setPage} total={totalPages} /></Group>
+      <Space/>
+      <Space/>
+      <Space/>
+      <Group justify="center" my = '20px'><Pagination value={activePage} onChange={setPage} total={totalPages} /></Group>
     </div>
     
   )

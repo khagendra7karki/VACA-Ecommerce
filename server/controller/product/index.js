@@ -26,8 +26,6 @@ const productController = {
           
             res.status(200).json( {payload : { products, page, pages: Math.ceil(count / pageSize) }});
             
-            // const products = await productSchema.find({}).limit( 20 )
-            // res.status(200).json({ task: 'getProduct', status:'successful', payload: products})
         }
         catch( error ){
             console.log('An error from productController.js occurred', error)
@@ -127,12 +125,12 @@ const productController = {
         const formattedProducts = [];
         
         products.map((product) => {
-            formattedProducts.push({
+            return {
             value: product._id,
             label: product.title,
-            });
+            };
         });
-        res.status(200).json({formattedProducts});
+        res.status(200).json({payload: products });
     } 
 }
 

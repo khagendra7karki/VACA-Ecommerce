@@ -25,7 +25,7 @@ import UserProfile from './pages/User/UserProfile';
 import MyWishList from './pages/User/MyWishList';
 import MyCart from './pages/User/MyCart';
 import MyReviews from './pages/User/MyReviews';
-import Layout from './Layout/Layout';
+import Layout from './components/Layout/Layout';
 
 const Root = () =>{ 
   return <>

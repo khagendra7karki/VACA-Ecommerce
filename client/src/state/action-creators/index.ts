@@ -146,7 +146,7 @@ export const quickSearchProducts = (keyword: number) => {
       );
       dispatch({
         type: ActionType.QUICK_SEARCH_SUCCESS,
-        payload: data,
+        payload: data.payload,
       });
     } catch (error: any) {
       dispatch({
@@ -240,12 +240,6 @@ export const register = (fullName: string, email: string, password: string) => {
         headers: {
           "Content-Type": "application/json",
         },
-      };
-
-      const formData = {  
-        fullName,
-        email,
-        password,
       };
 
       // create a new user using the 

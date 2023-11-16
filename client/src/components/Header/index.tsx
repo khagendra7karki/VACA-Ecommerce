@@ -1,4 +1,4 @@
-import { Group, Burger, rem, Divider } from '@mantine/core';
+import { Group, Burger, Divider } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 
 import classes from './HeaderSearch.module.css';
@@ -9,10 +9,11 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { useDispatch } from 'react-redux';
+import SearchBar from '../SearchBar';
 //handles general link click 
 import { v4 as uuidv4 } from 'uuid';
 
-export function HeaderSearch() {
+export function Header() {
   
   const navigate = useNavigate()
   const dispatch = useDispatch();
@@ -62,21 +63,24 @@ export function HeaderSearch() {
 
   return (
     <>
-    <header className={classes.header}>
-      <div className={classes.inner}>
-        <Group>
-          <Burger opened={opened} onClick={toggle} size="sm" hiddenFrom="sm" />
-          <img src={Vaca} alt="Image" height={50}/>
-       
-        </Group>
-
-        <Group mx = '500px'>
-          <Group gap={50} className={classes.links} visibleFrom="sm">
-            {items}
+      <header className={classes.header}>
+        <div className={classes.inner}>
+          <Group>
+            <Burger opened={opened} onClick={toggle} size="sm" hiddenFrom="sm" />
+            <img src={Vaca} alt="Image" height={50}/>
+        
           </Group>
-         
-        </Group>
-      </div>
-    </header> <Divider my="sm" /></>
+
+          <Group mx = '500px'>
+            <Group gap={50} className={classes.links} visibleFrom="sm">
+              {items}
+              <SearchBar />
+            </Group>
+          
+          </Group>
+        </div>
+      </header> 
+      <Divider my="sm" />
+    </>
   );
 }

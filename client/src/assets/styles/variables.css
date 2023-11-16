@@ -2,5 +2,6 @@
     --primary-black: #000000;
     --primary-red: rgba(216, 0, 0, 1);
     --primary-white: #FAFAFA;
+    --secondary-white: rgba(245, 245, 245, 1);
     --text-grey: rgba(128, 128, 128, 1);
 }
