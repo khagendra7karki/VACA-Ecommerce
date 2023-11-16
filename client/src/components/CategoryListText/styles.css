@@ -1,0 +1,19 @@
+@import '../../assets/styles/variables.css';
+
+.category-list{
+    list-style-type: none;
+}
+.category-list-item{
+    white-space: nowrap;
+}
+.category-list-item-a{
+    text-decoration: none;
+    color: inherit;
+    padding: 10px;
+    display: inline-block;
+    width: 100%;
+}
+.category-list-item-a:hover{
+
+    color: var(--primary-red);
+}

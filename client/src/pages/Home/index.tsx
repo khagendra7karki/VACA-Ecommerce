@@ -2,15 +2,15 @@ import React from 'react'
 import Slider from '../../components/Carousel'
 import Cardslide1 from '../../components/CardCarousel/CardCarousel1'
 import Cardslide2 from '../../components/CardCarousel/CardCarousel2'
-import { Space, Stack, Text } from '@mantine/core'
+import { Group, Space, Stack, Text } from '@mantine/core'
+import CategoryListText from '../../components/CategoryListText'
 export default function Home() {
   return (
-    <Stack
-      //h={300}
-      bg="var(--mantine-color-blue-light)"
-    
-    > 
-      <Slider />
+    <Stack>
+      <Group style={{display:'flex', flexDirection:'row', flexWrap: 'nowrap'}}>
+        <CategoryListText />
+        <Slider />
+      </Group>
       <Space h="xl" />
       <Text fw={700} size="xl" ta="center" tt="uppercase">Aligned to center</Text>
       <Space h="md" />

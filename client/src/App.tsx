@@ -1,5 +1,4 @@
 import React from 'react';
-import './App.css';
 import Login from './pages/Login'
 import {Signup} from './pages/SignUp'
 import Home from './pages/Home'
@@ -26,6 +25,8 @@ import MyWishList from './pages/User/MyWishList';
 import MyCart from './pages/User/MyCart';
 import MyReviews from './pages/User/MyReviews';
 import Layout from './components/Layout/Layout';
+import Test from './pages/Test';
+
 
 const Root = () =>{ 
   return <>
@@ -35,7 +36,9 @@ const Root = () =>{
   </>
 }
 
-
+const theme = createTheme({
+  fontFamily: 'Poppins, sans-sefif',
+})
 
 function App() {
   /**
@@ -51,7 +54,7 @@ function App() {
   return (
     <div >
       <Provider store={store} >
-      <MantineProvider>
+      <MantineProvider theme = { theme }>
     <Notifications />
     <BrowserRouter>
             <Routes>
@@ -85,6 +88,8 @@ function App() {
 
                   
                 </Route>
+
+                <Route path = '/test' element = {<Test /> } />
 
               </Route>
               

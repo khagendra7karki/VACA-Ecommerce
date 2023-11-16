@@ -1,4 +1,4 @@
-import { Group, Burger, Divider } from '@mantine/core';
+import { Group, Burger } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 
 import classes from './HeaderSearch.module.css';
@@ -63,15 +63,15 @@ export function Header() {
 
   return (
     <>
-      <header className={classes.header}>
+      <header className={classes.header} style = {{borderBottom: '1px solid grey'}}>
         <div className={classes.inner}>
-          <Group>
+          <Group >
             <Burger opened={opened} onClick={toggle} size="sm" hiddenFrom="sm" />
             <img src={Vaca} alt="Image" height={50}/>
         
           </Group>
 
-          <Group mx = '500px'>
+          <Group>
             <Group gap={50} className={classes.links} visibleFrom="sm">
               {items}
               <SearchBar />
@@ -80,7 +80,6 @@ export function Header() {
           </Group>
         </div>
       </header> 
-      <Divider my="sm" />
     </>
-  );
+  ); 
 }

@@ -17,9 +17,12 @@ const Slider = () => {
   ));
 
   return (
-    <Carousel withIndicators 
-    height={500} 
-    classNames={classes} style={{  margin: '0 auto', backgroundColor: 'transparent' }} >
+    <Carousel 
+      withIndicators 
+      loop
+      height={500} 
+      classNames={classes}
+    >
       {slides}
     </Carousel>
   );

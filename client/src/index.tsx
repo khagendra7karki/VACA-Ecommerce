@@ -1,12 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 // core styles are required for all packages
-
-import { Notifications } from '@mantine/notifications';
-
+import './assets/styles/variables.css'
+import './assets/styles/global.css'
 
 
 const root = ReactDOM.createRoot(

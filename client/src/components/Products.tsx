@@ -1,6 +1,4 @@
 import { SimpleGrid, Container } from '@mantine/core';
-import {  MantineProvider, createTheme, rem } from '@mantine/core';
-
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { bindActionCreators } from "redux";
@@ -34,7 +32,7 @@ const ArticlesCardsGrid: React.FC<PageNum> = ({page, pages}): JSX.Element =>
 
   // _page => 
   // _pages =>
-  const { products, _page, _pages, loading } = useSelector(
+  const { products, _pages, loading } = useSelector(
     (state: State) => state.products
   
   );

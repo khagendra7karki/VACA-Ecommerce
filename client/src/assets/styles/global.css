@@ -1,0 +1,27 @@
+@import 'variables.css';
+/*! Firefox */    
+html{
+    scrollbar-color: var(--secondary-white);
+}
+
+/*! Other Browser */
+html {
+    --thumbBG: var(--secondary-white);
+  }
+
+body::-webkit-scrollbar {
+width: 10px;
+height: 20px;
+}
+body {
+scrollbar-width: thin;
+scrollbar-color: var(--thumbBG) var(--scrollbarBG);
+}
+body::-webkit-scrollbar-track {
+background: var(--scrollbarBG);
+}
+body::-webkit-scrollbar-thumb {
+background-color: var(--thumbBG) ;
+border-radius: 6px;
+border: 3px solid var(--scrollbarBG);
+}

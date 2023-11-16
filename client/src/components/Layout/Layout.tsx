@@ -22,7 +22,7 @@ const Layout: React.FC<PropsWithChildren<LayoutProps>> = ({ children }) => {
       >
         <Container
           style={{
-            marginTop: "7rem",
+            marginTop: "5rem",
             maxWidth: "1620px",
             width: "100%",
           }}
