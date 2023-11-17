@@ -1,4 +1,4 @@
-@import '../../assets/styles/variables.css';
+@use '../../assets/styles/variables';
 
 .category-list{
     list-style-type: none;
@@ -15,5 +15,5 @@
 }
 .category-list-item-a:hover{
 
-    color: var(--primary-red);
+    color: variables.$primary-red;
 }

@@ -1,4 +1,4 @@
-@import 'variables.css';
+@use './variables';
 /*! Firefox */    
 html{
     scrollbar-color: var(--secondary-white);

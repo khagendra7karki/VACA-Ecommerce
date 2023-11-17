@@ -3,8 +3,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 // core styles are required for all packages
-import './assets/styles/variables.css'
-import './assets/styles/global.css'
+import './assets/styles/global.scss'
 
 
 const root = ReactDOM.createRoot(

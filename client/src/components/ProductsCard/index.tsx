@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 
-import './productStyle.css';
+import './productStyle.scss';
 import RatingStars from '../reviews/RatingStars';
 
 interface Product {
