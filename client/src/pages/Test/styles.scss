@@ -1,0 +1,6 @@
+@use '../../assets/styles/variables';
+
+h1{
+    @include variables.heading-semi-bold;
+    
+}

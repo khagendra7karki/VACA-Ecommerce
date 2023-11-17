@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 import { Container } from '@mantine/core';
 import { v4 as uuidv4 } from 'uuid';
 
+
 interface Product {
     _id: string,  
     title: string,
@@ -17,7 +18,7 @@ interface Product {
   };
   
   
-function Cardslide2() {
+function CardCarousel() {
     const dispatch = useDispatch();
     const { getProducts } = bindActionCreators(actionCreators, dispatch);
     const { products } = useSelector(
@@ -30,18 +31,18 @@ function Cardslide2() {
   }, [dispatch]);
 
 
-  const cards =
-  products? (
-  products.map((product : Product ) => (
-    <Carousel.Slide >
-      <Container style={{height:'600px', display:'flex', }}>
-    <ProductsCard product = { product } key = { uuidv4()}/>
-    </Container>
-     </Carousel.Slide>
-     )))
-    : (
-      <>hello world</>
-    )
+  
+    const cards =
+    products ? (
+    products.map((product : Product ) => (
+      <Carousel.Slide >
+        <Container style={{height:'600px', display:'flex', }}>
+      <ProductsCard product = { product } key = { uuidv4()}/>
+      </Container>
+       </Carousel.Slide>
+       )))
+    :<></>
+      
  
   return (
    
@@ -56,11 +57,9 @@ function Cardslide2() {
     >
        
         {cards}
-    
-
    
     </Carousel>
   );
 }
 
-export default  Cardslide2
+export default  CardCarousel
