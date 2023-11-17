@@ -1,7 +1,7 @@
 import { Card, Grid, TextInput, Button } from "@mantine/core";
 import { useNavigate } from "react-router";
-import { useDispatch, useSelector } from "react-redux";
-import { actionCreators, State } from ".././state";
+import { useDispatch } from "react-redux";
+import { actionCreators } from ".././state";
 
 import { bindActionCreators } from "redux";
 

@@ -38,6 +38,7 @@ const Root = () =>{
 
 const theme = createTheme({
   fontFamily: 'Poppins, sans-sefif',
+  
 })
 
 function App() {

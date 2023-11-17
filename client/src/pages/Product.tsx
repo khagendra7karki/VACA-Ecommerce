@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
   ActionIcon,
-  Alert,
   Badge,
   Button,
   Divider,
@@ -32,7 +31,7 @@ const Product = () => {
   const params = useParams();
   const dispatch = useDispatch();
 
-  const { getProduct, addReview, addToCart } = bindActionCreators(
+  const { getProduct, addToCart } = bindActionCreators(
     actionCreators,
     dispatch
   );
@@ -48,7 +47,6 @@ const Product = () => {
 
   const {
     review,
-    loading: reviewLoading,
     error: reviewError,
   } = useSelector((state: State) => state.review);
 

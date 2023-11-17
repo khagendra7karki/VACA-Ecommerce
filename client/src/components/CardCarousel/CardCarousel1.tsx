@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { State, actionCreators } from '../../state';
 import { useEffect } from 'react';
-import { Container, MantineProvider, SimpleGrid, createTheme, rem } from '@mantine/core';
+import { Container } from '@mantine/core';
 import { v4 as uuidv4 } from 'uuid';
 
 
@@ -41,9 +41,8 @@ function Cardslide1() {
       </Container>
        </Carousel.Slide>
        )))
-      : (
-        <>hello world</>
-      )
+    :<></>
+      
  
   return (
    

@@ -10,7 +10,6 @@ import {
 
 import { BiUser } from "react-icons/bi";
 import { HiOutlineMail } from "react-icons/hi";
-// import { PayPalButton } from "react-paypal-button-v2";
 import {
   BsBox,
   BsCreditCard2Front,
@@ -21,7 +20,7 @@ import { useParams } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators, State } from "../state";
 import { bindActionCreators } from "redux";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 
 import { ActionType } from "../state/action-types";
@@ -30,43 +29,12 @@ const Order = () => {
   const params = useParams();
 
   const dispatch = useDispatch();
-
-  const [sdkReady, setSdkReady] = useState(false);
-
   const { getOrder } = bindActionCreators(actionCreators, dispatch);
 
   const { order } = useSelector((state: State) => state.order);
 
   const { success } = useSelector((state: State) => state.orderPay);
 
-  // const successPaymentHanlder = (paymentResult: any) => {
-  //   payOrder(params.order, paymentResult);
-  // };
-
-  // useEffect(() => {
-  //   const addPayPalScript = async () => {
-  //     const { data: clientId } = await axios.get("/api/v1/config/paypal");
-  //     const script = document.createElement("script");
-  //     script.type = "text/javascript";
-  //     script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}`;
-  //     script.async = true;
-  //     script.onload = () => {
-  //       setSdkReady(true);
-  //     };
-  //     document.body.appendChild(script);
-  //   };
-
-  //   if (!order || success) {
-  //     dispatch({ type: ActionType.ORDER_PAY_RESET });
-  //   } else if (!order.isPaid) {
-  //     if (!(window as any).paypal) {
-  //       addPayPalScript();
-  //     } else {
-  //       setSdkReady(true);
-  //     }
-  //   }
-  //   // eslint-disable-next-line
-  // }, [dispatch]);
 
   useEffect(() => {
     getOrder(params.order);
@@ -78,7 +46,6 @@ const Order = () => {
 
   return (
     <>
-      {/* <Head title={`Order ${params.order}`} /> */}
       {order && Object.keys(order).length ? (
         <Card withBorder shadow="sm" radius="lg" padding="xl">
           <Grid>
@@ -280,7 +247,7 @@ const Order = () => {
                     <Text>Price</Text>
                   </Grid.Col>
                   <Grid.Col span={6}>
-                    <Text ta="right">$1399.99</Text>
+                    <Text ta="right">Rs. 1399.99</Text>
                   </Grid.Col>
                 </Grid>
                 <Grid
@@ -290,7 +257,7 @@ const Order = () => {
                     <Text>Tax (2%)</Text>
                   </Grid.Col>
                   <Grid.Col span={6}>
-                    <Text ta="right">$13.00</Text>
+                    <Text ta="right">Rs. 13.00</Text>
                   </Grid.Col>
                 </Grid>
                 <Grid
@@ -300,7 +267,7 @@ const Order = () => {
                     <Text>Discount (5%)</Text>
                   </Grid.Col>
                   <Grid.Col span={6}>
-                    <Text ta="right">$299.00</Text>
+                    <Text ta="right">Rs. 299.00</Text>
                   </Grid.Col>
                 </Grid>
                 <Grid style={{ margin: "10px 0" }}>
@@ -308,7 +275,7 @@ const Order = () => {
                     <Text>Total</Text>
                   </Grid.Col>
                   <Grid.Col span={6}>
-                    <Text ta="right">$1099.99</Text>
+                    <Text ta="right">Rs. 1099.99</Text>
                   </Grid.Col>
                 </Grid>
               </Card>
@@ -318,18 +285,6 @@ const Order = () => {
           <Group style={{ marginTop: "1rem" }} 
           //position="right"
           >
-            {!order.isPaid && (
-              <Grid.Col span={6}>
-                {!sdkReady ? (
-                  <Loader />
-                ) : (<></>
-                  // <PayPalButton
-                  //   amount={order.totalPrice}
-                  //   onSuccess={successPaymentHanlder}
-                  // />
-                )}
-              </Grid.Col>
-            )}
           </Group>
         </Card>
       ) : (
