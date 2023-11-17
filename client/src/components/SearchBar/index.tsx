@@ -4,6 +4,7 @@ import { bindActionCreators } from "redux";
 import { State, actionCreators } from "../../state";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 
 const SearchBar = () =>{
@@ -15,12 +16,19 @@ const SearchBar = () =>{
 
     const handlerSearch = (value: any) => {
         quickSearchProducts(value);
+        console.log(quickSearch ," kkkkkkkkkkkkkkkkkkkkk")
     };
 
     const handlerSearchSelect = (id: any) => {
         getProduct(id);
         navigate(`/product/${id}`);
     };
+
+    useEffect(() => {
+        console.log(quickSearch ," kkkkkkkkkkkkkkkkkkkkk")
+
+    },[quickSearch])
+
     return<>
             <Select
             style ={{width: '400px', backgroundColor: 'var(--secondary-white)'}}
@@ -29,9 +37,9 @@ const SearchBar = () =>{
             size="sm"
             placeholder="What are you looking for?"
             rightSection={<IconSearch style={{ width: '16px', height: '16px' }} stroke={1.5} />}
-            // onSearchChange={(e) => handlerSearch(e)}
-            // onChange={(e) => handlerSearchSelect(e)}
-            data={quickSearch}
+            onSearchChange={(e) => handlerSearch(e)}
+            onChange={(e) => handlerSearchSelect(e)}
+            data={quickSearch ? quickSearch : ["help" , " me"]}
             searchable
             nothingFoundMessage="Nothing found..."
             />

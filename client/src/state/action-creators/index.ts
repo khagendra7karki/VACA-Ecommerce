@@ -144,6 +144,7 @@ export const quickSearchProducts = (keyword: number) => {
       const { data } = await axios.get(
         `http://localhost:5000/getProducts/search?keyword=${keyword}`
       );
+      console.log(data.payload, data , "csdjbsefbvjh")
       dispatch({
         type: ActionType.QUICK_SEARCH_SUCCESS,
         payload: data.payload,
