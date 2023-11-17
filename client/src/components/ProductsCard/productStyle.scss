@@ -1,18 +1,17 @@
-@import '../../assets/styles/variables.css';
+@use '../../assets/styles/variables';
 
-:root{
-    --border-color: 1px solid rgba(219, 209, 209, 1);
-    --box-shadow: 4px 4px 37px rgba(0,0,0,0.25);
-    --transition: all 0.3s cubic-bezier(.25,.8,.25,1);
-}
+$border-properties: 1px solid rgba(219, 209, 209, 1);
+$box-shadow: 4px 4px 37px rgba(0,0,0,0.25);
+$transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+
 
 .products-card{
     padding: 12px 8px;
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    border: var(--border-color);
-    box-shadow: var(--box-shadow);
+    border: $border-properties;
+    box-shadow: $box-shadow;
 }
 .products-card:hover img {
     transform: scale( 1.1 );
@@ -28,7 +27,7 @@
 img{
     width: 100%;
     aspect-ratio: auto ;
-    transition: var( --transition );
+    transition: $transition;
 }
 
 .text-wraper{
@@ -48,8 +47,8 @@ img{
 
 .oldPrice{
     text-decoration: line-through;
-    color: var( --text-grey )
+    color: variables.$text-grey;
 }
 .price{
-    color: var( --primary-red )
+    color: variables.$primary-red;
 }

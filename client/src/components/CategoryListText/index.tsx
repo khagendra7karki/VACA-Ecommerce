@@ -1,5 +1,4 @@
-import react from 'react';
-import './styles.css'
+import './styles.scss'
 import { Link } from 'react-router-dom';
 interface Iprops {
     category?: Array<String >,
