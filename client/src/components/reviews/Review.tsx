@@ -1,5 +1,5 @@
 import { useForm } from "@mantine/form";
-import React, { FC, useEffect, useRef, useState } from "react";
+import React, { FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { bindActionCreators } from "redux";
 import { State, actionCreators } from "../../state";
@@ -39,7 +39,7 @@ interface MyProps {
 export const Review: FC<MyProps> = ({ reviewM }): JSX.Element => {
   const dispatch = useDispatch();
 
-  const { getProduct, addReview, addToCart } = bindActionCreators(
+  const { addReview } = bindActionCreators(
     actionCreators,
     dispatch
   );

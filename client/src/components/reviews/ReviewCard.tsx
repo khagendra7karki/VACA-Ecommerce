@@ -1,5 +1,4 @@
 import React, { PropsWithChildren } from "react";
-import moment from "moment";
 import RatingStars from './RatingStars'
 
 import {
@@ -23,6 +22,10 @@ const ReviewCard: React.FC<PropsWithChildren<IReviewCard>> = ({
   comment,
   rating,
 }) => {
+  const formatDate= (date: Date) => {
+    const options = { day: '2-digit', month: 'short', year: 'numeric' } as any;
+    return new Date(date).toLocaleDateString('en-US', options).toUpperCase();
+}
   return (
     <>
       <div style={{ display: "flex" }}>
@@ -31,7 +34,8 @@ const ReviewCard: React.FC<PropsWithChildren<IReviewCard>> = ({
             {name}
           </Text>
           <Text color="gray" size="xs">
-            {moment(date).format("DD-MMM-YYYY")}
+            {" "}
+            {formatDate(date)}
           </Text>
           <RatingStars rating = {rating}/>
         </div>
