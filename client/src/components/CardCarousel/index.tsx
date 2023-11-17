@@ -7,6 +7,9 @@ import { useEffect } from 'react';
 import { Container } from '@mantine/core';
 import { v4 as uuidv4 } from 'uuid';
 
+interface Iprops{
+  page?: number
+}
 
 interface Product {
     _id: string,  
@@ -18,7 +21,7 @@ interface Product {
   };
   
   
-function CardCarousel() {
+function CardCarousel({page = 1 }: Iprops) {
     const dispatch = useDispatch();
     const { getProducts } = bindActionCreators(actionCreators, dispatch);
     const { products } = useSelector(
@@ -26,7 +29,7 @@ function CardCarousel() {
       
       );
   useEffect(() => {
-    getProducts(1);
+    getProducts(page);
     
   }, [dispatch]);
 
