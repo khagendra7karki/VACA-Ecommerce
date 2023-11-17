@@ -1,8 +1,7 @@
 import React from 'react'
 import Slider from '../../components/Carousel'
-import Cardslide1 from '../../components/CardCarousel/CardCarousel1'
-import Cardslide2 from '../../components/CardCarousel/CardCarousel2'
-import { Group, Space, Stack, Text } from '@mantine/core'
+import CardCarousel from '../../components/CardCarousel'
+import { Card, Group, Space, Stack, Text } from '@mantine/core'
 import CategoryListText from '../../components/CategoryListText'
 export default function Home() {
   return (
@@ -14,11 +13,11 @@ export default function Home() {
       <Space h="xl" />
       <Text fw={700} size="xl" ta="center" tt="uppercase">Aligned to center</Text>
       <Space h="md" />
-      <Cardslide1/>
+      <CardCarousel />
       <Space h="xl" />
       <Text fw={700} size="xl" ta="center" tt="uppercase">Aligned to center</Text>
       <Space h="md" />
-      <Cardslide2/>
+      <CardCarousel />
       <Space h="xl" />
     </Stack>
     
