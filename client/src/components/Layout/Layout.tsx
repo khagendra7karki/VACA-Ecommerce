@@ -27,7 +27,7 @@ const Layout: React.FC<PropsWithChildren<LayoutProps>> = ({ children }) => {
         mr = {0}
         
           style={{
-            marginTop: "5rem",
+            marginTop: "3rem",
             maxWidth: "2400px",
             width: "100%",
 
