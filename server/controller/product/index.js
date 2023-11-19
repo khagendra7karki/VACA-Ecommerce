@@ -94,7 +94,7 @@ const productController = {
             console.log( req.body )
             const producttModel = new  productSchema( product)
             await producttModel.save()
-            res.status(200).json({ task: 'createProduct', status: 'successful'})
+            res.status(200).json({ task: res.status(200).json({ task: 'createProduct', status: 'successful'})})
         }catch( error ){
             console.log ( error )
             return res.status( 500 ).json( { task: 'createProduct',status: 'unsuccessful',  reason: error })
@@ -113,27 +113,31 @@ const productController = {
     },
 
     getProductsForSearch : async(req, res) => {
-    const keyword = req.query.keyword
-        ? {
-            title: {
-            $regex: req.query.keyword,
-            $options: "i",
-            },
+        try{
+            const keyword = req.query.keyword
+                ? {
+                    title: {
+                    $regex: req.query.keyword,
+                    $options: "i",
+                    },
+                }
+                : {};
+            
+            const products = await productSchema.aggregate([
+                keyword,
+                {
+                    $project:{ 
+                        _id: 0,
+                        value : '$_id',
+                        label : '$title'}
+                }
+            ]);
+    
+            res.status(200).send({ task: 'getProductsSearch', status: 'successsful', payload: products})
+
+        }catch( error ){
+            return res.status(500).json({task: 'getProductsForSearch', status: 'unsuccessful', reason: 'Internal Server Error'})
         }
-        : {};
-        
-        const products = await productSchema.find({ ...keyword });
-        const formattedProducts = [];
-        
-        console.log(keyword, "helll")
-        products.map((product) => {
-            formattedProducts.push({
-                value: product._id,
-                label: product.title,
-              });
-        });
-        console.log(products)
-        res.status(200).json({payload: formattedProducts });
     } 
 }
 
