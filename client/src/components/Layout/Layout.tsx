@@ -21,10 +21,16 @@ const Layout: React.FC<PropsWithChildren<LayoutProps>> = ({ children }) => {
         }}
       >
         <Container
+        pl={0}
+        pr={0}
+        ml={0}
+        mr = {0}
+        
           style={{
-            marginTop: "5rem",
-            maxWidth: "1620px",
+            marginTop: "3rem",
+            maxWidth: "2400px",
             width: "100%",
+
           }}
         >
           {children}

@@ -121,16 +121,19 @@ const productController = {
             },
         }
         : {};
+        
         const products = await productSchema.find({ ...keyword });
         const formattedProducts = [];
         
+        console.log(keyword, "helll")
         products.map((product) => {
-            return {
-            value: product._id,
-            label: product.title,
-            };
+            formattedProducts.push({
+                value: product._id,
+                label: product.title,
+              });
         });
-        res.status(200).json({payload: products });
+        console.log(products)
+        res.status(200).json({payload: formattedProducts });
     } 
 }
 

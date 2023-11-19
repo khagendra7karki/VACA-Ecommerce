@@ -16,7 +16,7 @@
   
   .link {
     display: block;
-    line-height: 1;
+    line-height: 6;
     padding: rem(8px) rem(12px);
     background: inherit;
     /* border-radius: var(--mantine-radius-sm); */
