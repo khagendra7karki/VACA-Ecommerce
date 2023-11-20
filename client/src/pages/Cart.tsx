@@ -11,11 +11,15 @@ import {
   Image,
   NumberInput,
   Alert,
+  Container,
+  Grid,
+  Divider,
+  TextInput,
+  Title,
 } from "@mantine/core";
 import { RiShoppingBagLine } from "react-icons/ri";
 import { BiTrashAlt } from "react-icons/bi";
-import { v4 as uuidv4 } from 'uuid';
-
+import { v4 as uuidv4 } from "uuid";
 
 const Cart = () => {
   const numRef = useRef(null);
@@ -42,132 +46,353 @@ const Cart = () => {
 
   const handlerDeleteCartItem = (id: string) => {
     setOpened(false);
-    console.log( id )
+    console.log(id);
     removeFromCart(id);
   };
 
   return (
-    <div className="cart-container">
-      <Modal
-        title="Delete Item?"
-        size="lg"
-        onClose={() => setOpened(false)}
-        opened={opened}
-      >
-        <Text size="sm">Are you sure that you want to remove this item?</Text>
-        <div className="button-container">
-          <Button
-            onClick={() => setOpened(false)}
-            color="gray"
-            size="lg"
-            fullWidth
-          >
-            Cancel
-          </Button>
-          <Button
-            onClick={() => handlerDeleteCartItem(selectedItem)}
-            color="red"
-            size="lg"
-            fullWidth
-          >
-            Yes
-          </Button>
-        </div>
-      </Modal>
-      <div className="grid-container">
+    <>
+      <Container size="80%" mb = {50}>
+        <Grid gutter={{ base: 5, xs: "md", md: "xl", xl: 50 }}>
+          <Grid.Col span={5}>Product</Grid.Col>
+          <Grid.Col span={2}>Price</Grid.Col>
+          <Grid.Col span={2}>Quantity</Grid.Col>
+          <Grid.Col span={3}>SubTotal</Grid.Col>
+        </Grid>
+        <Divider mb={30} />
         {cartItems && cartItems.length ? (
           cartItems.map((item: any, index: number) => {
-
             return (
-              <Card className="cart-card" key={uuidv4()}>
-                <div className="grid-item">
-                  <Image
-                    fit="contain"
-                    radius="lg"
-                    height={50}
-                    width={50}
-                    src={item.image}
-                  />
-                </div>
-                <div className="grid-item">
-                  <div className="item-name">{item.title}</div>
-                </div>
-                <div className="grid-item">
-                  <div className="item-price">
-                    Rs. {item.price}x {item.quantity}
+              <>
+                <Modal
+                  title="Delete Item?"
+                  size="lg"
+                  onClose={() => setOpened(false)}
+                  opened={opened}
+                >
+                  <Text size="sm">
+                    Are you sure that you want to remove this item?
+                  </Text>
+                  <div className="button-container">
+                    <Button
+                      onClick={() => setOpened(false)}
+                      color="gray"
+                      size="lg"
+                      fullWidth
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      onClick={() => handlerDeleteCartItem(selectedItem)}
+                      color="red"
+                      size="lg"
+                      fullWidth
+                    >
+                      Yes
+                    </Button>
                   </div>
-                </div>
-                <div className="grid-item">
-                  <NumberInput
-                    radius="lg"
-                    value={item.quantity}
-                    ref={numRef}
-                    onChange={(e) =>{
-                      handlerUpdateCartItems(e as number, item.product )
-                    }
-                    }
-                    min={1}
-                    //max={item.countInStock}
-                    max={5}
-                    required
-                  />
-                </div>
-                <div className="grid-item">
-                  <Button
-                    size="sm"
-                    radius="lg"
-                    variant="filled"
-                    color="red"
-                    onClick={() => selectItem(item.product)}
-                    fullWidth
-                  >
-                    <BiTrashAlt />
-                  </Button>
-                </div>
-              </Card>
+                </Modal>
+                <Grid gutter={{ base: 5, xs: "md", md: "xl", xl: 50 }} my={20}>
+                  <Grid.Col span={5}>
+                    <Grid gutter={{ base: 5, xs: "md", md: "xl", xl: 50 }}>
+                      <Grid.Col span={2}>
+                        {" "}
+                        <Button
+                          size="sm"
+                          radius="lg"
+                          variant="filled"
+                          color="#DB4444"
+                          onClick={() => selectItem(item.product)}
+                          fullWidth
+                        >
+                          <BiTrashAlt />
+                        </Button>
+                      </Grid.Col>
+                      <Grid.Col span={2}>
+                        {" "}
+                        <Image
+                          fit="contain"
+                          radius="lg"
+                          height={50}
+                          width={50}
+                          src={item.image}
+                        />
+                      </Grid.Col>
+                      <Grid.Col span={6}>{item.title}</Grid.Col>
+                    </Grid>
+                  </Grid.Col>
+                  <Grid.Col span={2}> Rs. {item.price}</Grid.Col>
+                  <Grid.Col span={2}>
+                    <NumberInput
+                      style={{ width: "30%" }}
+                      radius="sm"
+                      value={item.quantity}
+                      ref={numRef}
+                      onChange={(e) => {
+                        handlerUpdateCartItems(e as number, item.product);
+                      }}
+                      min={1}
+                      //max={item.countInStock}
+                      max={5}
+                      required
+                    />
+                  </Grid.Col>
+                  <Grid.Col span={3}>Rs. {item.price * item.quantity}</Grid.Col>
+                </Grid>
+              </>
             );
           })
         ) : (
-          <Alert
-            icon={<RiShoppingBagLine size={16} />}
-            style={{ marginTop: "1rem" }}
-            color="blue"
-            radius="lg"
-          >
-            No items in the cart
-          </Alert>
+          <>
+            {" "}
+            <Alert
+              icon={<RiShoppingBagLine size={16} />}
+              style={{ marginTop: "1rem" }}
+              color="blue"
+              radius="lg"
+            >
+              No items in the cart
+            </Alert>
+          </>
         )}
-      </div>
-      <div className="subtotal-container">
-        <Card radius="lg" shadow="xl" withBorder>
-          <Text style={{ marginBottom: "1rem" }}>
-            Subtotal
-            ({cartItems.reduce((acc: any, item: any) => acc + item.quantity, 0)})
-            Items
-          </Text>
-          <Text size="xl" style={{ marginTop: ".5rem" }}>
-            Rs. 
-            {cartItems
-              .reduce((acc: any, item: any) => acc + item.quantity * item.price, 0)
-              .toFixed(2)
-            }
-          </Text>
-          {cartItems && cartItems.length ? (
+        <Divider mb={20} />
+        <Grid>
+          <Grid.Col span={6}>
+            <Button size="md" variant="default">
+              Return To shop
+            </Button>
+          </Grid.Col>
+          <Grid.Col
+            span={6}
+            style={{ display: "flex", justifyContent: "flex-end" }}
+          >
+            <Button size="md" variant="default">
+              Update Cart
+            </Button>
+          </Grid.Col>
+        </Grid>
+
+        <Grid mt = {50}>
+          <Grid.Col span={8}>
+            <Grid>
+              <Grid.Col span={6}>
+                {" "}
+                <TextInput placeholder="Coupon Code" />
+              </Grid.Col>
+              <Grid.Col span={6}>
+                <Button size="md" variant="default">
+                  Apply Coupon
+                </Button>
+              </Grid.Col>
+            </Grid>
+          </Grid.Col>
+
+          <Grid.Col
+            span={4}
+            // style={{ display: "flex", justifyContent: "flex-end" }}
+          >
+             <div className="subtotal-container">
+          <Card radius="lg" shadow="xl" withBorder>
+          <Title order={3}>Cart Total</Title>
+          <Grid>
+            <Grid.Col span = {6}> <Text>
+              Total Quantity 
+            </Text></Grid.Col>
+            <Grid.Col span = {6} ><Text ta="right">
+              {cartItems.reduce(
+                (acc: any, item: any) => acc + item.quantity,
+                0
+              )}
+                 &nbsp; Items</Text></Grid.Col>
+          </Grid>
+          <Grid>
+            <Grid.Col span = {6}> <Text>
+              Subtotal 
+            </Text></Grid.Col>
+            <Grid.Col span = {6} >
+            <Text size="md" ta = 'right' style={{ marginTop: ".5rem" }}>
+              Rs.
+              {cartItems
+                .reduce(
+                  (acc: any, item: any) => acc + item.quantity * item.price,
+                  0
+                )
+                .toFixed(2)}
+            </Text>
+            </Grid.Col>
+          </Grid>
+          <Grid>
+            <Grid.Col span = {6}> <Text>
+              Shipping 
+            </Text></Grid.Col>
+            <Grid.Col span = {6} >
+            <Text size="md" ta = 'right' style={{ marginTop: ".5rem" }}>
+              0
+            </Text>
+            </Grid.Col>
+          </Grid>
+          <Grid>
+            <Grid.Col span = {6}> <Text>
+              Total 
+            </Text></Grid.Col>
+            <Grid.Col span = {6} >
+            <Text size="md" ta = 'right' style={{ marginTop: ".5rem" }}>
+              Rs. {cartItems
+                .reduce(
+                  (acc: any, item: any) => acc + item.quantity * item.price,
+                  0
+                )
+                .toFixed(2)} 
+            </Text>
+            </Grid.Col>
+          </Grid>
+           
+            
+            
+            {cartItems && cartItems.length ? (
+              <Button
+                style={{ marginTop: ".5rem" }}
+                color="#DB4444"
+                size="md"
+                fullWidth
+                onClick={() => navigate("/shipping")}
+              >
+                Proceed to Checkout
+              </Button>
+            ) : (
+              <></>
+            )}
+          </Card>
+        </div>
+          </Grid.Col>
+        </Grid>
+       
+      </Container>
+      {/* <div className="cart-container">
+        <Modal
+          title="Delete Item?"
+          size="lg"
+          onClose={() => setOpened(false)}
+          opened={opened}
+        >
+          <Text size="sm">Are you sure that you want to remove this item?</Text>
+          <div className="button-container">
             <Button
-              style={{ marginTop: ".5rem" }}
-              color="dark"
+              onClick={() => setOpened(false)}
+              color="gray"
               size="lg"
               fullWidth
-              onClick={() => navigate("/shipping")}
             >
-              Proceed to Checkout
+              Cancel
             </Button>
+            <Button
+              onClick={() => handlerDeleteCartItem(selectedItem)}
+              color="red"
+              size="lg"
+              fullWidth
+            >
+              Yes
+            </Button>
+          </div>
+        </Modal>
+        <div className="grid-container">
+          {cartItems && cartItems.length ? (
+            cartItems.map((item: any, index: number) => {
+              return (
+                <Card className="cart-card" key={uuidv4()}>
+                  <div className="grid-item">
+                    <Image
+                      fit="contain"
+                      radius="lg"
+                      height={50}
+                      width={50}
+                      src={item.image}
+                    />
+                  </div>
+                  <div className="grid-item">
+                    <div className="item-name">{item.title}</div>
+                  </div>
+                  <div className="grid-item">
+                    <div className="item-price">
+                      Rs. {item.price}x {item.quantity}
+                    </div>
+                  </div>
+                  <div className="grid-item">
+                    <NumberInput
+                      radius="lg"
+                      value={item.quantity}
+                      ref={numRef}
+                      onChange={(e) => {
+                        handlerUpdateCartItems(e as number, item.product);
+                      }}
+                      min={1}
+                      //max={item.countInStock}
+                      max={5}
+                      required
+                    />
+                  </div>
+                  <div className="grid-item">
+                    <Button
+                      size="sm"
+                      radius="lg"
+                      variant="filled"
+                      color="red"
+                      onClick={() => selectItem(item.product)}
+                      fullWidth
+                    >
+                      <BiTrashAlt />
+                    </Button>
+                  </div>
+                </Card>
+              );
+            })
           ) : (
-            <></>
+            <Alert
+              icon={<RiShoppingBagLine size={16} />}
+              style={{ marginTop: "1rem" }}
+              color="blue"
+              radius="lg"
+            >
+              No items in the cart
+            </Alert>
           )}
-        </Card>
-      </div>
-    </div>
+        </div>
+        <div className="subtotal-container">
+          <Card radius="lg" shadow="xl" withBorder>
+            <Text style={{ marginBottom: "1rem" }}>
+              Subtotal (
+              {cartItems.reduce(
+                (acc: any, item: any) => acc + item.quantity,
+                0
+              )}
+              ) Items
+            </Text>
+            <Text size="xl" style={{ marginTop: ".5rem" }}>
+              Rs.
+              {cartItems
+                .reduce(
+                  (acc: any, item: any) => acc + item.quantity * item.price,
+                  0
+                )
+                .toFixed(2)}
+            </Text>
+            {cartItems && cartItems.length ? (
+              <Button
+                style={{ marginTop: ".5rem" }}
+                color="dark"
+                size="lg"
+                fullWidth
+                onClick={() => navigate("/shipping")}
+              >
+                Proceed to Checkout
+              </Button>
+            ) : (
+              <></>
+            )}
+          </Card>
+        </div>
+      </div> */}
+    </>
   );
 };
 
