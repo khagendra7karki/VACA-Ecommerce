@@ -39,10 +39,10 @@ function CardCarousel({page = 1 }: Iprops) {
     products ? (
     products.map((product : Product ) => (
       <Carousel.Slide >
-        <Container style={{height:'600px', display:'flex', }}>
-      <ProductsCard product = { product } key = { uuidv4()}/>
-      </Container>
-       </Carousel.Slide>
+        <Container style={{ margin: '20px 0',height:'640px', display:'flex', }}>
+          <ProductsCard product = { product } key = { uuidv4()}/>
+        </Container>
+      </Carousel.Slide>
        )))
     :<></>
       

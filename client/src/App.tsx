@@ -3,12 +3,11 @@ import Login from './pages/Login'
 import {Signup} from './pages/SignUp'
 import Home from './pages/Home'
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
-import Shop from './pages/Shop';
 import { Notifications } from '@mantine/notifications';
 import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
 import '@mantine/carousel/styles.css';
-import { MantineProvider, createTheme } from '@mantine/core';
+import { Container, MantineProvider, createTheme, rem } from '@mantine/core';
 import { Provider } from 'react-redux';
 import { store } from "./state/index";
 import Cart from './pages/Cart';
@@ -28,18 +27,43 @@ import Layout from './components/Layout/Layout';
 import Test from './pages/Test';
 
 
-const Root = () =>{ 
-  return <>
-    <Layout>
-      <Outlet />
-    </Layout>
-  </>
-}
+const CONTAINER_SIZES: Record<string, string> = {
+  xxs: rem(300),
+  xs: rem(400),
+  sm: rem(500),
+  md: rem(600),
+  lg: rem(700),
+  xl: rem(800),
+  xxl: rem(1200),
+  xxxl: rem(1600),
+};
 
 const theme = createTheme({
   fontFamily: 'Poppins, sans-sefif',
-  
-})
+  components: {
+    Container: Container.extend({
+      vars: (_, { size, fluid }) => ({
+        root: {
+          '--container-size': fluid
+          ? '100%'
+          : size !== undefined && size in CONTAINER_SIZES
+          ? CONTAINER_SIZES[size]
+          : rem(size),
+        },
+      }),
+    }),
+  },
+});
+
+  const Root = () =>{ 
+    return <>
+      <Layout>
+        <Container size="xxxl">
+          <Outlet />
+        </Container>
+      </Layout>
+    </>
+  }
 
 function App() {
   /**
@@ -56,16 +80,14 @@ function App() {
     <div >
       <Provider store={store} >
       <MantineProvider theme = { theme }>
-    <Notifications />
-    <BrowserRouter>
+        <Notifications />
+        <BrowserRouter>
             <Routes>
               <Route path = '/' element = { <Root /> } >
                 <Route index element={<Home />} />
-                <Route path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />
                 {/* <Route path="/profile" element={<Shop />} /> */}
-                <Route path="/shop" element={<Shop />} />
                 <Route path="/contact" element={<ContactUs />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/product/:id" element={<Product />} />
@@ -95,9 +117,9 @@ function App() {
               </Route>
               
 
-              </Routes>
-      </BrowserRouter>
-    </MantineProvider>
+            </Routes>
+        </BrowserRouter>
+      </MantineProvider>
     </Provider>
      
      

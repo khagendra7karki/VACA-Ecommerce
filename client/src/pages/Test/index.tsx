@@ -1,4 +1,4 @@
-import CategoryButton from "../../components/CategoryButton";
+import CategoryButton from "../../components/Categories/CategoryButton";
 export default function () {
     var date = new Date();
 

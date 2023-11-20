@@ -35,7 +35,6 @@ export function Header() {
     
     const initialLinks = [
       { link: '/', label: 'Home', onClick: handleLinkClick },
-      { link: '/shop', label: 'Shop' , onClick: handleLinkClick },
       { link: '/Contact', label: 'Contact', onClick: handleLinkClick },
       { link: '/signup', label: 'signup', onClick: handleLinkClick },
       { link: '/cart', label: 'cart', onClick: handleLinkClick },

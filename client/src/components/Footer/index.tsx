@@ -78,7 +78,7 @@ export function Footer() {
 
   return (
     <footer className={classes.footer}>
-      <Container className={classes.inner} fluid>
+      <Container size = 'xxxl'>
         <Grid>
           <Grid.Col span={3}>
             <div className={classes.logo}>

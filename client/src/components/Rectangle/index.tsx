@@ -7,8 +7,8 @@ interface Iprops{
 export default function Reactangle({color, height, width}: Iprops){
     return <>
         <span style = {{background: `${color? color: 'red'}`,
-                        height: `${height ? height : '80px'}`,
-                        width: `${width ? width : '50px'}`,
+                        height: `${height ? height : '50px'}`,
+                        width: `${width ? width : '30px'}`,
                         borderRadius: `${ height ? Number(height) / 10 + 'px' : '5px'}`}}
         >
 
