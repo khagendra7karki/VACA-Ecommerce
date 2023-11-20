@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 import productSchema from "../../models/Product.js"
-import userModel from "../../models/User.js";
 
 
 const productController = {
@@ -124,7 +123,7 @@ const productController = {
                 : {};
             
             const products = await productSchema.aggregate([
-                keyword,
+                {$match: keyword },
                 {
                     $project:{ 
                         _id: 0,
@@ -132,10 +131,11 @@ const productController = {
                         label : '$title'}
                 }
             ]);
-    
+            
             res.status(200).send({ task: 'getProductsSearch', status: 'successsful', payload: products})
 
         }catch( error ){
+            console.log('An error occurred at getProductsForSearch', error)
             return res.status(500).json({task: 'getProductsForSearch', status: 'unsuccessful', reason: 'Internal Server Error'})
         }
     } 

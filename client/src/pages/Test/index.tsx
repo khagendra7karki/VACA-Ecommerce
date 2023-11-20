@@ -1,5 +1,4 @@
-import CountDownTimer from "../../components/CountDown";
-
+import CategoryButton from "../../components/CategoryButton";
 export default function () {
     var date = new Date();
 
@@ -7,6 +6,6 @@ export default function () {
     date.setDate(date.getDate() + 2 );
     
     return <>
-        <CountDownTimer targetDate = { date }/>
+        <CategoryButton label = {'hello World'}/>
     </>
 }

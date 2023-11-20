@@ -49,7 +49,7 @@ export function Header() {
 
 
   const items = links.map((link) => (
-    <>
+    
     <button 
       key = { uuidv4() }
       onClick = { (e) => link.onClick( link.link) }
@@ -58,7 +58,7 @@ export function Header() {
       { link.label }
     </button>
 
-    </>
+    
   ));
 
   return (

@@ -1,17 +1,18 @@
-import { MouseEventHandler } from "react";
+import { CSSProperties, MouseEventHandler, ReactNode } from "react";
+import './styles.scss'
 
 interface Iprops{
-    label: string,
     onClick: MouseEventHandler<HTMLButtonElement>,
+    children?: ReactNode 
+    sx ?: CSSProperties
 }
 
-export default function Button ({label,onClick}: Iprops){
-    
+export default function Button({onClick, children, sx }: Iprops){
     
 
     return <>
-        <button onClick = {onClick}>
-            {label}
+        <button className = 'custom-button'onClick = {onClick} style = { sx }>
+            {children}
         </button>
     </>
 }

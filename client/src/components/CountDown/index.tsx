@@ -33,13 +33,13 @@ const CountDownTimer = ({ targetDate }: Iprops ) => {
   });
 
   return (
-    <div style = {{ display: 'flex' , gap: '20px', paddingLeft: '100px'}}>
+    <div style = {{ display: 'flex' , gap: '20px', paddingLeft: '100px', textAlign: 'center'}}>
         <div style = {{display: 'flex', flexDirection: 'column'}}>
             <h5>
                 Days
             </h5>
             <h3>
-                {timeLeft.days ? `${timeLeft.days}` : "00"}
+                {timeLeft.days ? `${timeLeft.days} :` : "00"}
             </h3>
 
         </div>
@@ -49,7 +49,7 @@ const CountDownTimer = ({ targetDate }: Iprops ) => {
             </h5>
             <h3>
 
-              {timeLeft.hours ? `${timeLeft.hours}` : "00"}
+              {timeLeft.hours ? `${timeLeft.hours} :` : "00"}
             </h3>
 
         </div>
@@ -58,7 +58,7 @@ const CountDownTimer = ({ targetDate }: Iprops ) => {
                 Minutes
             </h5>
             <h3>
-                {timeLeft.minutes ? `${timeLeft.minutes}` : "00"}
+                {timeLeft.minutes ? `${timeLeft.minutes}:` : "00"}
 
             </h3>
         </div>

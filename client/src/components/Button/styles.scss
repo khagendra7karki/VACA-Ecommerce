@@ -1,0 +1,18 @@
+@use '../../assets/styles/variables';
+
+.custom-button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    padding: 16px 48px;
+    border: none;
+    border-radius: 4px;
+    background-color: variables.$secondary-red;
+    color: variables.$text-white;
+
+    &:hover{
+        background-color: variables.$hover-red;
+    }
+}
+

@@ -2,9 +2,6 @@
  * TODO
  * optimize the code
  * 
- * addToCart can receive the product info from the 
- * frontend iteself. Request for product need not be 
- * made
  */
 
 import axios from "axios";
@@ -44,6 +41,7 @@ export const addToCart = (id: string, qty: number) => {
       payload: data.payload
     })
 
+    console.log(JSON.stringify(store.getState()).length)
   };
 };
 
@@ -65,7 +63,6 @@ export const removeFromCart = (id: string) => {
       type: ActionType.CART_SET,
       payload: data.payload,
     });
-
   };
 };
 
