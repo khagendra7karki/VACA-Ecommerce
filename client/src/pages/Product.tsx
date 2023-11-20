@@ -3,6 +3,7 @@ import {
   ActionIcon,
   Badge,
   Button,
+  Container,
   Divider,
   Grid,
   Group,
@@ -17,6 +18,7 @@ import {
   Text,
 } from "@mantine/core";
 import classes from "./product.module.css";
+import img1 from "../assets/img/img1.jpg"
 
 import { useParams } from "react-router";
 import { bindActionCreators } from "redux";
@@ -26,6 +28,32 @@ import { notifications } from "@mantine/notifications";
 import { ActionType } from "../state/action-types";
 import Loading from "../components/Loading";
 import Review from "../components/reviews/Review";
+import { Carousel } from "@mantine/carousel";
+
+function productSideCarousel() {
+  return (
+    <Carousel
+      
+      height={650}
+      slideSize={{ base: '100%', sm: '50%', md: '25%' }}
+      slideGap= "xs"
+      controlsOffset="sm"
+      loop
+      align="start"
+      orientation="vertical"
+      
+    >
+      <Carousel.Slide><Image src = {img1}/></Carousel.Slide>
+      <Carousel.Slide><Image src = {img1}/></Carousel.Slide>
+      <Carousel.Slide><Image src = {img1}/></Carousel.Slide>
+      <Carousel.Slide><Image src = {img1}/></Carousel.Slide>
+      <Carousel.Slide><Image src = {img1}/></Carousel.Slide>
+      <Carousel.Slide><Image src = {img1}/></Carousel.Slide>
+      <Carousel.Slide><Image src = {img1}/></Carousel.Slide>
+      
+    </Carousel>
+  );
+}
 
 const Product = () => {
   const params = useParams();
@@ -84,14 +112,20 @@ const Product = () => {
     {loading ? (
       <Loading />
     ) : (
-      <>
+      <><Container size = '80%' >
         {Object.keys(product).length && (
-          <Grid gutter={{ base: 5, xs: "md", md: "xl", xl: 50 }}>
-            <Grid.Col span={{ base: 12, md: 4, lg: 5 }}>
+          
+          <Grid mb={100} gutter={{ base: 5, xs: "md", md: "xl", xl: 50 }}>
+            <Grid.Col span={{ base: 12, md: 4, lg: 2 }}>
+              <Group justify="center">
+                {productSideCarousel()}
+              </Group>
+            </Grid.Col>
+            <Grid.Col span={{ base: 12, md: 4, lg: 4 }}>
               <Group justify="center">
                 <Image
                   radius="md"
-                  h={550}
+                  h={500}
                   w="auto"
                   fit="contain"
                   src={product.image}
@@ -100,11 +134,11 @@ const Product = () => {
               </Group>
             </Grid.Col>
 
-            <Grid.Col span={{ base: 12, md: 8, lg: 7 }}>
+            <Grid.Col span={{ base: 12, md: 8, lg: 6 }}>
               <Stack
-                h={600}
+                //h={600}
                 //bg="var(--mantine-color-blue-light)"
-
+                ml ="50px"
                 justify="flex-start"
               >
                 <Group gap="lg">
@@ -219,10 +253,12 @@ const Product = () => {
               </Stack>
             </Grid.Col>
           </Grid>
+         
         )}
         {Object.keys(product).length && (
           <Review reviewM={product.reviews} />
         )}
+         </Container>
       </>
     )}
   </>
