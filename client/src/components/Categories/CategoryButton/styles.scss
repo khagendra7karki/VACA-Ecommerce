@@ -13,7 +13,7 @@
     text-decoration: none;
     height: 120px;
     width: 170px;
-
+    transition: variables.$transition;
     
     &:hover{
         color: white;

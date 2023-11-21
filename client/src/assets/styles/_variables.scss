@@ -23,6 +23,10 @@ $bold: 700;
 $semi-bold: 600;
 
 
+//animation
+$transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+
+//text
 @mixin text-small{
     font-size: $small;
     font-weight: $normal;

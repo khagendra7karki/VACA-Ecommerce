@@ -1,17 +1,20 @@
+import { ReactNode } from "react"
+
 interface Iprops{
     color?: string,
     height?: number | string,
     width?: number | string,
+    children?: ReactNode,
 }
 
-export default function Reactangle({color, height, width}: Iprops){
+export default function Reactangle({color, height, width, children}: Iprops){
     return <>
         <span style = {{background: `${color? color: 'red'}`,
                         height: `${height ? height : '50px'}`,
                         width: `${width ? width : '30px'}`,
                         borderRadius: `${ height ? Number(height) / 10 + 'px' : '5px'}`}}
         >
-
+        {children}
         </span>
     </>
 }

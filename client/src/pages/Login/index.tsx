@@ -127,7 +127,7 @@ export default function Signin() {
     <Container fluid h={800} pl={0} ml={0} mb={50}>
       <Grid gutter={{ base: 5, xs: "md", md: "xl", xl: 100 }}>
         <Grid.Col span={{ base: 12, md: 12, lg: 8 }}>
-          <Image src={img1} h={781} w="auto" fit="contain" />
+          <Image src={img1} h={781} w="100%" fit="contain" />
         </Grid.Col>
         <Grid.Col
           span={{ base: 12, md: 12, lg: 4 }}
@@ -205,8 +205,6 @@ export default function Signin() {
                 <Text ta="center" mt="md">
                   Don&apos;t have an account?{" "}
                   <Anchor
-                    // href="/signup"
-                    //target="_blank"
                     underline="hover"
                     onClick={(event) => {
                       // event.preventDefault()
