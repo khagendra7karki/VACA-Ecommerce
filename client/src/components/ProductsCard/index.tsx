@@ -2,16 +2,21 @@ import { useNavigate } from 'react-router-dom';
 
 import './productStyle.scss';
 import RatingStars from '../reviews/RatingStars';
+import Reactangle from '../Rectangle';
 
 interface Product {
     _id: string,
     title: string,
     image: string[],
-    oldPrice?: Number,
-    price: Number,
+    oldPrice?: number,
+    price: number,
     rating : number,
 };
 
+const calculateDiscout = ( actual : number , discounted : number ) => {
+    return  (( actual - discounted) * 100 / actual).toFixed(0) 
+
+}
 
 export function ProductsCard( {product} : { product: Product} ){
     const navigate = useNavigate();
@@ -21,6 +26,13 @@ export function ProductsCard( {product} : { product: Product} ){
         onClick = { (e) => { navigate(`/product/${product._id}`)}}>
         <div className = 'image-wraper'>
             <img  src ={product.image[0]}/>
+            {
+                product.oldPrice && <Reactangle width = '50px'
+                        height = '30px' 
+                        sx = {{display: 'flex',borderRadius: '6px', justifyContent: 'center', alignItems: 'center', color: 'white', position: 'absolute', top: '20px', left: '30px'}}>
+                {`${calculateDiscout( product.oldPrice, product.price )}%`}
+            </Reactangle>
+            }
         </div>
         <div className = 'text-wraper'>
             <p className = 'title' >{product.title}</p>
