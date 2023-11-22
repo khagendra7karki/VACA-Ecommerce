@@ -19,7 +19,6 @@ import {
 } from "@mantine/core";
 import { RiShoppingBagLine } from "react-icons/ri";
 import { BiTrashAlt } from "react-icons/bi";
-import { v4 as uuidv4 } from "uuid";
 
 const Cart = () => {
   const numRef = useRef(null);

@@ -76,9 +76,6 @@ export const updateCart = ( id: string, qty : number ) =>{
           Authorization: `Bearer ${token}`,
         },
     };
-    console.log( { id , token })
-    
-
   
     const { data } = await axios.post(`http://localhost:5000/cart/updateItem/${id}/${qty}`,{},config );
 

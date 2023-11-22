@@ -23,13 +23,12 @@ export default function HeaderNav(){
     const initialLinks = [
       { link: '/', label: 'Home', onClick: handleLinkClick },
       { link: '/Contact', label: 'Contact', onClick: handleLinkClick },
-      { link: '/signup', label: 'signup', onClick: handleLinkClick },
-      { link: '/cart', label: 'cart', onClick: handleLinkClick },
+      { link: '/cart', label: 'Cart', onClick: handleLinkClick },
     ];
       const [ links, setLinks ] = useState( initialLinks )
 
     useEffect( () =>{
-        setLinks( [ ...initialLinks, ( isLoggedIn ? { link: '/logout', label: 'logout', onClick : handleLogout }: { link: '/login', label: 'login', onClick: handleLinkClick} ) ])
+        setLinks( [ ...initialLinks, ...( isLoggedIn ? [{ link: '/logout', label: 'logout', onClick : handleLogout }]: [{ link: '/signup', label: 'signup', onClick: handleLinkClick },{ link: '/login', label: 'login', onClick: handleLinkClick}] ) ])
     }, [ isLoggedIn ])
 
     return<>
