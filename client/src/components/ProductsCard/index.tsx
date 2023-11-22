@@ -27,7 +27,7 @@ export function ProductsCard( {product} : { product: Product} ){
         <div className = 'image-wraper'>
             <img  src ={product.image[0]}/>
             {
-                product.oldPrice && <Reactangle width = '50px'
+                product.oldPrice && <Reactangle width = '55px'
                         height = '30px' 
                         sx = {{display: 'flex',borderRadius: '6px', justifyContent: 'center', alignItems: 'center', color: 'white', position: 'absolute', top: '20px', left: '30px'}}>
                 {`${calculateDiscout( product.oldPrice, product.price )}%`}

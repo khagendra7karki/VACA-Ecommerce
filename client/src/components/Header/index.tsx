@@ -3,62 +3,14 @@ import { useDisclosure } from '@mantine/hooks';
 
 import classes from './HeaderSearch.module.css';
 import  Vaca from '../../assets/img/vaca.png'
-import { useEffect, useState } from 'react';
-import {  actionCreators, State } from '../../state';
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { bindActionCreators } from 'redux';
-import { useDispatch } from 'react-redux';
 import SearchBar from '../SearchBar';
-//handles general link click 
-import { v4 as uuidv4 } from 'uuid';
+import HeaderNav from './HeaderNav';
+import { Link } from 'react-router-dom';
 
 export function Header() {
   
-  const navigate = useNavigate()
-  const dispatch = useDispatch();
   
-  const { logout } = bindActionCreators( 
-    actionCreators,
-    dispatch
-    )
-    const [opened, { toggle }] = useDisclosure(false);
-    const { isLoggedIn } = useSelector( (state: State) => state.userLogin )
-    
-    const handleLinkClick = ( url: string ) =>{
-      navigate( url )
-    }
-    
-    const handleLogout = ( url: string ) =>{
-      logout() 
-    }
-    
-    const initialLinks = [
-      { link: '/', label: 'Home', onClick: handleLinkClick },
-      { link: '/Contact', label: 'Contact', onClick: handleLinkClick },
-      { link: '/signup', label: 'signup', onClick: handleLinkClick },
-      { link: '/cart', label: 'cart', onClick: handleLinkClick },
-    ];
-
-  const [ links, setLinks ] = useState( initialLinks )
-
-  useEffect( () =>{
-    setLinks( [ ...initialLinks, ( isLoggedIn ? { link: '/logout', label: 'logout', onClick : handleLogout }: { link: '/login', label: 'login', onClick: handleLinkClick} ) ])
-  }, [ isLoggedIn ])
-
-
-  const items = links.map((link) => (
-    
-    <button 
-      key = { uuidv4() }
-      onClick = { (e) => link.onClick( link.link) }
-      className = { classes.link }
-      >
-      { link.label }
-    </button>
-
-    
-  ));
+  const [opened, { toggle }] = useDisclosure(false);
 
   return (
     <>
@@ -66,13 +18,15 @@ export function Header() {
         <div className={classes.inner}>
           <Group >
             <Burger opened={opened} onClick={toggle} size="sm" hiddenFrom="sm" />
-            <img src={Vaca} alt="Image" height={50}/>
+            <Link to = '/'>
+              <img src={Vaca} alt="logo" height={50}/>
+            </Link>
         
           </Group>
 
           <Group>
             <Group gap={50} className={classes.links} visibleFrom="sm">
-              {items}
+              <HeaderNav />
               <SearchBar />
             </Group>
           

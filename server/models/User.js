@@ -4,12 +4,13 @@
  * add a little bit of description
  * 
  */
-import mongoose, { Schema } from 'mongoose'
+import mongoose ,{Schema} from 'mongoose'
 
-const wishListItem = new mongoose.Schema({
+const wishListItem = new Schema({
     product: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Product'
+        type: Schema.Types.ObjectId,
+        ref: 'Product',
+        unique: true,
     },
 
     title: {
@@ -33,10 +34,10 @@ const wishListItem = new mongoose.Schema({
 
 }, { timestamps: true })
 
-const cartItem = new mongoose.Schema({
+const cartItem = new Schema({
 
     product: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'Product'
     },
 
@@ -62,7 +63,7 @@ const cartItem = new mongoose.Schema({
 }, { timestamps: true })
 
 
-const userSchema = new mongoose.Schema( { 
+const userSchema = new Schema( { 
     uid:{
         type: String,
         required: true,

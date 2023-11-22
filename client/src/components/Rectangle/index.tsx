@@ -2,8 +2,8 @@ import { CSSProperties, ReactNode } from "react"
 
 interface Iprops{
     color?: string,
-    height?: number | string,
-    width?: number | string,
+    height?: string,
+    width?: string,
     children?: ReactNode,
     sx?: CSSProperties
 }

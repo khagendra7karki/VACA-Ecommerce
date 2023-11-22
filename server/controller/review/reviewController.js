@@ -36,11 +36,11 @@ const reviewController = {
             },0) / product.reviews.length
             
             const finalProduct = await productSchema.findByIdAndUpdate( productId, { 
-                $set: { rating: averageRating.toFixed(1)}
+                $set: { rating: averageRating.toFixed(1)},
             },{new: true }).lean()
 
 
-            res.status( 200).json( { status: 'successful', task: 'addReview', payload: finalProduct})
+            res.status( 200).json( { status: 'successful', task: 'addReview', payload: finalProduct.reviews })
         }
         catch( error){
             console.log( 'An error occurred in addReiew', error )

@@ -10,22 +10,21 @@ export default function CategoryListText({category } : Iprops ){
     category = category ? category : exampleCategory;
 
 
-    return<>
-            <nav style = {{ width: '400px'}}>
+    return <nav style = {{ width: '400px'}}>
                 <ul className = 'category-list'>
-                    { category.map(category =>{
-                        return <>
-                            <li className = 'category-list-item'>
+                    { category.map((category, index) =>{
+                        return <li  key = { index }
+                                    className = 'category-list-item'>
                                 <Link  className = 'category-list-item-a'to = '#'>
                                     {category}
                                 </Link>
             
                             </li>
-                        </>
+                        
                     })}
 
                 </ul>
             </nav>
-    </>
+    
     
 }

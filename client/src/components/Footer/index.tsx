@@ -17,7 +17,6 @@ import {
   IconBrandInstagram,
 } from "@tabler/icons-react";
 import classes from "./Footer.module.css";
-import { v4 as uuidv4 } from "uuid";
 
 const data = [
   {
@@ -52,9 +51,8 @@ const data = [
 export function Footer() {
   const groups = data.map((group) => {
     const links = group.links.map((link, index) => (
-      <>
         <Text<"a">
-          key={uuidv4()}
+          key={index}
           className={classes.link}
           component="a"
           href={link.link}
@@ -62,12 +60,10 @@ export function Footer() {
         >
           {link.label}
         </Text>
-        <Space h="sm" />
-      </>
     ));
 
     return (
-      <div className={classes.wrapper} key={uuidv4()}>
+      <div className={classes.wrapper}>
         <SimpleGrid cols={3} spacing="xl">
           <Text className={classes.title}>{group.title}</Text>
         </SimpleGrid>

@@ -5,7 +5,6 @@ import { bindActionCreators } from 'redux';
 import { State, actionCreators } from '../../state';
 import { useEffect } from 'react';
 import { Container } from '@mantine/core';
-import { v4 as uuidv4 } from 'uuid';
 
 interface Iprops{
   page?: number
@@ -37,10 +36,10 @@ function CardCarousel({page = 1 }: Iprops) {
   
     const cards =
     products ? (
-    products.map((product : Product ) => (
-      <Carousel.Slide >
+    products.map((product : Product , index: number) => (
+      <Carousel.Slide key = { index } >
         <Container style={{ margin: '20px 0',height:'640px', display:'flex', }}>
-          <ProductsCard product = { product } key = { uuidv4()}/>
+          <ProductsCard product = { product }/>
         </Container>
       </Carousel.Slide>
        )))

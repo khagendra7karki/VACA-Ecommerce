@@ -17,7 +17,6 @@ import { ActionType } from "../../state/action-types";
 import { AiFillStar } from "react-icons/ai";
 import { IoIosCloseCircle, IoIosUnlock } from "react-icons/io";
 import ReviewCard from "./ReviewCard";
-import { v4 as uuidv4 } from 'uuid';
 
 
 interface Reviews {
@@ -25,9 +24,7 @@ interface Reviews {
   rating: Number;
   fullName: String;
   review: String;
-  user: {
-    fullName: String,
-  };
+  user: string;
   _id: String;
 }
 
@@ -47,20 +44,8 @@ export const Review: FC<MyProps> = ({ reviewM }): JSX.Element => {
 
 
   const { isLoggedIn } = useSelector((state: State) => state.userLogin );
-  const product = useSelector( ( state: State ) => state.product.product)
-  // const {
-  //   review,
-  //   loading: reviewLoading,
-  //   error: reviewError,
-  // } = useSelector((state: State) => state.review);
+  const {product} = useSelector( ( state: State ) => state.product )
 
-  const ratingLevels = [
-    { value: "1", label: "1 - Poor" },
-    { value: "2", label: "2 - Fair" },
-    { value: "3", label: "3 - Good" },
-    { value: "4", label: "4 - Very Good" },
-    { value: "5", label: "5 - Excellent" },
-  ];
 
 
   const form = useForm({
@@ -68,10 +53,6 @@ export const Review: FC<MyProps> = ({ reviewM }): JSX.Element => {
       rating: "",
       comment: "",
     },
-
-    // validate: {
-    //   email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
-    // },
   });
 
 
@@ -106,7 +87,7 @@ export const Review: FC<MyProps> = ({ reviewM }): JSX.Element => {
 
             <div style={{ marginTop: "1rem" }}>
               {reviewM ? (
-                reviewM.map((review: any) => {
+                reviewM.map((review: any, index: number) => {
                   return (
                     <ReviewCard
                       comment={review.review}
@@ -114,7 +95,7 @@ export const Review: FC<MyProps> = ({ reviewM }): JSX.Element => {
                       id={review._id}
                       name={ review.fullName }
                       rating={review.rating}
-                      key={uuidv4()}
+                      key={index}
                     />
                   );
                 })

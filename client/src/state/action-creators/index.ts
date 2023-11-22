@@ -186,7 +186,7 @@ export const addReview = (id: string, rating: number, comment: string) => {
         type: ActionType.ADD_REVIEW_REQUEST,
       });
 
-      const {token, fullName} = store.getState().user.userInfo;
+      const {token, _id, fullName} = store.getState().user.userInfo;
 
       const config = {
         headers: {
@@ -198,7 +198,7 @@ export const addReview = (id: string, rating: number, comment: string) => {
 
       //make reivew object
       const reviewObject = {
-        user: store.getState().user.userInfo._id,
+        user: _id,
         review: comment,
         rating: rating,
         fullName
@@ -210,7 +210,7 @@ export const addReview = (id: string, rating: number, comment: string) => {
         {   productId: id , review: reviewObject },
         config
       );
-      
+      console.log('From data review', data.payload )
       dispatch({
         type: ActionType.ADD_REVIEW_SUCCESS,
         payload:data.payload 

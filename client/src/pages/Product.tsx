@@ -22,8 +22,6 @@ import { useParams } from "react-router";
 import { bindActionCreators } from "redux";
 import { actionCreators, State } from "../state";
 import { useDispatch, useSelector } from "react-redux";
-import { notifications } from "@mantine/notifications";
-import { ActionType } from "../state/action-types";
 import Loading from "../components/Loading";
 import Review from "../components/reviews/Review";
 
@@ -42,37 +40,14 @@ const Product = () => {
 
   const { product, loading } = useSelector((state: State) => state.product);
 
-  const { quickSearch } = useSelector((state: State) => state.quickSearch);
-
-
-  const {
-    review,
-    error: reviewError,
-  } = useSelector((state: State) => state.review);
-
-
   const handlerAddToCart = (quantity: number, id: string) => {
     addToCart(id, quantity);
   };
 
-  useEffect(() => {
-    if (reviewError !== null) {
-      notifications.show({
-        title: "Error!",
-        message: reviewError,
-        color: "red",
-      });
-    }
-    dispatch({
-      type: ActionType.ADD_REVIEW_RESET,
-    });
-    // eslint-disable-next-line
-  }, [reviewError]);
-
 
   useEffect(() => {
     getProduct(params.id as string);
-  }, [dispatch, review, quickSearch]);
+  }, [dispatch]);
 
   const pills = product.size?.map(( size : string, index : number ) => (
       <Pill key={index} withRemoveButton>
@@ -200,9 +175,9 @@ const Product = () => {
                     Add To Cart
                   </Button>
                 </Group>
-                <Group>
+                {/* <Group>
                   <Button variant="filled">Add to Wishlist</Button>
-                </Group>
+                </Group> */}
 
                 <Text fz="sm" c="dimmed" className={classes.label}>
                   Basic configuration
