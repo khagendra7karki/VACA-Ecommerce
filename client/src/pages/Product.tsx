@@ -27,6 +27,8 @@ import { useDispatch, useSelector } from "react-redux";
 import Loading from "../components/Loading";
 import Review from "../components/reviews/Review";
 import { Carousel } from "@mantine/carousel";
+import Reactangle from "../components/Rectangle";
+import CardCarousel from "../components/CardCarousel";
 
 function productSideCarousel() {
   return (
@@ -88,8 +90,7 @@ const Product = () => {
       <Loading />
     ) : (
       <><Container size = '80%' >
-        {Object.keys(product).length && (
-          
+        {Object.keys(product).length && (<>
           <Grid mb={100} gutter={{ base: 5, xs: "md", md: "xl", xl: 50 }}>
             <Grid.Col span={{ base: 12, md: 4, lg: 2 }}>
               <Group justify="center">
@@ -111,8 +112,6 @@ const Product = () => {
 
             <Grid.Col span={{ base: 12, md: 8, lg: 6 }}>
               <Stack
-                //h={600}
-                //bg="var(--mantine-color-blue-light)"
                 ml ="50px"
                 justify="flex-start"
               >
@@ -150,7 +149,6 @@ const Product = () => {
                 <Group gap="lg">
                   <Text>Color</Text>
                   <Select
-                    // label="Your favorite color"
                     placeholder="Choose a color"
                     data={ product.color }
                   />
@@ -214,9 +212,6 @@ const Product = () => {
                 </Group> */}
 
                 <Text fz="sm" c="dimmed" className={classes.label}>
-                  Basic configuration
-                </Text>
-                <Text fz="sm" c="dimmed" className={classes.label}>
                   Description
                 </Text>
 
@@ -228,11 +223,20 @@ const Product = () => {
               </Stack>
             </Grid.Col>
           </Grid>
+
+          <Group >
+            <Reactangle />
+            <h5 className = 'sub-title'>Related Product</h5>
+            
+          </Group>
+          <CardCarousel />
+        </>
+          
          
         )}
-        {Object.keys(product).length && (
+        {/* {Object.keys(product).length && (
           <Review reviewM={product.reviews} />
-        )}
+        )} */}
          </Container>
       </>
     )}

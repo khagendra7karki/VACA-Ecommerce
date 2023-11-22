@@ -25,10 +25,10 @@ export default function Home() {
         </Group>
         <Group >
             <Reactangle />
-            <h5>Today's</h5>
+            <h5 className = 'sub-title'>Today's</h5>
         </Group>
         <Group>
-        <h1>
+        <h1 style = {{margin: '0',marginRight: '100px', alignSelf: 'flex-end'}}>
             Flash Sales
         </h1>
         <CountDownTimer targetDate = {date} />
@@ -38,7 +38,7 @@ export default function Home() {
 
         <Group >
             <Reactangle />
-            <h5>Categories</h5>
+            <h5 className = 'sub-title'>Categories</h5>
         </Group>
         <h1>
             Browse By Categories
@@ -46,7 +46,7 @@ export default function Home() {
         <Categories />
         <Group >
             <Reactangle />
-            <h5>This Month</h5>
+            <h5 className = 'sub-title'>This Month</h5>
         </Group>
         <h1>
             Best Selling Product
@@ -54,14 +54,14 @@ export default function Home() {
 
         <CardCarousel />
 
-        <Group >
+        {/* <Group >
             <Reactangle />
-            <h5>Featured</h5>
+            <h5 className = 'sub-title'>Featured</h5>
         </Group>
         <h1>
             New Arrival
         </h1>
-        <img src = {newArrivals } />
+        <img src = {newArrivals } /> */}
 
     </div>
   )

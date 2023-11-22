@@ -42,7 +42,7 @@ const Order = () => {
       dispatch({ type: ActionType.CART_CLEAR_ITEMS });
     }
     // eslint-disable-next-line
-  }, [dispatch, success]);
+  }, [dispatch,order, success]);
 
   return (
     <>

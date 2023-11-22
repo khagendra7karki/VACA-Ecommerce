@@ -25,7 +25,7 @@ export function Header() {
           </Group>
 
           <Group>
-            <Group gap={50} className={classes.links} visibleFrom="sm">
+            <Group gap={50} visibleFrom="sm">
               <HeaderNav />
               <SearchBar />
             </Group>

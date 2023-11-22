@@ -35,12 +35,12 @@ export function ProductsCard( {product} : { product: Product} ){
             }
         </div>
         <div className = 'text-wraper'>
-            <p className = 'title' >{product.title}</p>
+            <h3 className = 'title' >{product.title}</h3>
             <div className="price-wraper">
                 <p className = 'price'>{`Rs. ${String(product.price)}` }</p>
                 <p className = 'oldPrice'>{`Rs. ${String(product.oldPrice)}`}</p>
             </div>
-            <RatingStars rating = {product.rating || 0} />
+            {/* <RatingStars rating = {product.rating || 0} /> */}
         </div>
     </div>
     </>

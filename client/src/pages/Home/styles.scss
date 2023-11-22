@@ -4,6 +4,9 @@ h1{
     @include variables.heading-semi-bold;
     
 }
-h5{
-    margin: 0;
+
+.sub-title{
+    margin: 5px 0;
+    align-self:last baseline;
+    font-size: 16px;
 }

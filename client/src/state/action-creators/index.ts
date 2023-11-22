@@ -403,7 +403,7 @@ export const getOrder = (id: any) => {
         type: ActionType.GET_ORDER_REQUEST,
       });
 
-      const token = store.getState().user.userInfo.token;
+      const {token} = store.getState().user.userInfo;
 
       const config = {
         headers: {
@@ -413,26 +413,11 @@ export const getOrder = (id: any) => {
       };
 
 
+      const { data } = await axios.get(`http://localhost:5000/order/${id}`, config);
 
-      const data = {
-        isPaid: true,
-        user: {
-          name: "dk",
-          email: "njdnck",
-        },
-        paymentMethod: "admnd",
-        orderItems: {},
-        isDelivered: false,
-        shippingAddress: {
-          address: "cdadc",
-          city: "casdac",
-          postalCode: "cadca",
-          country: "cadca",
-        },
-      };
       dispatch({
         type: ActionType.GET_ORDER_SUCCESS,
-        payload: data,
+        payload: data.payload,
       });
     } catch (error: any) {
       dispatch({
@@ -446,6 +431,7 @@ export const getOrder = (id: any) => {
 export const payOrder = (id: any, paymentResult: any) => {
   return async (dispatch: Dispatch<Action>, getState: any) => {
     try {
+      console.log( id )
       dispatch({
         type: ActionType.ORDER_PAY_REQUEST,
       });

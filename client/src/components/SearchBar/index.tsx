@@ -36,7 +36,7 @@ const SearchBar = () =>{
 
     return<>
             <Select
-            style ={{width: '400px', backgroundColor: 'var(--secondary-white)'}}
+            style ={{ backgroundColor: 'var(--secondary-white)'}}
             my = '5px'
             mx = '20px'
             size="sm"

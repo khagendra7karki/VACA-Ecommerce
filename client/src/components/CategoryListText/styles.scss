@@ -1,8 +1,14 @@
 @use '../../assets/styles/variables';
 
+@media only screen and (max-width: 1040px) {
+  .category-list-nav{
+    display: none;
+  }
+}
 .category-list{
     list-style-type: none;
 }
+
 .category-list-item{
     white-space: nowrap;
 }
