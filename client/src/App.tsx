@@ -25,6 +25,7 @@ import MyCart from './pages/User/MyCart';
 import MyReviews from './pages/User/MyReviews';
 import Layout from './components/Layout/Layout';
 import Test from './pages/Test';
+import WishList from './pages/WishList';
 
 
 const CONTAINER_SIZES: Record<string, string> = {
@@ -87,9 +88,9 @@ function App() {
                 <Route index element={<Home />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />
-                {/* <Route path="/profile" element={<Shop />} /> */}
                 <Route path="/contact" element={<ContactUs />} />
                 <Route path="/cart" element={<Cart />} />
+                <Route path="/wishlist" element={<WishList />} />
                 <Route path="/product/:id" element={<Product />} />
                 <Route path="/shipping" element={<Shipping />} />
                 <Route path="/payment" element={<Payment />} />

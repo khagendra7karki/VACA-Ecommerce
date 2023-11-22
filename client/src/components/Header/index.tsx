@@ -18,14 +18,14 @@ export function Header() {
         <div className={classes.inner}>
           <Group >
             <Burger opened={opened} onClick={toggle} size="sm" hiddenFrom="sm" />
-            <Link to = '/'>
-              <img src={Vaca} alt="logo" height={50}/>
+            <Link to = '/' style = {{fontSize: '32px', textDecoration: 'none' , color: 'black', fontWeight: '500' , padding: '10px'}}>
+              VACA
             </Link>
         
           </Group>
 
           <Group>
-            <Group gap={50} visibleFrom="sm">
+            <Group gap={50} visibleFrom="sm" style={{ flexWrap :'nowrap'}}>
               <HeaderNav />
               <SearchBar />
             </Group>
