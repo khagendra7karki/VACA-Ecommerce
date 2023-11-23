@@ -14,7 +14,7 @@ const cartController = {
     getItem: async ( req, res ) =>{
         try{
             const userId = res.locals.user._id;
-            let result = await User.find([
+            let result = await User.aggregate([
                 {$match: {_id: new mongoose.Types.ObjectId(userId) } },
                 {$project: { cart : 1, _id: 0}},                
             ])

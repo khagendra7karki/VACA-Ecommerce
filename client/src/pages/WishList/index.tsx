@@ -119,7 +119,6 @@ export default function WishList( ) {
                     <Grid.Col span={3}>
                         { item.availableQuantity > 0 ? 'In Stock'  : "Out of Stock" }
                     </Grid.Col>
-                    <Grid.Col span={3}>Rs. {item.price * item.quantity}</Grid.Col>
                 </Grid>
                 </>
             );

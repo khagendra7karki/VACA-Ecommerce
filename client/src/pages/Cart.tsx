@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 import { actionCreators, State } from "../state";
@@ -29,7 +29,7 @@ const Cart = () => {
   const [selectedItem, setSelectedItem] = useState("");
   const { cartItems } = useSelector((state: State) => state.cart);
 
-  const { removeFromCart, updateCart } = bindActionCreators(
+  const { getCart, removeFromCart, updateCart } = bindActionCreators(
     actionCreators,
     dispatch
   );
@@ -48,6 +48,10 @@ const Cart = () => {
     console.log(id);
     removeFromCart(id);
   };
+
+  useEffect( () =>{
+    getCart()
+  }, [])
 
   return (
     <>
@@ -92,7 +96,7 @@ const Cart = () => {
                   </div>
                 </Modal>
                 <Grid gutter={{ base: 5, xs: "md", md: "xl", xl: 50 }} my={20}>
-                  <Grid.Col span={5}>
+                  <Grid.Col span={6}>
                     <Grid gutter={{ base: 5, xs: "md", md: "xl", xl: 50 }}>
                       <Grid.Col span={2}>
                         {" "}

@@ -11,6 +11,35 @@ import { Action } from "../actions/index";
 import { store } from "../store";
 import createNewUser from "../../firebase/createNewUser";
 
+/**
+ * @description - Retrieves user cart from the database
+ * 
+ */
+export const getCart = () => {
+  return async (dispatch: Dispatch<Action>, getState: any) => {
+
+    const { isLoggedIn } = store.getState().userLogin;
+
+    if( !isLoggedIn ) return  
+
+    const token = store.getState().user.userInfo.token;
+    const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+    const { data } = await axios.get(`http://localhost:5000/cart/getItem`, config);
+    console.log( ' car items \n',data.payload )
+
+    dispatch({
+      type: ActionType.CART_SET,
+      payload: data.payload
+    })
+
+  };
+};
 
 
 /**
@@ -23,7 +52,7 @@ import createNewUser from "../../firebase/createNewUser";
  */
 export const addToCart = (id: string, qty: number) => {
   return async (dispatch: Dispatch<Action>, getState: any) => {
-      
+    
     const token = store.getState().user.userInfo.token;
 
     const config = {
@@ -41,7 +70,6 @@ export const addToCart = (id: string, qty: number) => {
       payload: data.payload
     })
 
-    console.log(JSON.stringify(store.getState()).length)
   };
 };
 
