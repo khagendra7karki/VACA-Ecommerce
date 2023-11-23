@@ -7,9 +7,25 @@
  * 
  */
 import mongoose from 'mongoose'
-import userSchema from "../../models/User.js";
-import productSchema from '../../models/Product.js'
+import User from "../../models/User.js";
+import Product from '../../models/Product.js'
 const cartController = {
+
+    getItem: async ( req, res ) =>{
+        try{
+            const userId = res.locals.user._id;
+            let result = await User.find([
+                {$match: {_id: new mongoose.Types.ObjectId(userId) } },
+                {$project: { cart : 1, _id: 0}},                
+            ])
+            return res.status( 200 ).json({ status: 'successful', task: 'getItem', payload: result[0].cart })
+
+        }catch( error ){
+            console.log('Error while getting getItem', error );
+            res.status(500).json({ status:'unsuccessful', task: 'getItem', reason: 'Internal Error'})
+
+        }
+    },
 
     /**
      * adds item to the cart
@@ -21,9 +37,9 @@ const cartController = {
 
             const { id , qty } = req.params;
             //find the product from the database
-            let product = await productSchema.findById( id ).lean()
+            let product = await Product.findById( id ).lean()
 
-            let user = await userSchema.findByIdAndUpdate(userId, {
+            let user = await User.findByIdAndUpdate(userId, {
                 $push: { "cart": { product: product._id, price: product.price, title: product.title, image: product.image[0], quantity: qty } }
             }, { new: true }).lean();
 
@@ -46,7 +62,7 @@ const cartController = {
         try{
             const userId = res.locals.user._id;
             const { id } = req.params   // product Id
-            let user = await userSchema.findByIdAndUpdate(userId, {
+            let user = await User.findByIdAndUpdate(userId, {
                 $pull: {"cart": {"product": id }},
             },{ new: true }).lean();
 
@@ -74,7 +90,7 @@ const cartController = {
             const userId = res.locals.user._id
             const { id, qty } = req.params
 
-            let user = await userSchema.findByIdAndUpdate( userId, 
+            let user = await User.findByIdAndUpdate( userId, 
                 {$set: { "cart.$[inner].quantity": qty }},
                 { arrayFilters: [ {"inner.product" : new mongoose.Types.ObjectId( id ) }], new: true}
                 ).lean()

@@ -1,8 +1,8 @@
-import mongoose , {Schema } from 'mongoose';
+import {model, Schema } from 'mongoose';
 
 const review = new Schema({
     user: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'User',
         unique: true
     },
@@ -79,7 +79,7 @@ const ProductSchema = new Schema({
     },
 },{ timestamps: true })
 
-const Product = mongoose.model('Product', ProductSchema);
+const Product = model('Product', ProductSchema);
 
 export default Product
 
