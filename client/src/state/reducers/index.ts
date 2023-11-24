@@ -24,9 +24,11 @@ import {
   updateUserReducer,
   getUserReview,
 } from "./userReducer";
+import wishListReducer from "./wishListReducer";
 
 const reducers = combineReducers({
   cart: cartReducer,
+  wishList: wishListReducer,
   products: getProductsReducer,
   product: getProductReducer,
   review: addReviewReducer,

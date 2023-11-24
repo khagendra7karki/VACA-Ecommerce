@@ -3,9 +3,8 @@ import User from "../../models/User.js";
 import Product from "../../models/Product.js";
 
 const wishListController= {
-    //
-    // To be done later
-    //
+
+    /** gets wish list items from user model */
     getItem: async ( req, res ) =>{
         try{
             const userId = res.locals.user._id;
@@ -23,7 +22,7 @@ const wishListController= {
     },
 
 
-    /** adds item to the wish list*/
+    /** adds item to the wish list */
     addItem: async ( req, res ) =>{
         try{
             const userId = res.locals.user._id;

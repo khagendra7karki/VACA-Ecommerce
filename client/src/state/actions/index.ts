@@ -13,6 +13,19 @@ interface CartRemoveItemAction {
   type: ActionType.CART_REMOVE_ITEM;
   payload: any;
 }
+interface WishListSetAction {
+  type: ActionType.WISHLIST_SET;
+  payload: any;
+}
+interface WishListAddItemAction {
+  type: ActionType.WISHLIST_ADD_ITEM;
+  payload: any;
+}
+
+interface WishListRemoveItemAction {
+  type: ActionType.WISHLIST_REMOVE_ITEM;
+  payload: any;
+}
 
 interface CartSaveShippingAction {
   type: ActionType.CART_SAVE_SHIPPING_ITEM;
@@ -86,7 +99,6 @@ interface UserLoginRequestAction {
 
 interface UserLoginSuccessAction {
   type: ActionType.USER_LOGIN_SUCCESS;
-  payload: any;
 }
 
 interface UserLoginFailAction {
@@ -101,7 +113,6 @@ interface UserRegisterRequestAction {
 
 interface UserRegisterSuccessAction {
   type: ActionType.USER_REGISTER_SUCCESS;
-  payload: any;
 }
 
 interface UserRegisterFailAction {
@@ -333,6 +344,9 @@ export type Action =
   | CartSetAction
   | CartAddItemAction
   | CartRemoveItemAction
+  | WishListSetAction
+  | WishListAddItemAction
+  | WishListRemoveItemAction
   | CartSaveShippingAction
   | CartSavePaymentAction
   | CartClearItemsAction

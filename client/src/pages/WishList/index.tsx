@@ -1,8 +1,7 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 import { actionCreators, State } from "../../state";
-import { useNavigate } from "react-router-dom";
 import {
   Text,
   Modal,
@@ -17,22 +16,17 @@ import { RiShoppingBagLine } from "react-icons/ri";
 import { BiTrashAlt } from "react-icons/bi";
 
 export default function WishList( ) {
-    const numRef = useRef(null);
     const dispatch = useDispatch();
-    const navigate = useNavigate();
 
     const [opened, setOpened] = useState(false);
     const [selectedItem, setSelectedItem] = useState("");
-    const { cartItems } = useSelector((state: State) => state.cart);
+    const { wishListItems } = useSelector((state: State) => state.wishList);
 
-    const { removeFromCart, updateCart } = bindActionCreators(
+    const { getWishList, removeFromWishList } = bindActionCreators(
     actionCreators,
     dispatch
     );
 
-    const handlerUpdateCartItems = (value: number, id: string) => {
-    updateCart(id, value);
-    };
 
     const selectItem = (id: string) => {
     setOpened(true);
@@ -42,8 +36,12 @@ export default function WishList( ) {
     const handlerDeleteCartItem = (id: string) => {
     setOpened(false);
     console.log(id);
-    removeFromCart(id);
+    removeFromWishList(id);
     };
+
+    useEffect(() =>{
+        getWishList();
+    })
 
     return (
     <>
@@ -54,8 +52,8 @@ export default function WishList( ) {
             <Grid.Col span={3}>Stock Status</Grid.Col>
         </Grid>
         <Divider mb={30} />
-        {cartItems && cartItems.length ? (
-            cartItems.map((item: any, index: number) => {
+        {wishListItems && wishListItems.length ? (
+            wishListItems.map((item: any, index: number) => {
             return (
                 <>
                 <Modal
@@ -120,6 +118,7 @@ export default function WishList( ) {
                         { item.availableQuantity > 0 ? 'In Stock'  : "Out of Stock" }
                     </Grid.Col>
                 </Grid>
+                <Divider mb={20} />
                 </>
             );
             })
@@ -134,6 +133,7 @@ export default function WishList( ) {
             >
                 No items added to Wish List
             </Alert>
+
             </>
         )}
         </Container>

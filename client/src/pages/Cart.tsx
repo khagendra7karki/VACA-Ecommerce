@@ -96,9 +96,9 @@ const Cart = () => {
                   </div>
                 </Modal>
                 <Grid gutter={{ base: 5, xs: "md", md: "xl", xl: 50 }} my={20}>
-                  <Grid.Col span={6}>
+                  <Grid.Col span={5}>
                     <Grid gutter={{ base: 5, xs: "md", md: "xl", xl: 50 }}>
-                      <Grid.Col span={2}>
+                      <Grid.Col span={3}>
                         {" "}
                         <Button
                           size="sm"
@@ -106,12 +106,11 @@ const Cart = () => {
                           variant="filled"
                           color="#DB4444"
                           onClick={() => selectItem(item.product)}
-                          fullWidth
                         >
                           <BiTrashAlt />
                         </Button>
                       </Grid.Col>
-                      <Grid.Col span={2}>
+                      <Grid.Col span={3}>
                         {" "}
                         <Image
                           fit="contain"
@@ -127,7 +126,7 @@ const Cart = () => {
                   <Grid.Col span={2}> Rs. {item.price}</Grid.Col>
                   <Grid.Col span={2}>
                     <NumberInput
-                      style={{ width: "30%" }}
+                      style = {{maxWidth: '70px'}}
                       radius="sm"
                       value={item.quantity}
                       ref={numRef}

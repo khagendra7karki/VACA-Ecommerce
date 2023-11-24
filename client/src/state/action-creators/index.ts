@@ -11,6 +11,91 @@ import { Action } from "../actions/index";
 import { store } from "../store";
 import createNewUser from "../../firebase/createNewUser";
 
+
+
+/**
+ * @description - Retrieves user cart from the database
+ * 
+*/
+export const getWishList= () => {
+  return async (dispatch: Dispatch<Action>, getState: any) => {
+    
+    const { isLoggedIn } = store.getState().userLogin;
+    
+    if( !isLoggedIn ) return  
+    
+    const token = store.getState().user.userInfo.token;
+    const config = {
+      headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      
+      const { data } = await axios.get(`http://localhost:5000/cart/getItem`, config);
+      console.log( ' car items \n',data.payload )
+      
+      dispatch({
+        type: ActionType.CART_SET,
+      payload: data.payload
+    })
+    
+  };
+};
+
+/**
+ * Adds an item to the cart
+ * by creating a whole new cart
+ * received from the backend
+ * 
+ * @param id - product Id
+ * @param qty - number of items
+ */
+export const addToWishList = (id: string) => {
+  return async (dispatch: Dispatch<Action>, getState: any) => {
+    
+    const token = store.getState().user.userInfo.token;
+    
+    const config = {
+      headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+    const { data } = await axios.post(`http://localhost:5000/wishList/addItem/${id}`,{},config );
+    console.log( ' car items \n',data.payload )
+
+    dispatch({
+      type: ActionType.WISHLIST_SET,
+      payload: data.payload
+    })
+    
+  };
+};
+
+export const removeFromWishList = (id: string) => {
+  return async (dispatch: Dispatch<Action>, getState: any) => {
+    const token = store.getState().user.userInfo.token;
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    
+    const { data } = await axios.delete(`http://localhost:5000/wishList/removeItem/${id}`,config );
+    console.log( data.payload );
+    
+    dispatch({
+      type: ActionType.WISHLIST_SET,
+      payload: data.payload,
+    });
+  };
+};
+
+
 /**
  * @description - Retrieves user cart from the database
  * 
@@ -40,7 +125,6 @@ export const getCart = () => {
 
   };
 };
-
 
 /**
  * Adds an item to the cart
@@ -281,13 +365,11 @@ export const register = (fullName: string, email: string, password: string) => {
           // dispatch register action
           dispatch({
               type: ActionType.USER_REGISTER_SUCCESS,
-              payload: {},
             });
 
           // dispatch login action
           dispatch({
             type: ActionType.USER_LOGIN_SUCCESS,
-            payload: {},
           });
           
           // dispatch get user action
@@ -339,8 +421,7 @@ export const login = (email: string, password: string) => {
       // add userInfo to 
       // redux store
       dispatch({
-        type: ActionType.USER_LOGIN_SUCCESS,
-        payload: user,
+        type: ActionType.USER_LOGIN_SUCCESS
       });
 
 
@@ -355,12 +436,6 @@ export const login = (email: string, password: string) => {
       // as  " userInfo "
       localStorage.setItem("userInfo", JSON.stringify( user ));
       
-      // add cart data to 
-      // redux store
-      dispatch({
-        type: ActionType.CART_SET,
-        payload: cart,
-      })
 
     } catch (error: any) {
 

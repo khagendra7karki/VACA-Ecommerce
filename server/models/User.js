@@ -26,6 +26,10 @@ const wishListItem = new Schema({
         type: String,
         requried: true
     },
+    availableQuantity: {
+        type: Number,
+        required: true
+    },
 
 }, { timestamps: true })
 
@@ -53,7 +57,12 @@ const cartItem = new Schema({
     quantity: {
         type: Number,
         required: true
-    }
+    },
+    
+    availableQuantity:{
+        type: Number,
+        required: true
+    },
 
 }, { timestamps: true })
 
