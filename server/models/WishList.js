@@ -20,12 +20,6 @@ export const wishListItemSchema = new Schema({
         type: String,
         requried: true
     },
-    
-    quantity: {
-        type: Number,
-        required: true
-    }
-
 }, { timestamps: true })
 
 export const wishListSchema = Schema({

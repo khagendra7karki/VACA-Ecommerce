@@ -26,11 +26,6 @@ const wishListItem = new Schema({
         type: String,
         requried: true
     },
-    
-    quantity: {
-        type: Number,
-        required: true
-    }
 
 }, { timestamps: true })
 

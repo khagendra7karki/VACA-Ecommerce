@@ -1,10 +1,11 @@
-import cartController from "../../controller/wishList/index.js";
 import express from 'express'
 import { verificationMiddleware } from "../../middleware/auth/index.js";
+import wishListController from "../../controller/wishList/index.js";
 
-const cartRouter = express.Router();
+const wishListRouter = express.Router();
 
-cartRouter.post('/addItem/:id/:qty',verificationMiddleware, cartController.addItem )
-cartRouter.post('/removeItem', verificationMiddleware, cartController.removeItem )
+wishListRouter.get('/getItem', verificationMiddleware, wishListController.getItem)
+wishListRouter.post('/addItem/:id',verificationMiddleware, wishListController.addItem )
+wishListRouter.delete('/removeItem/:id', verificationMiddleware, wishListController.removeItem )
 
-export default cartRouter
+export default wishListRouter
