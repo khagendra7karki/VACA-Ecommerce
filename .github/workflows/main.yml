@@ -17,7 +17,7 @@ jobs:
         key: ${{secrets.SSH}}
         password: ${{secrets.PASSWORD}}
         script: |
-          cd /training-ground/VACA-Ecommerce
+          cd ./training-ground/VACA-Ecommerce/
           git pull origin main
             
             
