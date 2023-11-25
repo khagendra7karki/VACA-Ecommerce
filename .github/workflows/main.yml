@@ -1,0 +1,23 @@
+name: Deploy
+
+on: 
+  push: 
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    steps:
+    - name: Deploy using ssh
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{secrets.HOST}}
+        username: ${{ secrets.USERNAME}}
+        key: ${{secrets.SSH}}
+        script: |
+          cd /training-ground/VACA-Ecommerce
+          git pull origin main
+            
+            
+
