@@ -64,7 +64,7 @@ export function Footer() {
 
     return (
       <div className={classes.wrapper}>
-        <SimpleGrid cols={3} spacing="xl">
+        <SimpleGrid cols={3} spacing="md">
           <Text className={classes.title}>{group.title}</Text>
         </SimpleGrid>
         {links}
@@ -76,7 +76,7 @@ export function Footer() {
     <footer className={classes.footer}>
       <Container size = 'xxxl'>
         <Grid>
-          <Grid.Col span={3}>
+          <Grid.Col span={{ base: 12, md: 6, lg: 3 }}>
             <div className={classes.logo}>
               {/* <MantineLogo size={30} /> */}
               <Title order={2} c="white">
@@ -92,11 +92,11 @@ export function Footer() {
               <TextInput placeholder="Enter your email" mt="15px" style={{ width: rem(300) }}/>
             </div>
           </Grid.Col>
-          <Grid.Col span={6} >
+          <Grid.Col span={{ base: 12, md: 6, lg: 6 }} >
             {" "}
             <div className={classes.groups}>{groups}</div>
           </Grid.Col>
-          <Grid.Col span={3}>
+          <Grid.Col span={{ base: 12, md: 6, lg: 3 }}>
             {" "}
             <div>
               <Title order={2} c="white">
@@ -109,12 +109,12 @@ export function Footer() {
               <Text size="sm" c="white" className={classes.description}>
                 TakeFree
               </Text>
-              <Container className={classes.afterFooter}>
+              
                 <Group
                   gap={0}
-                  className={classes.social}
-                  justify="flex-end"
-                  wrap="nowrap"
+                  
+                  // justify="flex-end"
+                  // wrap="nowrap"
                 >
                   <ActionIcon size="lg" color="gray" variant="subtle">
                     <IconBrandTwitter
@@ -135,13 +135,13 @@ export function Footer() {
                     />
                   </ActionIcon>
                 </Group>
-              </Container>
+             
             </div>
           </Grid.Col>
         </Grid>
       </Container>
 
-      <Divider color="white " />
+      <Divider color="white " mt={20} />
       <Group justify="center">
         <Text c="dimmed" size="sm" ta="center" mt="20px" mb="10px">
           © 2023 vaca.dev. All rights reserved.
