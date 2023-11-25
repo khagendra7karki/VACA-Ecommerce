@@ -1,10 +1,9 @@
 import db from './utils/db.js'
-import productSchema from './models/Product.js'
+import Product from './models/Product.js'
 import dotenv from 'dotenv'
 dotenv.config()
 
 
-const product = productSchema
 
 const URI = process.env.MONGODB_URI
 const database = new db()
@@ -14,7 +13,7 @@ const connections = await database.connectDB( URI )
 const returnValue  = fetch( 'https://fakestoreapi.com/products?limit=100').then( res => res.json()).then( res => res)
 
 
-const randomDiscountPercentage = [ 0.2, 0.3 , 0.45, 0.5, 0.1, 0.35, 0.25, 0.15] 
+const randomDiscountPercentage = [ 0, 0.3 , 0.45, 0, 0.1, 0.35, 0.25, 0] 
 const randomQuantity = [ 0, 3, 4, 5, 0, 6, 7, 8, 0, 13]
 const randomSize = [ 'xxl', 'xl', 'l', 'm', 's', 'xs']
 const randomColor = [ 'red', 'orange', 'blue', 'yellow', 'green', 'pink']
@@ -52,7 +51,7 @@ await returnValue.then( async (products) =>{
                             
                         }
         // console.log( product )
-        const item = new productSchema( product )
+        const item = new Product( product )
         
         const savedProduct = await item.save()
 
@@ -69,7 +68,7 @@ await returnValue.then( async (products) =>{
 // })
 
 
-// const products = await productSchema.find( )
+// const products = await Product.find( )
 
 
 

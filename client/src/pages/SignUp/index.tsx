@@ -14,11 +14,13 @@ import {
 } from "@mantine/core";
 import img2 from "../../assets/img/img2.jpg";
 import classes from "./Signup.module.css";
-import { useNavigate } from "react-router-dom";
+import { redirect, unstable_HistoryRouter, useNavigate } from "react-router-dom";
 import { useForm } from "@mantine/form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { bindActionCreators } from "redux";
 import { actionCreators } from "../../state";
+import { useEffect, useLayoutEffect } from "react";
+import { State } from "../../state";
 
 interface credential {
   email: string;
@@ -60,6 +62,7 @@ export function Signup() {
   const navigate = useNavigate();
 
   const { register } = bindActionCreators(actionCreators, dispatch);
+  const [ isLoggedIn, hasJustRegistered] = useSelector( (state: State) => [ state.userLogin.isLoggedIn, state.userRegister.hasJustRegistered])
 
   const form = useForm({
     validateInputOnChange: true,
@@ -71,9 +74,17 @@ export function Signup() {
   });
   const handleSubmit = (values: credential) => {
     register(values.fullName, values.email, values.password);
-
-    // console.log(`A user has been register \n`, values)
   };
+  useEffect( () =>{
+    if ( hasJustRegistered )
+      navigate('/')
+  },[hasJustRegistered])
+
+
+  if( isLoggedIn ){
+    navigate(-1)
+    return <></>
+  }
 
   return (
     <Container fluid h={800} pl={0} ml={0} mb={50}>

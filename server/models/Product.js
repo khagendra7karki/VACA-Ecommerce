@@ -4,12 +4,13 @@ const review = new Schema({
     user: {
         type: Schema.Types.ObjectId,
         ref: 'User',
-        unique: true
+        unique: true,
+        sparse: true
     },
 
     fullName: {
         type: String,
-        requried: true
+        requried: true,
     },
 
 
@@ -19,8 +20,8 @@ const review = new Schema({
     },
     rating: { 
             type: Number,
+            required: true,
             default: 0,
-            required: true
     
     }
 },{ timestamps: true})

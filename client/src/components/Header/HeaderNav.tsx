@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"
 import { bindActionCreators } from "redux"
 import { State, actionCreators } from "../../state"
 import { useEffect, useState } from "react"
-import classes from './HeaderSearch.module.css';
+import './styles.scss'
 
 
 export default function HeaderNav(){
@@ -42,7 +42,7 @@ export default function HeaderNav(){
             <button 
             key = { index }
             onClick = { (e) => link.onClick( link.link, link.label) }
-            className = { `${classes.link } ${selected == link.label ? classes.selected : '' }`}
+            className = { `link ${selected == link.label ? 'selected' : '' }`}
             >
             { link.label }
             </button>

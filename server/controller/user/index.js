@@ -57,10 +57,9 @@ const userController = {
             
             res.status( 200 ).json( result )
 
-        }
-        catch(error){
+        }catch( error ){
+            console.log('An error occurred at registerUser', error)
             res.status( 500 ).json( {status: 'unsuccessful', task: 'getUser', reason: 'Internal Server Error'} )
-            console.log('An error occurred', error)
         }
     },
 
@@ -73,6 +72,7 @@ const userController = {
      * 
      * @description does something i dont konw about
      */
+
     login: async( req, res ) =>{
         try{            
             const user = await User.findOne( {email: req.body.email} ).select('+password').lean()

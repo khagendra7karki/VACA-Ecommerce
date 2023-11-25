@@ -1,8 +1,6 @@
 import { Group, Burger } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-
-import classes from './HeaderSearch.module.css';
-import  Vaca from '../../assets/img/vaca.png'
+import './styles.scss';
 import SearchBar from '../SearchBar';
 import HeaderNav from './HeaderNav';
 import { Link } from 'react-router-dom';
@@ -14,8 +12,8 @@ export function Header() {
 
   return (
     <>
-      <header className={classes.header} style = {{borderBottom: '1px solid grey'}}>
-        <div className={classes.inner}>
+      <header className ='header' style = {{borderBottom: '1px solid grey'}}>
+        <div className='inner'>
           <Group >
             <Burger opened={opened} onClick={toggle} size="sm" hiddenFrom="sm" />
             <Link to = '/' style = {{fontSize: '32px', textDecoration: 'none' , color: 'black', fontWeight: '500' , padding: '10px'}}>

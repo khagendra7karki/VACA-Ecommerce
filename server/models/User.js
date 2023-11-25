@@ -11,6 +11,7 @@ const wishListItem = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Product',
         unique: true,
+        sparse: true,
     },
 
     title: {
@@ -37,7 +38,9 @@ const cartItem = new Schema({
 
     product: {
         type: Schema.Types.ObjectId,
-        ref: 'Product'
+        ref: 'Product',
+        unique: true,
+        sparse: true,
     },
 
     title: {
