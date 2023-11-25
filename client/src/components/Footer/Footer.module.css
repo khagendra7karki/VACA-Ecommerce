@@ -9,7 +9,7 @@
 }
 
 .logo {
-  max-width: rem(200px);
+  /* max-width: rem(200px); */
 
   @media (max-width: mantine-breakpoint-sm) {
     display: flex;
@@ -30,7 +30,7 @@
 
 .groups {
   display: flex;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
 
   @media (max-width: mantine-breakpoint-sm) {
     display: none;
@@ -63,14 +63,14 @@
 
 .afterFooter {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   margin-top: var(--mantine-spacing-xl);
   padding-top: var(--mantine-spacing-xl);
   padding-bottom: var(--mantine-spacing-xl);
   border-top: rem(1px) solid light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-4));
 
-  @media (max-width: mantine-breakpoint-sm) {
+  @media (max-width: "750px") {
     flex-direction: column;
   }
 }
