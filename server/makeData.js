@@ -39,10 +39,10 @@ await returnValue.then( async (products) =>{
         products[i].price *= 100;
         const product = {
                             title: products[i].title,
-                            price: products[i].price,
+                            oldPrice: products[i].price,
                             description: products[i].description,
                             // choose random discount percentage and deduct it from the original price 
-                            oldPrice: (products[i].price - getRandomElements( [...randomDiscountPercentage], 1 ) * products[i].price).toFixed( 2 ),
+                            price: (products[i].price - getRandomElements( [...randomDiscountPercentage], 1 ) * products[i].price).toFixed( 2 ),
                             size: getRandomElements( [...randomSize], 3 ),
                             color: getRandomElements( [...randomColor], 3 ),
                             image: [ products[i].image ],

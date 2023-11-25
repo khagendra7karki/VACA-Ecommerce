@@ -14,7 +14,7 @@ interface Product {
     _id: string,  
     title: string,
     image: string[],
-    oldPrice?: number,
+    oldPrice: number,
     price: number,
     rating: number
   };

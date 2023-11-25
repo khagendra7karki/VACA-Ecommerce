@@ -8,7 +8,7 @@ interface Product {
     _id: string,
     title: string,
     image: string[],
-    oldPrice?: number,
+    oldPrice: number,
     price: number,
     rating : number,
 };
@@ -27,18 +27,22 @@ export function ProductsCard( {product} : { product: Product} ){
         <div className = 'image-wraper'>
             <img  src ={product.image[0]}/>
             {
-                product.oldPrice && <Reactangle width = '55px'
+                (product.oldPrice != product.price) 
+                && 
+                <Reactangle width = '55px'
                         height = '30px' 
                         sx = {{display: 'flex',borderRadius: '6px', justifyContent: 'center', alignItems: 'center', color: 'white', position: 'absolute', top: '20px', left: '30px'}}>
-                {`${calculateDiscout( product.oldPrice, product.price )}%`}
-            </Reactangle>
+                    {`${calculateDiscout( product.oldPrice, product.price )}%`}
+                </Reactangle>
             }
         </div>
         <div className = 'text-wraper'>
             <h3 className = 'title' >{product.title}</h3>
             <div className="price-wraper">
                 <p className = 'price'>{`Rs. ${String(product.price)}` }</p>
-                <p className = 'oldPrice'>{`Rs. ${String(product.oldPrice)}`}</p>
+                { ( product.price != product.oldPrice)
+                    &&
+                    <p className = 'oldPrice'>{`Rs. ${String(product.oldPrice)}`}</p>}
             </div>
             {/* <RatingStars rating = {product.rating || 0} /> */}
         </div>

@@ -14,12 +14,12 @@ import {
 } from "@mantine/core";
 import img2 from "../../assets/img/img2.jpg";
 import classes from "./Signup.module.css";
-import { redirect, unstable_HistoryRouter, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "@mantine/form";
 import { useDispatch, useSelector } from "react-redux";
 import { bindActionCreators } from "redux";
 import { actionCreators } from "../../state";
-import { useEffect, useLayoutEffect } from "react";
+import { useEffect } from "react";
 import { State } from "../../state";
 
 interface credential {
@@ -82,7 +82,7 @@ export function Signup() {
 
 
   if( isLoggedIn ){
-    navigate(-1)
+    window.location.href = 'http://localhost:3000/'
     return <></>
   }
 
