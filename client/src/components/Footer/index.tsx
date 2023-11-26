@@ -49,7 +49,7 @@ const data = [
 ];
 
 export function Footer() {
-  const groups = data.map((group) => {
+  const groups = data.map((group, index) => {
     const links = group.links.map((link, index) => (
         <Text<"a">
           key={index}
@@ -63,7 +63,7 @@ export function Footer() {
     ));
 
     return (
-      <div className={classes.wrapper}>
+      <div className={classes.wrapper} key = {index}>
         <SimpleGrid cols={3} spacing="md">
           <Text className={classes.title}>{group.title}</Text>
         </SimpleGrid>

@@ -19,7 +19,6 @@ export default function HeaderNav(){
     const { isLoggedIn } = useSelector( (state : State) => state.userLogin )
     
     const handleLogout = ( url: string, label : string ) =>{
-      setSelected( label )
       logout() 
     }
     const initialLinks = [
@@ -32,7 +31,12 @@ export default function HeaderNav(){
     const [ selected, setSelected ] = useState<string>('Home');
 
     useEffect( () =>{
-        setLinks( [ ...initialLinks, ...( isLoggedIn ? [{ link: '/logout', label: 'Logout', onClick : handleLogout }]: [{ link: '/signup', label: 'Sign Up', onClick: handleLinkClick },{ link: '/login', label: 'Login', onClick: handleLinkClick}] ) ])
+      if( isLoggedIn )
+        setLinks( [ ...initialLinks, { link: '/logout', label: 'Logout', onClick : handleLogout }  ])
+      else{  
+        setLinks( [ ...initialLinks, { link: '/signup', label: 'Sign Up', onClick: handleLinkClick },{ link: '/login', label: 'Login', onClick: handleLinkClick}] )
+
+      }
     }, [ isLoggedIn ])
 
     return<>
