@@ -48,11 +48,11 @@ const PlaceOrder = () => {
       createOrder(
         cartItems,
         shippingAddress,
-        paymentMethod,
         itemsPrice,
         taxPrice,
         shippingPrice,
-        totalPrice
+        totalPrice,
+        paymentMethod
       )
     
   };
@@ -61,7 +61,7 @@ const PlaceOrder = () => {
       navigate(`/order/${orderCreate._id}`);
     }
     // eslint-disable-next-line
-  }, [orderCreate ]);
+  }, [orderCreate]);
 
   return (
     <Card withBorder shadow="sm" radius="lg" padding="xl">
@@ -83,7 +83,7 @@ const PlaceOrder = () => {
               >
                 <BsBox size="30" />
                 <Text
-                  color="gray"
+                  c="gray"
                   style={{ marginLeft: "10px" }}
                 //  weight={500}
                   size="sm"

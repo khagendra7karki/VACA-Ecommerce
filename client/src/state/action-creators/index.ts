@@ -451,11 +451,11 @@ export const login = (email: string, password: string) => {
 export const createOrder = (
   orderItems: any,
   shippingAddress: any,
-  paymentMethod: string,
   itemsPrice: any,
   taxPrice: any,
   shippingPrice: any,
-  totalPrice: any
+  totalPrice: any,
+  paymentMethod: string = "onDelivery",
 ) => {
   return async (dispatch: Dispatch<Action>) => {
     try {

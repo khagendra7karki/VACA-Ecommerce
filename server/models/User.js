@@ -1,9 +1,3 @@
-/**
- * TODO
- * 
- * add a little bit of description
- * 
- */
 import {model, Schema} from 'mongoose'
 
 const wishListItem = new Schema({

@@ -66,7 +66,7 @@ const Cart = () => {
         {cartItems && cartItems.length ? (
           cartItems.map((item: any, index: number) => {
             return (
-              <>
+              <div key = {index}>
                 <Modal
                   title="Delete Item?"
                   size="lg"
@@ -141,7 +141,7 @@ const Cart = () => {
                   </Grid.Col>
                   <Grid.Col span={3}>Rs. {item.price * item.quantity}</Grid.Col>
                 </Grid>
-              </>
+              </div>
             );
           })
         ) : (

@@ -33,12 +33,6 @@ const Shipping = () => {
    
   };
 
-  // useEffect(() => {
-  //   if (!userInfo) {
-  //     navigate("/login?redirect=shipping");
-  //   }
-  //   // eslint-disable-next-lineadd
-  // }, []);
 
   return (
     <Card padding="xl" withBorder radius="lg" shadow="xl">
@@ -59,7 +53,6 @@ const Shipping = () => {
               radius="lg"
               placeholder="Your City"
               {...form.getInputProps("city")}
-            //  error={form.errors.city}
               label="City"
             />
           </Grid.Col>
@@ -68,7 +61,6 @@ const Shipping = () => {
               radius="lg"
               placeholder="Your Postal Code"
               {...form.getInputProps("postalCode")}
-            //   error={form.errors.postalCode}
               label="Postal Code"
             />
           </Grid.Col>
@@ -84,7 +76,6 @@ const Shipping = () => {
           <Grid.Col span={12}>
             <Button
               type="submit"
-            //  onClick={() => navigate("/payment")}
               radius="lg"
               color="dark"
               fullWidth

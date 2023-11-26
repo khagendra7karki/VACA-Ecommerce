@@ -32,15 +32,16 @@ const Payment = () => {
           <Text  style={{ margin: "10px 0" }}>Select Payment Method</Text>
           <Card withBorder shadow="xs" radius="lg">
             <Grid.Col span={12}>
-              <RadioGroup value="credit" color="dark" required>
-                <Radio checked size="sm" value="credit" label="   Credit Card or PayPal"/>
+              <RadioGroup value="onDelivery" color="dark" required>
+                <Radio size = "sm" value = "onDelivery" label = "Cash on Delivery"/> 
+                <Radio size="sm" value="credit" label="Credit Card or PayPal"/>
               </RadioGroup>
             </Grid.Col>
           </Card>
         </Grid.Col>
         <Grid.Col span={12}>
           <Button
-            onClick={() => handlerAddPaymentMethod("PayPal")}
+            onClick={() => handlerAddPaymentMethod("onDelivery")}
             radius="lg"
             color="dark"
             fullWidth
