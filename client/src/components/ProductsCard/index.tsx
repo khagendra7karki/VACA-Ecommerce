@@ -7,7 +7,7 @@ import Reactangle from '../Rectangle';
 interface Product {
     _id: string,
     title: string,
-    image: string[],
+    images: string[],
     oldPrice: number,
     price: number,
     rating : number,
@@ -25,7 +25,7 @@ export function ProductsCard( {product} : { product: Product} ){
     <div className = 'products-card'
         onClick = { (e) => { navigate(`/product/${product._id}`)}}>
         <div className = 'image-wraper'>
-            <img  src ={product.image[0]}/>
+            <img  src ={product.images[0]}/>
             {
                 (product.oldPrice != product.price) 
                 && 
