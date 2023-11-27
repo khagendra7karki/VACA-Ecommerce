@@ -40,7 +40,7 @@ const cartController = {
             let product = await Product.findById( id ).lean()
 
             let user = await User.findByIdAndUpdate(userId, {
-                $push: { "cart": { product: product._id, price: product.price, title: product.title, image: product.image[0], quantity: qty } }
+                $push: { "cart": { product: product._id, price: product.price, title: product.title, image: product.images[0], quantity: qty } }
             }, { new: true }).lean();
 
             if( !user ) return res.status(500).json({ status:'unsuccessful', task: 'addItem', reason: 'Internal Error'})
