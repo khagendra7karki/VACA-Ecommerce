@@ -46,7 +46,7 @@ const ProductSchema = new Schema({
         type: String,
         required: true
     },
-    image:[{
+    images:[{
         type: String,
         required: true,
     }],
@@ -67,7 +67,7 @@ const ProductSchema = new Schema({
         }
     ],
 
-    color: [
+    options: [
         {
             type: String
         }
