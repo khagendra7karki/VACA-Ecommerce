@@ -27,7 +27,7 @@ class ScrapeData{
         console.log('Scrape Data Class has been closed')
     }
 
-    async generateProductLinks( link = 'https://www.ufonepal.com/product-category/men/men-new-arrivals/', selector = 'ul.products > li'  ){
+    async generateProductLinks( link = 'https://www.ufonepal.com/product-category/men/men-new-arrivals/?product-page=2', selector = 'ul.products > li'  ){
         try{
             await this.page.goto( link)
             await this.page.waitForSelector(selector)
