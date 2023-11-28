@@ -115,7 +115,7 @@ const Product = () => {
                   h={500}
                   //w="auto"
                   fit="contain"
-                  src={selectedImage || product.images[0]}
+                  src={ selectedImage || product.images[0] }
                   alt="product image"
                 />
               </Group>

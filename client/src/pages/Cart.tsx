@@ -129,7 +129,7 @@ const Cart = () => {
                   <Grid.Col span={2}> Rs. {item.price}</Grid.Col>
                   <Grid.Col span={2}>
                     <NumberInput
-                      style={{ width: "40%" }}
+                      style = {{maxWidth: '70px'}}
                       radius="sm"
                       value={item.quantity}
                       ref={numRef}
