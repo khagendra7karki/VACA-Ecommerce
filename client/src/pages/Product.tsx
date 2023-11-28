@@ -115,7 +115,7 @@ const Product = () => {
                   h={500}
                   //w="auto"
                   fit="contain"
-                  src={ selectedImage || product.image }
+                  src={selectedImage || product.images[0]}
                   alt="product image"
                 />
               </Group>
@@ -158,10 +158,10 @@ const Product = () => {
                 </Group>
                 <Divider my="sm" />
                 <Group gap="lg">
-                  <Text>Color</Text>
+                  <Text>Option</Text>
                   <Select
-                    placeholder="Choose a color"
-                    data={ product.color }
+                    placeholder="Choose an Option"
+                    data={ product.options }
                   />
                 </Group>
                 <Group>

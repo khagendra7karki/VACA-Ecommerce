@@ -13,7 +13,7 @@ interface Iprops{
 interface Product {
     _id: string,  
     title: string,
-    image: string[],
+    images: string[],
     oldPrice: number,
     price: number,
     rating: number
