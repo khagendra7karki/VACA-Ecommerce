@@ -57,7 +57,8 @@ const Product = () => {
   }, [dispatch, params]);
 
 
-  const productImages : string[] = [product.images[0], img1 , img2 , product.images[0] , img2 , img1]
+  // const productImages : string[] = [product.images[0], img1 , img2 , product.images[0] , img2 , img1]
+  const productImages : string[] = product.images
   const [selectedImage, setSelectedImage] = useState<string | null>( null );
   
   const handleImageClick = (imageName: string) => {
@@ -72,15 +73,15 @@ const Product = () => {
         slideSize={{ base: '25%', sm: '25%', md: '25%' }}
         slideGap= "xs"
         controlsOffset="sm"
-        loop
+        //loop
         align="start"
         orientation="vertical"
         
       >
         {productImages.map((image) => (
           
-            <Carousel.Slide mt={10}>
-              <Image src = {image} h={100} fit="contain" onClick={() => handleImageClick(image)} /></Carousel.Slide>
+            <Carousel.Slide mt={5}>
+              <Image src = {image} h={180}  fit="contain" onClick={() => handleImageClick(image)} /></Carousel.Slide>
         
         ))}
         
@@ -103,12 +104,12 @@ const Product = () => {
       <><Container size = '80%' >
         {Object.keys(product).length && (<>
           <Grid mb={100} gutter={{ base: 5, xs: "md", md: "xl", xl: 50 }}>
-            <Grid.Col span={{ base: 12, md: 4, lg: 2 }}>
+            <Grid.Col span={{ base: 5, md: 4, lg: 2 }}>
               <Group justify="center">
                 {productSideCarousel()}
               </Group>
             </Grid.Col>
-            <Grid.Col span={{ base: 12, md: 4, lg: 4 }}>
+            <Grid.Col span={{ base: 7, md: 4, lg: 4 }}>
               <Group justify="center">
                 <Image
                   radius="md"
