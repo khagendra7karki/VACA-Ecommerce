@@ -57,7 +57,7 @@ const Product = () => {
   }, [dispatch, params]);
 
 
-  const productImages : string[] = [product.image, img1 , img2 , product.image , img2 , img1]
+  const productImages : string[] = [product.images[0], img1 , img2 , product.images[0] , img2 , img1]
   const [selectedImage, setSelectedImage] = useState<string | null>( null );
   
   const handleImageClick = (imageName: string) => {
