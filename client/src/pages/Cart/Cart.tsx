@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
-import { actionCreators, State } from "../state";
+import { actionCreators, State } from "../../state";
 import { useNavigate } from "react-router-dom";
 import {
   Text,
@@ -16,9 +16,11 @@ import {
   Divider,
   TextInput,
   Title,
+  Group,
 } from "@mantine/core";
 import { RiShoppingBagLine } from "react-icons/ri";
 import { BiTrashAlt } from "react-icons/bi";
+import classes from './Cart.module.css'
 
 const Cart = () => {
   const numRef = useRef(null);
@@ -55,18 +57,19 @@ const Cart = () => {
 
   return (
     <>
-      <Container size="80%" mb = {50}>
-        <Grid gutter={{ base: 5, xs: "md", md: "xl", xl: 50 }}>
-          <Grid.Col span={5}>Product</Grid.Col>
-          <Grid.Col span={2}>Price</Grid.Col>
-          <Grid.Col span={2}>Quantity</Grid.Col>
-          <Grid.Col span={3}>SubTotal</Grid.Col>
+    <Group hiddenFrom="sm" mb={10}><Text size="xl">Cart</Text></Group>
+      <Container size="80%" mb = {50}  >
+        <Grid visibleFrom="sm"  gutter={{ base: 5, xs: "md", md: "xl", xl: 50 }}>
+          <Grid.Col span={5}><Group justify="center">Product</Group></Grid.Col>
+          <Grid.Col span={2}><Group justify="center">Price</Group></Grid.Col>
+          <Grid.Col span={2}><Group justify="center">Quantity</Group></Grid.Col>
+          <Grid.Col span={3}><Group justify="center">SubTotal</Group></Grid.Col>
         </Grid>
-        <Divider mb={30} />
+        <Divider mb={30} visibleFrom="sm" />
         {cartItems && cartItems.length ? (
           cartItems.map((item: any, index: number) => {
             return (
-              <div key = {index}>
+              <div key = {index} >
                 <Modal
                   title="Delete Item?"
                   size="lg"
@@ -95,12 +98,15 @@ const Cart = () => {
                     </Button>
                   </div>
                 </Modal>
+                <Container fluid h='100%' style={{borderStyle:'solid', borderWidth:'1px', borderColor:'grey'}} mb={10}>
+     
+   
                 <Grid gutter={{ base: 5, xs: "md", md: "xl", xl: 50 }} my={20}>
-                  <Grid.Col span={5}>
+                  <Grid.Col span={{ base: 12, md: 6, lg: 5 }}>
                     <Grid gutter={{ base: 5, xs: "md", md: "xl", xl: 50 }}>
-                      <Grid.Col span={3}>
+                      <Grid.Col span={{ base: 12, md: 6, lg: 2 }}>
                         {" "}
-                        <Button
+                        <Group justify="center"><Button
                           size="sm"
                           px={0}
                           mt={10}
@@ -110,25 +116,30 @@ const Cart = () => {
                           onClick={() => selectItem(item.product)}
                         >
                         <BiTrashAlt size={15} style ={{margin:"auto"}} />
-                        </Button> 
+                        </Button> </Group>
+                        
               
                       </Grid.Col>
-                      <Grid.Col span={3}>
+                      <Grid.Col span={{ base: 12, md: 6, lg: 3 }}>
                         {" "}
-                        <Image
+                        <Group justify="center"> <Image
                           fit="contain"
-                          radius="lg"
+                          radius="sm"
                           height={50}
                           width={50}
                           src={item.image}
-                        />
+                        /> </Group>
+                       
                       </Grid.Col>
-                      <Grid.Col span={7}>{item.title}</Grid.Col>
+                      <Grid.Col span={{ base: 12, md: 6, lg: 7 }}>
+                      <Group justify="center">{item.title} </Group></Grid.Col>
                     </Grid>
                   </Grid.Col>
-                  <Grid.Col span={2}> Rs. {item.price}</Grid.Col>
-                  <Grid.Col span={2}>
-                    <NumberInput
+                  <Grid.Col span={{ base: 12, md: 6, lg: 2 }}>
+                  <Group justify="center">Rs. {item.price}</Group>
+                     </Grid.Col>
+                  <Grid.Col span={{ base: 12, md: 6, lg: 2 }}>
+                  <Group justify="center"> <NumberInput
                       style = {{maxWidth: '70px'}}
                       radius="sm"
                       value={item.quantity}
@@ -140,10 +151,13 @@ const Cart = () => {
                       //max={item.countInStock}
                       max={5}
                       required
-                    />
+                    /></Group>
+                   
                   </Grid.Col>
-                  <Grid.Col span={3}>Rs. {item.price * item.quantity}</Grid.Col>
-                </Grid>
+                  <Grid.Col span={{ base: 12, md: 6, lg: 3 }}>
+                  <Group justify="center">  Rs. {item.price * item.quantity}</Group>
+                   </Grid.Col>
+                </Grid> </Container>
               </div>
             );
           })
@@ -162,29 +176,29 @@ const Cart = () => {
         )}
         <Divider mb={20} />
         <Grid>
-          <Grid.Col span={6}>
-            <Button size="md" variant="default">
+          <Grid.Col span={{ base: 7, md: 6, lg: 6 }}>
+            <Button size="sm" variant="default">
               Return To shop
             </Button>
           </Grid.Col>
           <Grid.Col
-            span={6}
+            span={{ base: 5, md: 6, lg: 6 }}
             style={{ display: "flex", justifyContent: "flex-end" }}
           >
-            <Button size="md" variant="default">
+            <Button size="sm" variant="default">
               Update Cart
             </Button>
           </Grid.Col>
         </Grid>
 
         <Grid mt = {50}>
-          <Grid.Col span={8}>
+          <Grid.Col span={{ base: 12, md: 6, lg: 8 }}>
             <Grid>
-              <Grid.Col span={6}>
+              <Grid.Col span={{ base: 12, md: 6, lg: 6 }}>
                 {" "}
                 <TextInput placeholder="Coupon Code" />
               </Grid.Col>
-              <Grid.Col span={6}>
+              <Grid.Col span={{ base: 12, md: 6, lg: 6 }}>
                 <Button size="md" variant="default">
                   Apply Coupon
                 </Button>
@@ -193,7 +207,7 @@ const Cart = () => {
           </Grid.Col>
 
           <Grid.Col
-            span={4}
+            span={{ base: 12, md: 6, lg: 4 }}
             // style={{ display: "flex", justifyContent: "flex-end" }}
           >
              <div className="subtotal-container">
