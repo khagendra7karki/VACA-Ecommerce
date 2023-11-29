@@ -51,11 +51,11 @@ function CardCarousel({page = 1 }: Iprops) {
     <Carousel
       withIndicators
       height={700}
-      slideSize="25%"
+      slideSize={{ base: '100%', sm: '50%', md: '25%' }}
       slideGap="md"
-      loop
+     // loop
       align="start"
-      slidesToScroll={4}
+      //slidesToScroll={4}
     >
        
         {cards}

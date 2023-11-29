@@ -19,6 +19,7 @@ import {
 } from "@mantine/core";
 import classes from "./product.module.css";
 import img1 from "../assets/img/img1.jpg"
+import img2 from "../assets/img/img2.jpg"
 
 import { useParams } from "react-router";
 import { bindActionCreators } from "redux";
@@ -30,32 +31,8 @@ import { Carousel } from "@mantine/carousel";
 import Reactangle from "../components/Rectangle";
 import CardCarousel from "../components/CardCarousel";
 
-function productSideCarousel() {
-  return (
-    <Carousel
-      
-      height={650}
-      slideSize={{ base: '100%', sm: '50%', md: '25%' }}
-      slideGap= "xs"
-      controlsOffset="sm"
-      loop
-      align="start"
-      orientation="vertical"
-      
-    >
-      <Carousel.Slide><Image src = {img1}/></Carousel.Slide>
-      <Carousel.Slide><Image src = {img1}/></Carousel.Slide>
-      <Carousel.Slide><Image src = {img1}/></Carousel.Slide>
-      <Carousel.Slide><Image src = {img1}/></Carousel.Slide>
-      <Carousel.Slide><Image src = {img1}/></Carousel.Slide>
-      <Carousel.Slide><Image src = {img1}/></Carousel.Slide>
-      <Carousel.Slide><Image src = {img1}/></Carousel.Slide>
-      
-    </Carousel>
-  );
-}
-
 const Product = () => {
+  const [image, setImage] = useState<string>();
   const params = useParams();
   const dispatch = useDispatch();
 
@@ -74,11 +51,46 @@ const Product = () => {
     addToCart(id, quantity);
   };
 
-
   useEffect(() => {
     getProduct(params.id as string);
-  }, [dispatch]);
+    
+  }, [dispatch, params]);
 
+
+  // const productImages : string[] = [product.images[0], img1 , img2 , product.images[0] , img2 , img1]
+  const productImages : string[] = product.images
+  const [selectedImage, setSelectedImage] = useState<string | null>( null );
+  
+  const handleImageClick = (imageName: string) => {
+    setSelectedImage(imageName);
+  };
+ 
+  function productSideCarousel() {
+    return (
+      <Carousel
+        className={classes.carousel}
+        
+        slideSize={{ base: '33.333333%', sm: '25%', md: '25%' }}
+        slideGap={{ base: 0, sm: 'md' }}
+        controlsOffset="sm"
+        //loop
+        align="start"
+        //orientation="vertical"
+        
+      >
+        {productImages.map((image) => (
+          
+            <Carousel.Slide mt={5}>
+              <Image src = {image}  fit="contain" onClick={() => handleImageClick(image)} /></Carousel.Slide>
+        
+        ))}
+        
+        
+      </Carousel>
+    );
+  }
+
+  
   const pills = product.size?.map(( size : string, index : number ) => (
       <Pill key={index} withRemoveButton>
         size {size}
@@ -102,9 +114,9 @@ const Product = () => {
                 <Image
                   radius="md"
                   h={500}
-                  w="auto"
+                  //w="auto"
                   fit="contain"
-                  src={product.images[0]}
+                  src={ selectedImage || product.images[0] }
                   alt="product image"
                 />
               </Group>

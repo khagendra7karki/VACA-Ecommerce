@@ -1,0 +1,13 @@
+{
+  "devDependencies": {
+    "install": "^0.13.0",
+    "npm": "^10.2.4",
+    "postcss": "^8.4.31",
+    "postcss-preset-mantine": "^1.11.0",
+    "postcss-simple-vars": "^7.0.1"
+  },
+  "dependencies": {
+    "postcss-mixins": "^9.0.4",
+    "postcss-nested": "^6.0.1"
+  }
+}

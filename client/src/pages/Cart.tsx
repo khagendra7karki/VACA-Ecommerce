@@ -102,13 +102,16 @@ const Cart = () => {
                         {" "}
                         <Button
                           size="sm"
-                          radius="lg"
-                          variant="filled"
+                          px={0}
+                          mt={10}
+                          radius="md"
+                          variant="subtle"
                           color="#DB4444"
                           onClick={() => selectItem(item.product)}
                         >
-                          <BiTrashAlt />
-                        </Button>
+                        <BiTrashAlt size={15} style ={{margin:"auto"}} />
+                        </Button> 
+              
                       </Grid.Col>
                       <Grid.Col span={3}>
                         {" "}
@@ -120,7 +123,7 @@ const Cart = () => {
                           src={item.image}
                         />
                       </Grid.Col>
-                      <Grid.Col span={6}>{item.title}</Grid.Col>
+                      <Grid.Col span={7}>{item.title}</Grid.Col>
                     </Grid>
                   </Grid.Col>
                   <Grid.Col span={2}> Rs. {item.price}</Grid.Col>

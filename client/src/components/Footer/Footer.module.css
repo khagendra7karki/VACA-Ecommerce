@@ -74,9 +74,3 @@
     flex-direction: column;
   }
 }
-
-.social {
-  @media (max-width: mantine-breakpoint-sm) {
-    margin-top: var(--mantine-spacing-xs);
-  }
-}
