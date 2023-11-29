@@ -68,20 +68,20 @@ const Product = () => {
   function productSideCarousel() {
     return (
       <Carousel
+        className={classes.carousel}
         
-        height={550}
-        slideSize={{ base: '25%', sm: '25%', md: '25%' }}
-        slideGap= "xs"
+        slideSize={{ base: '33.333333%', sm: '25%', md: '25%' }}
+        slideGap={{ base: 0, sm: 'md' }}
         controlsOffset="sm"
         //loop
         align="start"
-        orientation="vertical"
+        //orientation="vertical"
         
       >
         {productImages.map((image) => (
           
             <Carousel.Slide mt={5}>
-              <Image src = {image} h={180}  fit="contain" onClick={() => handleImageClick(image)} /></Carousel.Slide>
+              <Image src = {image}  fit="contain" onClick={() => handleImageClick(image)} /></Carousel.Slide>
         
         ))}
         
@@ -104,12 +104,12 @@ const Product = () => {
       <><Container size = '80%' >
         {Object.keys(product).length && (<>
           <Grid mb={100} gutter={{ base: 5, xs: "md", md: "xl", xl: 50 }}>
-            <Grid.Col span={{ base: 5, md: 4, lg: 2 }}>
+            <Grid.Col span={{ base: 12, md: 4, lg: 2 }}>
               <Group justify="center">
                 {productSideCarousel()}
               </Group>
             </Grid.Col>
-            <Grid.Col span={{ base: 7, md: 4, lg: 4 }}>
+            <Grid.Col span={{ base: 12, md: 4, lg: 4 }}>
               <Group justify="center">
                 <Image
                   radius="md"

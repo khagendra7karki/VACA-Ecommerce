@@ -28,3 +28,13 @@
     margin-right: rem(5px);
     color: light-dark(var(--mantine-color-gray-5), var(--mantine-color-dark-2));
   }
+
+  .carousel {
+    background-color: aqua;
+    height: '550px';
+    @media (min-width: 500px){
+      background-color: rgb(255, 0, 98);
+      orientation: "vertical";
+      height : '100px'
+    }
+  }
