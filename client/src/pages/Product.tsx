@@ -18,21 +18,17 @@ import {
   Text,
 } from "@mantine/core";
 import classes from "./product.module.css";
-import img1 from "../assets/img/img1.jpg"
-import img2 from "../assets/img/img2.jpg"
 
 import { useParams } from "react-router";
 import { bindActionCreators } from "redux";
 import { actionCreators, State } from "../state";
 import { useDispatch, useSelector } from "react-redux";
 import Loading from "../components/Loading";
-import Review from "../components/reviews/Review";
 import { Carousel } from "@mantine/carousel";
 import Reactangle from "../components/Rectangle";
 import CardCarousel from "../components/CardCarousel";
 
 const Product = () => {
-  const [image, setImage] = useState<string>();
   const params = useParams();
   const dispatch = useDispatch();
 
@@ -57,7 +53,6 @@ const Product = () => {
   }, [dispatch, params]);
 
 
-  // const productImages : string[] = [product.images[0], img1 , img2 , product.images[0] , img2 , img1]
   const productImages : string[] = product.images
   const [selectedImage, setSelectedImage] = useState<string | null>( null );
   
@@ -65,25 +60,29 @@ const Product = () => {
     setSelectedImage(imageName);
   };
  
-  function productSideCarousel() {
+  function ProductSideCarousel() {
     return (
       <Carousel
         className={classes.carousel}
-        
-        slideSize={{ base: '33.333333%', sm: '25%', md: '25%' }}
-        slideGap={{ base: 0, sm: 'md' }}
         controlsOffset="sm"
-        //loop
+        loop
+        height = '100%'
         align="start"
-        //orientation="vertical"
-        
+        slideSize={{ base: '33%', sm: '25%'}}
+        slideGap={'md'}
       >
-        {productImages.map((image) => (
-          
-            <Carousel.Slide mt={5}>
-              <Image src = {image}  fit="contain" onClick={() => handleImageClick(image)} /></Carousel.Slide>
+        {productImages.map((image, index) =>{ 
+
+          if (index == 0 )
+            return <></>
         
-        ))}
+          return <Carousel.Slide mt={5} mb = {5}>
+              <Image  radius="sm"
+                      height = '100%'
+                      src = {image}
+                      onClick={() => handleImageClick(image)} /></Carousel.Slide>
+        
+        })}
         
         
       </Carousel>
@@ -101,25 +100,18 @@ const Product = () => {
     {loading ? (
       <Loading />
     ) : (
-      <><Container size = '80%' >
+      <>
         {Object.keys(product).length && (<>
-          <Grid mb={100} gutter={{ base: 5, xs: "md", md: "xl", xl: 50 }}>
-            <Grid.Col span={{ base: 12, md: 4, lg: 2 }}>
-              <Group justify="center">
-                {productSideCarousel()}
-              </Group>
-            </Grid.Col>
-            <Grid.Col span={{ base: 12, md: 4, lg: 4 }}>
-              <Group justify="center">
-                <Image
-                  radius="md"
-                  h={500}
-                  //w="auto"
-                  fit="contain"
-                  src={ selectedImage || product.images[0] }
-                  alt="product image"
-                />
-              </Group>
+          <Grid mb={100} gutter={{ xs: "md", md: "xl", xl: 50 }}>
+            <Grid.Col style = {{display: 'flex', alignItems: 'center', gap: '20px', flexDirection: 'column'}}span={{ base: 12, md: 4, lg: 6 }}>
+                  <Image
+                    radius="sm"
+                    style = {{width: '100%', maxWidth: '500px'}}
+                    fit="contain"
+                    src={ selectedImage || product.images[0] }
+                    alt={product.title}
+                  />
+                  <ProductSideCarousel />
             </Grid.Col>
 
             <Grid.Col span={{ base: 12, md: 8, lg: 6 }}>
@@ -243,13 +235,7 @@ const Product = () => {
           </Group>
           <CardCarousel />
         </>
-          
-         
         )}
-        {/* {Object.keys(product).length && (
-          <Review reviewM={product.reviews} />
-        )} */}
-         </Container>
       </>
     )}
   </>

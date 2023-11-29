@@ -30,11 +30,5 @@
   }
 
   .carousel {
-    background-color: aqua;
-    height: '550px';
-    @media (min-width: 500px){
-      background-color: rgb(255, 0, 98);
-      orientation: "vertical";
-      height : '100px'
-    }
+    height: 200px;
   }
