@@ -66,7 +66,6 @@ const Product = () => {
         className={classes.carousel}
         controlsOffset="sm"
         loop
-        height = '100%'
         align="start"
         slideSize={{ base: '33%', sm: '25%'}}
         slideGap={'md'}
@@ -78,7 +77,6 @@ const Product = () => {
         
           return <Carousel.Slide mt={5} mb = {5}>
               <Image  radius="sm"
-                      height = '100%'
                       src = {image}
                       onClick={() => handleImageClick(image)} /></Carousel.Slide>
         
