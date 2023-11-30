@@ -1,0 +1,6 @@
+.carousel{
+    height: 500px;
+    @media( max-width: 720px ){
+        height: 150px ;
+    }
+}
