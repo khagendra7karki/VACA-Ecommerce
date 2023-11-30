@@ -51,7 +51,7 @@ function CardCarousel({page = 1 }: Iprops) {
     <Carousel
       withIndicators
       height={700}
-      slideSize={{ base: '100%', sm: '50%', md: '25%' }}
+      slideSize={{ base: '100%', sm: '50%', md: '33%', lg: '25%' }}
       slideGap="md"
       loop
       align="start"

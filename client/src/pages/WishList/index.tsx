@@ -29,14 +29,14 @@ export default function WishList( ) {
 
 
     const selectItem = (id: string) => {
-    setOpened(true);
-    setSelectedItem(id);
+        setOpened(true);
+        setSelectedItem(id);
     };
 
     const handlerDeleteCartItem = (id: string) => {
-    setOpened(false);
-    console.log(id);
-    removeFromWishList(id);
+        setOpened(false);
+        console.log(id);
+        removeFromWishList(id);
     };
 
     useEffect(() =>{
@@ -55,7 +55,7 @@ export default function WishList( ) {
         {wishListItems && wishListItems.length ? (
             wishListItems.map((item: any, index: number) => {
             return (
-                <>
+                <div key = {index}>
                 <Modal
                     title="Delete Item?"
                     size="lg"
@@ -119,7 +119,7 @@ export default function WishList( ) {
                     </Grid.Col>
                 </Grid>
                 <Divider mb={20} />
-                </>
+                </div>
             );
             })
         ) : (

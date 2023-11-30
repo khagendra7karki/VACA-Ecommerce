@@ -11,7 +11,7 @@ import { Container, MantineProvider, createTheme, rem } from '@mantine/core';
 import { Provider } from 'react-redux';
 import { store } from "./state/index";
 import Cart from './pages/Cart/Cart';
-import Product from './pages/Product';
+import Product from './pages/Product/Product';
 import app from './firebase';
 import Shipping from './pages/Shipping';
 import Payment from './pages/Payment';
@@ -72,7 +72,7 @@ function App() {
    * to apps so that the module is 
    * executed which initializes firebase
    * 
-   * Donot delete this line
+   * Do not delete this line
    */
   const apps = app;
   
