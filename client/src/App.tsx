@@ -102,6 +102,13 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
+  /**
+   * assigning import 'app'
+   * to apps so that the module is 
+   * executed which initializes firebase
+   * 
+   * Do not delete this line
+   */
   const apps = app;
 
   return (
