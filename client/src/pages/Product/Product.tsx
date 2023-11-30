@@ -18,26 +18,21 @@ import {
   Text,
 } from "@mantine/core";
 import classes from "./product.module.css";
-<<<<<<< HEAD
-=======
-import img1 from "../assets/img/img1.jpg";
-import img2 from "../assets/img/img2.jpg";
->>>>>>> db1a9284140e74da918b54729f2bc93627c3b44e
 
 import { useParams } from "react-router";
 import { bindActionCreators } from "redux";
-import { actionCreators, State } from "../state";
+import { actionCreators, State } from "../../state";
 import { useDispatch, useSelector } from "react-redux";
-import Loading from "../components/Loading";
+import Loading from "../../components/Loading";
 import { Carousel } from "@mantine/carousel";
-import Reactangle from "../components/Rectangle";
-import CardCarousel from "../components/CardCarousel";
+import Reactangle from "../../components/Rectangle";
+import CardCarousel from "../../components/CardCarousel";
 
 const Product = () => {
   const params = useParams();
   const dispatch = useDispatch();
 
-  const { getProduct, addToCart } = bindActionCreators(
+  const { getProduct, addToCart, addToWishList } = bindActionCreators(
     actionCreators,
     dispatch
   );
@@ -56,13 +51,16 @@ const Product = () => {
     getProduct(params.id as string);
   }, [dispatch, params]);
 
-  // const productImages : string[] = [product.images[0], img1 , img2 , product.images[0] , img2 , img1]
   const productImages: string[] = product.images;
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   const handleImageClick = (imageName: string) => {
     setSelectedImage(imageName);
   };
+
+  const handlerAddToWishList = (id: string) =>{ 
+      addToWishList( id );
+  }
 
   function productSideCarousel() {
     return (
@@ -75,16 +73,20 @@ const Product = () => {
         controlsOffset="xs"
         align="start"
       >
-        {productImages.map((image) => (
-          <Carousel.Slide >
-            <Image
-              src={image}
-              h={100}
-              fit="contain"
-              onClick={() => handleImageClick(image)}
-            />
-          </Carousel.Slide>
-        ))}
+        {productImages.map((image, index) => {
+            if ( index == 0 )
+              return 
+            
+            return <Carousel.Slide  key = {index}>
+              <Image
+                src={image}
+                h={100}
+                fit="contain"
+                onClick={() => handleImageClick(image)}
+              />
+            </Carousel.Slide>
+          }
+        )}
       </Carousel>
     );
   }
@@ -213,10 +215,12 @@ const Product = () => {
                         >
                           Add To Cart
                         </Button>
+                      
                       </Group>
-                      {/* <Group>
-                  <Button variant="filled">Add to Wishlist</Button>
-                </Group> */}
+                      
+                      <Group>
+                        <Button variant="filled" onClick = {() => handlerAddToWishList( product._id)}>Add to Wishlist</Button>
+                      </Group>
 
                       <Text fz="sm" c="dimmed" className={classes.label}>
                         Description
@@ -238,9 +242,6 @@ const Product = () => {
                 <CardCarousel />
               </>
             )}
-            {/* {Object.keys(product).length && (
-          <Review reviewM={product.reviews} />
-        )} */}
           </Container>
         </>
       )}

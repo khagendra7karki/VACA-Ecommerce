@@ -22,12 +22,8 @@ const Slider = () => {
     className= {classes.carousel}
       withIndicators 
       loop
-<<<<<<< HEAD:client/src/components/Carousel.tsx
-      height={470} 
-=======
        height= '100%' 
        mb= {50}
->>>>>>> db1a9284140e74da918b54729f2bc93627c3b44e:client/src/components/HomeSlider/Carousel.tsx
     >
       {slides}
     </Carousel>

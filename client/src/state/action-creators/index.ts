@@ -1,9 +1,3 @@
-/**
- * TODO
- * optimize the code
- * 
- */
-
 import axios from "axios";
 import { Dispatch } from "redux";
 import { ActionType } from "../action-types";
@@ -53,6 +47,10 @@ export const getWishList= () => {
  */
 export const addToWishList = (id: string) => {
   return async (dispatch: Dispatch<Action>, getState: any) => {
+      
+    const { isLoggedIn } = store.getState().userLogin;
+    
+    if( !isLoggedIn ) return 
     
     const token = store.getState().user.userInfo.token;
     
