@@ -25,22 +25,23 @@ const router = express.Router()
 
 
 //product routers
-router.use('/', productRouter );
+router.use('/product', productRouter );
 
 //user router
-router.use('/', userRouter );
+router.use('/user', userRouter );
 
 //order routes
-router.use('/order/', orderRouter );
+router.use('/order', orderRouter );
 
 //cart routes
-router.use('/cart/', cartRouter );
+router.use('/cart', cartRouter );
 
 //wishList routes
-router.use('/wishList/', wishListRouter );
+router.use('/wishList', wishListRouter );
 
 //review routes
 router.use( '/review', reviewRouter)
 
+router.route('*').all( (req, res ) => res.status(400).send() )
 
 export default router 
