@@ -26,7 +26,7 @@ export const getWishList= () => {
         },
       };
       
-      const { data } = await axios.get(`http://localhost:5000/cart/getItem`, config);
+      const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/cart/getItem`, config);
       console.log( ' car items \n',data.payload )
       
       dispatch({
@@ -61,7 +61,7 @@ export const addToWishList = (id: string) => {
         },
       };
 
-    const { data } = await axios.post(`http://localhost:5000/wishList/addItem/${id}`,{},config );
+    const { data } = await axios.post(`${process.env.REACT_APP_API_URL}/wishList/addItem/${id}`,{},config );
     console.log( ' car items \n',data.payload )
 
     dispatch({
@@ -83,7 +83,7 @@ export const removeFromWishList = (id: string) => {
       },
     };
     
-    const { data } = await axios.delete(`http://localhost:5000/wishList/removeItem/${id}`,config );
+    const { data } = await axios.delete(`${process.env.REACT_APP_API_URL}/wishList/removeItem/${id}`,config );
     console.log( data.payload );
     
     dispatch({
@@ -113,7 +113,7 @@ export const getCart = () => {
         },
       };
 
-    const { data } = await axios.get(`http://localhost:5000/cart/getItem`, config);
+    const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/cart/getItem`, config);
     console.log( ' car items \n',data.payload )
 
     dispatch({
@@ -144,7 +144,7 @@ export const addToCart = (id: string, qty: number) => {
         },
       };
 
-    const { data } = await axios.post(`http://localhost:5000/cart/addItem/${id}/${qty}`,{},config );
+    const { data } = await axios.post(`${process.env.REACT_APP_API_URL}/cart/addItem/${id}/${qty}`,{},config );
     console.log( ' car items \n',data.payload )
 
     dispatch({
@@ -166,7 +166,7 @@ export const removeFromCart = (id: string) => {
         },
       };
     
-    const { data } = await axios.post(`http://localhost:5000/cart/removeItem/${id}`,{},config );
+    const { data } = await axios.post(`${process.env.REACT_APP_API_URL}/cart/removeItem/${id}`,{},config );
     console.log( data.payload );
 
     dispatch({
@@ -187,7 +187,7 @@ export const updateCart = ( id: string, qty : number ) =>{
         },
     };
   
-    const { data } = await axios.post(`http://localhost:5000/cart/updateItem/${id}/${qty}`,{},config );
+    const { data } = await axios.post(`${process.env.REACT_APP_API_URL}/cart/updateItem/${id}/${qty}`,{},config );
 
     dispatch({
       type: ActionType.CART_SET,
@@ -225,7 +225,7 @@ export const getProducts = (page: number) => {
       dispatch({
         type: ActionType.GET_PRODUCTS_REQUEST,
       });
-      const { data } = await axios.get(`http://localhost:5000/getProducts?pageNumber=${page}`);
+      const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/getProducts?pageNumber=${page}`);
       dispatch({
         type: ActionType.GET_PRODUCTS_SUCCESS,
         payload: data.payload,
@@ -246,7 +246,7 @@ export const quickSearchProducts = (keyword: number) => {
         type: ActionType.QUICK_SEARCH_REQUEST,
       });
       const { data } = await axios.get(
-        `http://localhost:5000/getProducts/search?keyword=${keyword}`
+        `${process.env.REACT_APP_API_URL}/getProducts/search?keyword=${keyword}`
       );
       console.log(data.payload, data , "csdjbsefbvjh")
       dispatch({
@@ -270,7 +270,7 @@ export const getProduct = (id: string) => {
         type: ActionType.GET_PRODUCT_REQUEST,
       });
    
-      const { data } = await axios.get(`http://localhost:5000/getProduct/${id}`);
+      const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/getProduct/${id}`);
 
       dispatch({
         type: ActionType.GET_PRODUCT_SUCCESS,
@@ -313,7 +313,7 @@ export const addReview = (id: string, rating: number, comment: string) => {
 
       // receive the updated product info
       const { data } = await axios.post(
-        `http://localhost:5000/review/addReview`,
+        `${process.env.REACT_APP_API_URL}/review/addReview`,
         {   productId: id , review: reviewObject },
         config
       );
@@ -356,7 +356,7 @@ export const register = (fullName: string, email: string, password: string) => {
 
         console.log( user );
         
-        axios.post("http://localhost:5000/registerUser", user , config)
+        axios.post(`${process.env.REACT_APP_API_URL}/registerUser`, user , config)
         .then( res =>{
           console.log( 'Payload', res.data.payload )
           
@@ -407,7 +407,7 @@ export const login = (email: string, password: string) => {
       };
 
       const { data } = await axios.post(
-        "http://localhost:5000/login",
+        `${process.env.REACT_APP_API_URL}/login`,
         formData,
         config
       );
@@ -481,7 +481,7 @@ export const createOrder = (
       };
 
       console.log(formData)
-      const { data } = await axios.post("http://localhost:5000/order", formData, config);
+      const { data } = await axios.post(`${process.env.REACT_APP_API_URL}/order`, formData, config);
 
  
       dispatch({
@@ -514,7 +514,7 @@ export const getOrder = (id: any) => {
       };
 
 
-      const { data } = await axios.get(`http://localhost:5000/order/${id}`, config);
+      const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/order/${id}`, config);
 
       dispatch({
         type: ActionType.GET_ORDER_SUCCESS,
@@ -608,7 +608,7 @@ export const getUserReviews = () =>{
         },
       };
 
-      const { data } = await axios.get(`http://localhost:5000/reviews`, config);
+      const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/reviews`, config);
 
       dispatch({
         type: ActionType.GET_USER_REVIEW_SUCCESS,
@@ -821,7 +821,7 @@ export const updateProfile = (
       };
 
       const { data } = await axios.put(
-        `http://localhost:5000/updateProfile`,
+        `${process.env.REACT_APP_API_URL}/updateProfile`,
         formData,
         config
       );
