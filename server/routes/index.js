@@ -23,6 +23,11 @@ import reviewRouter from './review/index.js'
 
 const router = express.Router()
 
+  router.use(express.static(path.join(__dirname, 'build')))
+  
+  router.get('/', ( req, res ) =>{
+    res.sendFile( path.join(__dirname, 'build', 'index.html'))
+  })
 
 //product routers
 router.use('/product', productRouter );
@@ -42,6 +47,6 @@ router.use('/wishList', wishListRouter );
 //review routes
 router.use( '/review', reviewRouter)
 
-router.route('*').all( (req, res ) => res.status(400).send() )
+router.route('/*').all( (req, res ) => res.status(400).send() )
 
-export default router 
+export default router  
