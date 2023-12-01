@@ -225,7 +225,7 @@ export const getProducts = (page: number) => {
       dispatch({
         type: ActionType.GET_PRODUCTS_REQUEST,
       });
-      const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/getProducts?pageNumber=${page}`);
+      const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/product/getProducts?pageNumber=${page}`);
       dispatch({
         type: ActionType.GET_PRODUCTS_SUCCESS,
         payload: data.payload,
@@ -246,7 +246,7 @@ export const quickSearchProducts = (keyword: number) => {
         type: ActionType.QUICK_SEARCH_REQUEST,
       });
       const { data } = await axios.get(
-        `${process.env.REACT_APP_API_URL}/getProducts/search?keyword=${keyword}`
+        `${process.env.REACT_APP_API_URL}/product/getProducts/search?keyword=${keyword}`
       );
       console.log(data.payload, data , "csdjbsefbvjh")
       dispatch({
@@ -270,7 +270,7 @@ export const getProduct = (id: string) => {
         type: ActionType.GET_PRODUCT_REQUEST,
       });
    
-      const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/getProduct/${id}`);
+      const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/product/getProduct/${id}`);
 
       dispatch({
         type: ActionType.GET_PRODUCT_SUCCESS,
@@ -356,7 +356,7 @@ export const register = (fullName: string, email: string, password: string) => {
 
         console.log( user );
         
-        axios.post(`${process.env.REACT_APP_API_URL}/registerUser`, user , config)
+        axios.post(`${process.env.REACT_APP_API_URL}/user/registerUser`, user , config)
         .then( res =>{
           console.log( 'Payload', res.data.payload )
           
@@ -407,7 +407,7 @@ export const login = (email: string, password: string) => {
       };
 
       const { data } = await axios.post(
-        `${process.env.REACT_APP_API_URL}/login`,
+        `${process.env.REACT_APP_API_URL}/user/login`,
         formData,
         config
       );
@@ -608,7 +608,7 @@ export const getUserReviews = () =>{
         },
       };
 
-      const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/reviews`, config);
+      const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/user/reviews`, config);
 
       dispatch({
         type: ActionType.GET_USER_REVIEW_SUCCESS,
@@ -747,7 +747,7 @@ export const getTopProducts = () => {
         type: ActionType.GET_TOP_PRODUCTS_REQUEST,
       });
 
-      const { data } = await axios.get(`http://localhost:/5000/getTopProducts`);
+      const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/getTopProducts`);
 
       dispatch({
         type: ActionType.GET_TOP_PRODUCTS_SUCCESS,
@@ -821,7 +821,7 @@ export const updateProfile = (
       };
 
       const { data } = await axios.put(
-        `${process.env.REACT_APP_API_URL}/updateProfile`,
+        `${process.env.REACT_APP_API_URL}/user/updateProfile`,
         formData,
         config
       );
