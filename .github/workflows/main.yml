@@ -17,6 +17,7 @@ jobs:
         key: ${{secrets.SSH}}
         password: ${{secrets.PASSWORD}}
         script: |
+          echo $PATH
           export NVM_DIR=~/.nvm
           source ~/.nvm/nvm.sh
           cd ./training-ground/VACA-Ecommerce/
