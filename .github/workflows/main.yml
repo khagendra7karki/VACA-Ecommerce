@@ -17,6 +17,7 @@ jobs:
         key: ${{secrets.SSH}}
         password: ${{secrets.PASSWORD}}
         script: |
+          echo $0
           echo $PATH
           export NVM_DIR=~/.nvm
           source ~/.nvm/nvm.sh
