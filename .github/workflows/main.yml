@@ -30,6 +30,7 @@ jobs:
           cp -r ./build ../server/
           cd ../server
           npm install --omit-dev
+          npm start &
 
           
           
