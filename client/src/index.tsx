@@ -6,6 +6,11 @@ import reportWebVitals from './reportWebVitals';
 import './assets/styles/global.scss'
 
 
+
+// disabling all console.log for production
+if( process.env.NODE_ENV === 'production')
+  console.log = () => {}
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
