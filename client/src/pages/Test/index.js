@@ -80,6 +80,7 @@ export default function App() {
     <div className="App">
       <MainComment />
       <CommentSection />
+      Just a test
     </div>
   );
 }
