@@ -20,12 +20,13 @@ jobs:
           cd ./training-ground/VACA-Ecommerce/
           git pull origin main
           cd ./client
+          npm -v
           npm install --force
           npm run build
           cp -r ./build ../server/
           cd ../server
           npm install --omit-dev
-          
+
           
           
 
