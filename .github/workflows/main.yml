@@ -17,6 +17,7 @@ jobs:
         key: ${{secrets.SSH}}
         password: ${{secrets.PASSWORD}}
         script: |
+          su root
           whoami
           export NVM_DIR=~/.nvm
           source ~/.nvm/nvm.sh
