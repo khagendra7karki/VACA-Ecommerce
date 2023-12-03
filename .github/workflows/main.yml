@@ -27,7 +27,7 @@ jobs:
           npm run build
           cd ../server
           npm install --omit-dev
-          pm2 start index.js --name "server"
+          pm2 restart server
 
           
           
