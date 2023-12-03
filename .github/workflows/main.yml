@@ -17,7 +17,6 @@ jobs:
         key: ${{secrets.SSH}}
         password: ${{secrets.PASSWORD}}
         script: |
-          echo $0
           echo $PATH
           export NVM_DIR=~/.nvm
           source ~/.nvm/nvm.sh
@@ -27,10 +26,8 @@ jobs:
           npm -v
           npm install --force
           npm run build
-          cp -r ./build ../server/
           cd ../server
           npm install --omit-dev
-          npm start &
 
           
           
