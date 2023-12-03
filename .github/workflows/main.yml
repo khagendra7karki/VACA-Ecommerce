@@ -17,8 +17,6 @@ jobs:
         key: ${{secrets.SSH}}
         password: ${{secrets.PASSWORD}}
         script: |
-          su root
-          whoami
           export NVM_DIR=~/.nvm
           source ~/.nvm/nvm.sh
           cd /var/www/VACA-Ecommerce/
@@ -29,7 +27,7 @@ jobs:
           npm run build
           cd ../server
           npm install --omit-dev
-          pm2 restart server
+          pm2 start index.js --name "server"
 
           
           
