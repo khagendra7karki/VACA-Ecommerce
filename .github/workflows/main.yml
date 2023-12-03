@@ -20,7 +20,7 @@ jobs:
           echo $PATH
           export NVM_DIR=~/.nvm
           source ~/.nvm/nvm.sh
-          cd ./training-ground/VACA-Ecommerce/
+          cd /var/www/VACA-Ecommerce/
           git pull origin main
           cd ./client
           npm -v
