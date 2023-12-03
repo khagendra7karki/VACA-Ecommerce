@@ -8,7 +8,7 @@ class Database{
     
     async connectDB( URI ){
         try{
-            const database = await mongoose.connect(URI, {  useUnifiedTopology: true })
+            const database = await mongoose.connect(URI)
             console.log('Database connected')
             return database
         }
