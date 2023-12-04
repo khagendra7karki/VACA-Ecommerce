@@ -10,7 +10,7 @@ import '@mantine/carousel/styles.css';
 import { Container, MantineProvider, createTheme, rem } from '@mantine/core';
 import { Provider } from 'react-redux';
 import { store } from "./state/index";
-import Cart from './pages/Cart';
+import Cart from './pages/Cart/Cart';
 import Product from './pages/Product';
 import app from './firebase';
 import Shipping from './pages/Shipping';

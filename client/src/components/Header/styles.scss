@@ -38,3 +38,11 @@
 .selected:after{
   transform: scale(1);
 }
+
+.linked{
+  font-size: '32px';
+  text-decoration: 'none';
+  color: black;
+  font-weight: '500';
+  // padding: '10px';
+}

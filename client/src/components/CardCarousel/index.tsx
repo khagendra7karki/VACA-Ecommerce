@@ -55,6 +55,8 @@ function CardCarousel({page = 1 }: Iprops) {
       slideGap="md"
       loop
       align="start"
+      
+      //slidesToScroll={4}
     >
        
         {cards}
