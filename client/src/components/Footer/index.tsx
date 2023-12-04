@@ -87,7 +87,7 @@ export function Footer() {
                 Subscribe
               </Text>
               <Text size="sm" c="white" className={classes.description}>
-                Get 10% off your first order
+                Get 10% off on your first order
               </Text>
               <TextInput placeholder="Enter your email" mt="15px" style={{ width: rem(300) }}/>
             </div>
@@ -113,8 +113,6 @@ export function Footer() {
                 <Group
                   gap={0}
                   
-                  // justify="flex-end"
-                  // wrap="nowrap"
                 >
                   <ActionIcon size="lg" color="gray" variant="subtle">
                     <IconBrandTwitter
@@ -141,8 +139,7 @@ export function Footer() {
         </Grid>
       </Container>
 
-      <Divider color="white " mt={20} />
-      <Group justify="center">
+      <Group justify="center" style = {{borderTop: '1px solid rgba(255,255,255,0.3)', marginTop: '20px'}}>
         <Text c="dimmed" size="sm" ta="center" mt="20px" mb="10px">
           © 2023 vaca.dev. All rights reserved.
         </Text>

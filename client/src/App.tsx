@@ -1,8 +1,8 @@
 import React from 'react';
 import Login from './pages/Login'
-import {Signup} from './pages/SignUp'
+import { Signup } from './pages/SignUp'
 import Home from './pages/Home'
-import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
+import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import { Notifications } from '@mantine/notifications';
 import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
@@ -27,7 +27,7 @@ import Layout from './components/Layout/Layout';
 import Test from './pages/Test';
 import WishList from './pages/WishList';
 
-
+// rest of your imports...
 const CONTAINER_SIZES: Record<string, string> = {
   xxs: rem(300),
   xs: rem(400),
@@ -56,74 +56,62 @@ const theme = createTheme({
   },
 });
 
-  const Root = () =>{ 
-    return <>
-      <Layout>
-        <Container size="xxxl">
-          <Outlet />
-        </Container>
-      </Layout>
-    </>
+const Root = () => {
+  return <>
+    <Layout>
+      <Container size="xxxl">
+        <Outlet />
+      </Container>
+    </Layout>
+  </>
+}
+
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Root />,
+    children: [
+      { path: "/", element: <Home /> },
+      { path: "login", element: <Login /> },
+      { path: "signup", element: <Signup /> },
+      { path: "contact", element: <ContactUs /> },
+      { path: "cart", element: <Cart /> },
+      { path: "wishlist", element: <WishList /> },
+      { path: "product/:id", element: <Product /> },
+      { path: "shipping", element: <Shipping /> },
+      { path: "payment", element: <Payment /> },
+      { path: "placeorder", element: <PlaceOrder /> },
+      { path: "order/:order", element: <Order /> },
+      {
+        path: "user/:id",
+        element: <User />,
+        children: [
+          { path: "myProfile", element: <UserProfile /> },
+          { path: "addressBook" },
+          { path: "myReturns", element: <UserProfile /> },
+          { path: "myCancellation", element: <UserProfile /> },
+          { path: "myReviews", element: <MyReviews /> },
+          { path: "myWishlist", element: <MyWishList /> },
+          { path: "myCart", element: <MyCart /> }
+        ]
+      },
+      { path: "test", element: <Test /> }
+    ]
   }
+]);
 
 function App() {
-  /**
-   * assigning import 'app'
-   * to apps so that the module is 
-   * executed which initializes firebase
-   * 
-   * Do not delete this line
-   */
   const apps = app;
-  
-  
+
   return (
     <div >
       <Provider store={store} >
-      <MantineProvider theme = { theme }>
-        <Notifications />
-        <BrowserRouter>
-            <Routes>
-              <Route path = '/' element = { <Root /> } >
-                <Route index element={<Home />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/signup" element={<Signup />} />
-                <Route path="/contact" element={<ContactUs />} />
-                <Route path="/cart" element={<Cart />} />
-                <Route path="/wishlist" element={<WishList />} />
-                <Route path="/product/:id" element={<Product />} />
-                <Route path="/shipping" element={<Shipping />} />
-                <Route path="/payment" element={<Payment />} />
-                <Route path="/placeorder" element={<PlaceOrder />} />
-                <Route path="/order/:order" element={<Order />} />
-
-
-                {/* User Routes */}
-                
-                <Route path = '/user/:id/' element = {< User /> } >
-
-                  <Route path = 'myProfile' element = { <UserProfile /> } />
-                  <Route path = 'addressBook'/>
-                  <Route path = 'myReturns' element = { <UserProfile /> } />
-                  <Route path = 'myCancellation' element = { <UserProfile /> } />
-                  <Route path = 'myReviews' element = { <MyReviews /> } />
-                  <Route path = 'myWishlist' element = { <MyWishList /> } />
-                  <Route path = 'myCart' element = { <MyCart /> } />
-
-                  
-                </Route>
-
-                <Route path = '/test' element = {<Test /> } />
-
-              </Route>
-              
-
-            </Routes>
-        </BrowserRouter>
-      </MantineProvider>
-    </Provider>
-     
-     
+        <MantineProvider theme={theme}>
+          <Notifications />
+          <RouterProvider router={router} />
+        </MantineProvider>
+      </Provider>
     </div>
   );
 }

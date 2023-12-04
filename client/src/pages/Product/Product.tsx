@@ -27,6 +27,7 @@ import Loading from "../../components/Loading";
 import { Carousel } from "@mantine/carousel";
 import Reactangle from "../../components/Rectangle";
 import CardCarousel from "../../components/CardCarousel";
+import { ScrollRestoration } from "react-router-dom";
 
 const Product = () => {
   const params = useParams();
@@ -103,6 +104,7 @@ const Product = () => {
         <Loading />
       ) : (
         <>
+          <ScrollRestoration />
           <Container size= "100%"> 
             {Object.keys(product).length && (
               <>

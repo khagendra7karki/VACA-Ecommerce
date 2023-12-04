@@ -137,6 +137,7 @@ const userController = {
         }
     },
 
+    /** gets reviews of the user */
     getReviews: async ( req, res ) =>{
         try{    
             const { _id } = res.locals.user;
