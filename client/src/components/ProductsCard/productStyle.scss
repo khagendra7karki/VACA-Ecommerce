@@ -1,0 +1,54 @@
+@use '../../assets/styles/variables';
+
+$border-properties: 1px solid rgba(219, 209, 209, 1);
+$box-shadow: 0 0 10px rgba(0,0,0,0.1);
+
+
+.products-card{
+    padding: 7px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    border: $border-properties;
+    box-shadow: $box-shadow;
+}
+.products-card:hover img {
+    transform: scale( 1.05 );
+}
+
+.image-wraper{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    overflow: hidden;
+    position: relative;
+}
+img{
+    width: 100%;
+    aspect-ratio: auto ;
+    transition: variables.$transition;
+}
+
+.text-wraper{
+    text-align: center;
+}
+.title{
+    font-weight: 500;
+}
+.price-wraper{
+    display: flex;
+    justify-content: center;
+}
+.price-wraper > p {
+    font-size: 20px;
+    margin: 10px 5px;
+}
+
+.oldPrice{
+    text-decoration: line-through;
+    color: variables.$text-grey;
+}
+.price{
+    color: variables.$primary-red;
+}

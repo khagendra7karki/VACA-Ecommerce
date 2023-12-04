@@ -1,8 +1,9 @@
-import productSchema from "../../models/productSchema.js"
+import mongoose from "mongoose";
+import productSchema from "../../models/Product.js"
 
 
 const productController = {
-    getProduct : async (req, res) => {
+    getProducts : async (req, res) => {
 
         try{
             const pageSize = 8;
@@ -22,10 +23,8 @@ const productController = {
               .limit(pageSize)
               .skip(pageSize * (page - 1));
           
-            res.json({ products, page, pages: Math.ceil(count / pageSize) });
+            res.status(200).json( {payload : { products, page, pages: Math.ceil(count / pageSize) }});
             
-            // const products = await productSchema.find({}).limit( 20 )
-            // res.status(200).json({ task: 'getProduct', status:'successful', payload: products})
         }
         catch( error ){
             console.log('An error from productController.js occurred', error)
@@ -34,8 +33,8 @@ const productController = {
 
     updateProduct: async ( req, res) =>{
         try{
-            const productId = req.params.id
-            const product = await productSchema.findById(productId)
+            const { id } = req.params
+            const product = await productSchema.findById( id ).lean()
             if( product ){
                 product.title = req.body.title
                 product.description = req.body.description
@@ -51,58 +50,95 @@ const productController = {
 
         }
     },
+
     deleteProductById: async( req, res) =>{
-        const productId = req.params.id
+        const { id } = req.params
         try{
-            await productSchema.deleteOne( { _id: productId })
+            await productSchema.deleteOne( { _id: new mongoose.Types.ObjectId( id ) })
             res.status( 200).json( { task: 'deleteItem', status: 'successful'})
         }
         catch( error ){
             console.log( 'An error occurred', error)
         }
     },
-    getProductById: async( req, res) =>{
-        const productId  = req.params.id
-        // res.status(500).json({message: 'An error occurred'})
-        const product = await productSchema.findById( productId )
-        res.status(200).json( {task : 'getProductId',status:'unsuccessful', payload: product })
+
+    /**
+     *
+     * sends the user info
+     * along with the review
+     *  
+     */
+    getProductByIdWithReview: async( req, res) =>{    
+        try{
+
+            const { id } = req.params
+            // res.status(500).json({message: 'An error occurred'})
+            const product = await productSchema.findById( id ).lean()
+            res.status(200).json( {task : 'getProductId',status:'unsuccessful', payload: product })
+
+        }catch( error ){
+            console.log( 'An error occcurred at getproductByIdWithReview',error )
+            return res.status( 500 ).json( { task: 'getProductByIdWithReview',status: 'unsuccessful',  reason: error })
+
+        }
     },
+
     storeProduct: async( req, res) =>{
         
-        console.log("New Product received hhhhhh")
+        console.log("New Product received")
         
-        // try {
-        //     const product = req.body.product
-        //     console.log( "New product is to be saved to the database")
-        //     console.log( req.body )
-        //     const producttModel = new  productSchema( product)
-        //     await producttModel.save()
-        //     res.status(200).json({ task: 'createProduct', status: 'successful'})
-        // }catch( error ){
-        //     console.log ( error )
-        //     return res.status( 500 ).json( { task: 'createProduct',status: 'unsuccessful',  reason: error })
-        // }
+        try {
+            const {product} = req.body
+            console.log( "New product is to be saved to the database")
+            console.log( req.body )
+            const producttModel = new  productSchema( product)
+            await producttModel.save()
+            res.status(200).json({ task: res.status(200).json({ task: 'createProduct', status: 'successful'})})
+        }catch( error ){
+            console.log ( error )
+            return res.status( 500 ).json( { task: 'createProduct',status: 'unsuccessful',  reason: error })
+        }
     },
-     getProductsForSearch : async(req, res) => {
-        const keyword = req.query.keyword
-          ? {
-              title: {
-                $regex: req.query.keyword,
-                $options: "i",
-              },
-            }
-          : {};
-        const products = await productSchema.find({ ...keyword });
-        const formattedProducts = [];
-      
-        products.map((product) => {
-          formattedProducts.push({
-            value: product._id,
-            label: product.title,
-          });
-        });
-        res.json(formattedProducts);
-      } 
+
+    getTopProducts:async (req, res ) => {
+        try{
+            const result = await productSchema.find({}).sort({ rating: -1}).limit( 20 ).lean()
+            res.status(200).json({ task: 'createProduct', status: 'successful', payload: result })
+        }catch( error ){
+            console.log ( error )
+            return res.status( 500 ).json( { task: 'createProduct',status: 'unsuccessful',  reason: error })
+        }
+
+    },
+
+    getProductsForSearch : async(req, res) => {
+        try{
+            const keyword = req.query.keyword
+                ? {
+                    title: {
+                    $regex: req.query.keyword,
+                    $options: "i",
+                    },
+                }
+                : {};
+            
+            const products = await productSchema.aggregate([
+                {$match: keyword },
+                {
+                    $project:{ 
+                        _id: 0,
+                        value : '$_id',
+                        label : '$title'}
+                }
+            ]);
+            
+            res.status(200).send({ task: 'getProductsSearch', status: 'successsful', payload: products})
+
+        }catch( error ){
+            console.log('An error occurred at getProductsForSearch', error)
+            return res.status(500).json({task: 'getProductsForSearch', status: 'unsuccessful', reason: 'Internal Server Error'})
+        }
+    } 
 }
 
 export default productController

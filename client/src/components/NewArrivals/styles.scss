@@ -1,0 +1,14 @@
+.arrival-item{
+    position: relative;
+    overflow: hidden;
+    border-radius: 6px;
+    img{
+        width: 100%; 
+    }
+    .text{
+        position: absolute;
+        left: 10%;
+        bottom: 10%;  
+    }
+    
+}

@@ -1,0 +1,30 @@
+name: Deploy
+
+on: 
+  push: 
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    steps:
+    - name: Deploy using ssh
+      uses: appleboy/ssh-action@v1.0.0
+      with:
+        host: ${{secrets.HOST}}
+        username: ${{ secrets.USERNAME}}
+        key: ${{secrets.SSH}}
+        password: ${{secrets.PASSWORD}}
+        script: |
+          export NVM_DIR=~/.nvm
+          source ~/.nvm/nvm.sh
+          cd /var/www/VACA-Ecommerce/
+          git pull origin main
+          cd ./client
+          npm -v
+          npm install --force
+          npm run build
+          cd ../server
+          npm install --omit-dev
+          pm2 restart server

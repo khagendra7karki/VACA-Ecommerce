@@ -1,0 +1,48 @@
+.header {
+  background-color: var(--mantine-color-body);
+  padding-left: var(--mantine-spacing-md);
+  padding-right: var(--mantine-spacing-md);
+}
+
+.inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.link {
+  display: block;
+  line-height: 1.5;
+  padding: 8px;
+  background: inherit;
+  white-space: nowrap;
+  text-decoration: none;
+  color: light-dark(var(--mantine-color-gray-7), var(--mantine-color-dark-0));
+  font-size: var(--mantine-font-size-sm);
+  font-weight: 500;
+  border: none;
+  position:relative;
+  &:after{
+    content: '';
+    width: 85%;
+    left: 7.5%;
+    transform: scale(0);
+    position: absolute;
+    bottom: 5px;
+    border-width: 0 0 1px;
+    border-style: solid;
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    
+  }
+}
+.selected:after{
+  transform: scale(1);
+}
+
+.linked{
+  font-size: '32px';
+  text-decoration: 'none';
+  color: black;
+  font-weight: '500';
+  // padding: '10px';
+}

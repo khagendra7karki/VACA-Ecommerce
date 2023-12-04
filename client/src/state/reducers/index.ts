@@ -22,10 +22,13 @@ import {
   getUserReducer,
   updateProfileReducer,
   updateUserReducer,
+  getUserReview,
 } from "./userReducer";
+import wishListReducer from "./wishListReducer";
 
 const reducers = combineReducers({
   cart: cartReducer,
+  wishList: wishListReducer,
   products: getProductsReducer,
   product: getProductReducer,
   review: addReviewReducer,
@@ -43,6 +46,7 @@ const reducers = combineReducers({
   myOrders: getMyOrdersReducer,
   profileUpdate: updateProfileReducer,
   userUpdate: updateUserReducer,
+  userReivew: getUserReview,
 });
 
 export default reducers;

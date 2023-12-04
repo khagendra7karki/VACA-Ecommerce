@@ -7,9 +7,25 @@
  * 
  */
 import mongoose from 'mongoose'
-import userSchema from "../../models/userSchema.js";
-import productSchema from '../../models/productSchema.js'
+import User from "../../models/User.js";
+import Product from '../../models/Product.js'
 const cartController = {
+
+    getItem: async ( req, res ) =>{
+        try{
+            const userId = res.locals.user._id;
+            let result = await User.aggregate([
+                {$match: {_id: new mongoose.Types.ObjectId(userId) } },
+                {$project: { cart : 1, _id: 0}},                
+            ])
+            return res.status( 200 ).json({ status: 'successful', task: 'getItem', payload: result[0].cart })
+
+        }catch( error ){
+            console.log('Error while getting getItem', error );
+            res.status(500).json({ status:'unsuccessful', task: 'getItem', reason: 'Internal Error'})
+
+        }
+    },
 
     /**
      * adds item to the cart
@@ -20,14 +36,11 @@ const cartController = {
             const userId = res.locals.user._id;
 
             const { id , qty } = req.params;
-            console.log( id, qty  )
-            console.log( userId )
             //find the product from the database
-            let product = await productSchema.findById( id ).lean()
+            let product = await Product.findById( id ).lean()
 
-            console.log( product )
-            let user = await userSchema.findByIdAndUpdate(userId, {
-                $push: { "cart.items": { productId: product._id, ...product , quantity: qty } }
+            let user = await User.findByIdAndUpdate(userId, {
+                $push: { "cart": { product: product._id, price: product.price, title: product.title, image: product.images[0], quantity: qty } }
             }, { new: true }).lean();
 
             if( !user ) return res.status(500).json({ status:'unsuccessful', task: 'addItem', reason: 'Internal Error'})
@@ -49,9 +62,8 @@ const cartController = {
         try{
             const userId = res.locals.user._id;
             const { id } = req.params   // product Id
-            console.log( 'The product Id is', id )
-            let user = await userSchema.findByIdAndUpdate(userId, {
-                $pull: {"cart.items": {"productId": id }},
+            let user = await User.findByIdAndUpdate(userId, {
+                $pull: {"cart": {"product": id }},
             },{ new: true }).lean();
 
             if( !user ) return res.status(500).json({ status:'unsuccessful', task: 'addItem', reason: 'Internal Error'})
@@ -77,14 +89,19 @@ const cartController = {
         try{
             const userId = res.locals.user._id
             const { id, qty } = req.params
-            let user = await userSchema.findByIdAndUpdate( userId, 
-                {$set: { "cart.items.$[inner].quantity": qty }},
-                { arrayFilters: [ {"inner.productId" : new mongoose.Types.ObjectId( id ) }], new: true}
+
+            let user = await User.findByIdAndUpdate( userId, 
+                {$set: { "cart.$[inner].quantity": qty }},
+                { arrayFilters: [ {"inner.product" : new mongoose.Types.ObjectId( id ) }], new: true}
                 ).lean()
+            
             res.status( 200 ).json({status: 'successful', task: 'update Cart', payload: user.cart })
+        
         }catch( error ){
+            
             console.log('Error while pushing item to cart', error );
             res.status(500).json({ status:'unsuccessful', task: 'addItem', reason: 'Internal Error'})
+            
         }
     
     }

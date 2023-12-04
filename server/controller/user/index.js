@@ -1,12 +1,15 @@
 /**
  * TODO
  * create a utils files that saves the documents
+ * 
+ * Maybe reviews are not suited here
  */
-import mongoose from "mongoose";
-import userSchema from "../../models/userSchema.js";
+import User from "../../models/User.js";
 import bcrypt from 'bcrypt';
 import dotenv from  'dotenv';
 import { createCustomToken } from "../../middleware/auth/index.js";
+import Product from "../../models/Product.js";
+import mongoose from "mongoose";
 
 dotenv.config();
 const SALT_ROUND = parseInt( process.env.SALT_ROUND )
@@ -32,9 +35,8 @@ const hashPassword = async (password, SALT_ROUND) => {
 
 
 const createUser = async (user, token) => {
-    const newUser = new userSchema(user);
+    const newUser = new User(user);
     const result = await newUser.save();
-    console.log('Lean applied result ', result );
     return { status: 'successful', task: 'addUser', payload: {...result._doc, token } };
 };
 
@@ -45,21 +47,19 @@ const userController = {
         try{
             const { accessToken , ...user } = req.body;
             console.log( user )            
-            console.log( `The access token is`, accessToken )
 
-            //hash user password
             if( user.password ){
                 user.password = await hashPassword( user.password, SALT_ROUND );
             }
 
-            const result = await createUser( user, accessToken );
+            const token = createCustomToken( user, SECRET)
+            const result = await createUser( user, token );
             
             res.status( 200 ).json( result )
 
-        }
-        catch(error){
+        }catch( error ){
+            console.log('An error occurred at registerUser', error)
             res.status( 500 ).json( {status: 'unsuccessful', task: 'getUser', reason: 'Internal Server Error'} )
-            console.log('An error occurred', error)
         }
     },
 
@@ -69,24 +69,24 @@ const userController = {
      * @param { * } req - request object
      * @param { string } req.body.email - user email
      * @param { stirng } req.body.password - user password 
-     * @returns user id
+     * 
+     * @description does something i dont konw about
      */
+
     login: async( req, res ) =>{
-        try{
-            
-            console.log( req.body ) 
-            const user = await userSchema.findOne( {email: req.body.email} ).lean()
+        try{            
+            const user = await User.findOne( {email: req.body.email} ).select('+password').lean()
             // console.log( 'User object', user );
             if( !user ) return res.status( 401 ).json( {status: 'unsuccessful', task: 'login', reason: 'Invalid Credentials'} )
             
             const result = await bcrypt.compare( req.body.password, user.password)
-            console.log( 'Hash result ', result)
+        
             if ( !result ) return res.status( 401 ).json( { status: 'unsuccessful', task: 'login', reason: 'Incorrect Password'})
             
             //generate the access Token for the corresponding user
-            const { _id, uid, email, password, fullName, cart, wishList } = user
+            const { _id, uid, email,  fullName, cart, wishList } = user
             
-            const token = await createCustomToken( { _id, uid, email, password, fullName } , SECRET );
+            const token = await createCustomToken( { _id, uid, email,  fullName } , SECRET );
             res.status( 200 ).json( { status: 'successful', task: 'login', payload: {...user , cart, wishList, token } })
 
         }catch( error ) {
@@ -94,6 +94,73 @@ const userController = {
         }
     },
 
+
+    /**
+     * 
+     * @param { * } res - response object
+     * @param { * } req - request object
+     * @param { string } req.body.email - user email
+     * @param { stirng } req.body.password - user password 
+     */
+    updateProfile: async( req, res ) =>{
+        try{
+            
+            const { _id } = res.locals.user;
+            const { fullName, email, oldPassword, newPassword, phoneNumber } = req.body
+            
+            console.log( fullName, email, oldPassword, newPassword, phoneNumber ) 
+            const user = await User.findById( _id ).select('+password')
+
+            user.fullName = fullName;
+            user.email = email
+
+
+            if ( oldPassword && newPassword ){
+                const passwordMatchStatus = await bcrypt.compare( oldPassword, user.password )
+                if ( !passwordMatchStatus ) return res.status( 500 ).json({status: 'unsuccessful', task: 'userUpdate', reason: 'Old Password and new Password do not match'})
+                user.password = await hashPassword( newPassword , SALT_ROUND)
+            }
+
+            const newUser = await user.save()
+            {
+                const { _id, fullName, email,  uid } = newUser
+                const newToken = createCustomToken( { _id, fullName, email, uid }, SECRET)
+                return res.status(200).json({ status: 'successful', task: 'updateUser', payload: { ...newUser._doc, token : newToken }})
+
+            }
+ 
+ 
+
+        }catch( error ){
+            console.log('An errorr occurred at updateProfile', error )
+            return res.status(500).json({status: 'successful', task: 'updateProfile', reason: 'Internal Server Error '})
+        }
+    },
+
+    /** gets reviews of the user */
+    getReviews: async ( req, res ) =>{
+        try{    
+            const { _id } = res.locals.user;
+
+            const reviews = await Product.aggregate([
+                {$match: {'reviews.user': new mongoose.Types.ObjectId(_id) }},
+                {$unwind: '$reviews'},
+                {$project:  {id: '$reviews._id',
+                             user :'$reviews.user',
+                             rating: '$reviews.rating',
+                             review: '$reviews.review',
+                             fullName: '$reviews.fullName'}},
+
+            ]).exec()
+            
+            return res.status(200).json({ status: 'successful', task: 'getReviews', payload:  reviews || 'no Reviews' })
+
+        }catch( error ){
+            console.log('An errorr occurred at getReviews', error )
+            return res.status(500).json({status: 'successful', task: 'getReviewsById', reason: 'Internal Server Error '})
+        }
+
+    }
 }
 
 export default userController

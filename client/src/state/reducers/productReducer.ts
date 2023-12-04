@@ -4,19 +4,22 @@ import { Action } from "../actions/index";
 const getProductsReducer = (
   state = {
     products: [],
+    _page: 0,
+    _pages: 0,
     error: null,
     loading: false,
   },
   action: Action
 ) => {
-  //console.log(action.type, action.payload, "mmmmmmmmmmmm"  )
   switch (action.type) {
     case ActionType.GET_PRODUCTS_REQUEST:
       return { ...state, loading: true, error: null };
     case ActionType.GET_PRODUCTS_SUCCESS:
       return {
         ...state,
-        products: action.payload,
+        _page: action.payload.page,
+        _pages: action.payload.pages,
+        products: action.payload.products,
         loading: false,
         error: null,
       };

@@ -1,0 +1,61 @@
+
+// colors
+$transparent: rbga(0,0, 0, 0);
+$primary-black: #000000;
+$primary-red: rgba(216, 0, 0, 1);
+$secondary-red: rgba(219, 68, 68, 1);
+$hover-red: rgba(224, 117, 117, 1);
+$primary-white: #FAFAFA;
+$secondary-white: #f5f5f5;
+$text-white: rgba(250, 250, 250, 1);
+$text-grey: rgba(128, 128, 128, 1);
+
+
+// Text
+$extra-small: 14px;
+$small: 16px;
+$medium: 20px;
+$large: 24px;
+$heading: 36px;
+
+$normal: 400;
+$medium: 500;
+$bold: 700;
+$semi-bold: 600;
+
+
+//animation
+$transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+
+//text
+@mixin text-small{
+    font-size: $small;
+    font-weight: $normal;
+}
+
+@mixin text-small-semibold{
+    font-size: $small;
+    font-weight: $semi-bold;
+}
+
+@mixin text-small-bold{
+    font-size: $small;
+    font-weight: $bold;
+}
+
+//heading
+@mixin heading{
+    font-size: $heading;
+    font-weight: $normal;
+}
+
+@mixin heading-semi-bold{
+    font-size: $heading;
+    font-weight: $semi-bold;
+}
+
+@mixin heading-bold{
+    font-size: $heading;
+    font-weight: $bold;
+}
+

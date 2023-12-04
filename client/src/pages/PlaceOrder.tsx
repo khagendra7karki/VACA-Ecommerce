@@ -8,7 +8,6 @@ import { actionCreators, State } from "../state";
 
 import { bindActionCreators } from "redux";
 import { useEffect } from "react";
-import Layout from "../Layout/Layout";
 
 const PlaceOrder = () => {
   const dispatch = useDispatch();
@@ -28,22 +27,20 @@ const PlaceOrder = () => {
     return parseInt((Math.round(num * 100) / 100).toFixed(2));
   };
 
-  console.log( cartItems[0].price )
-  cartItems.itemsPrice = addDecimals(
+  const itemsPrice = addDecimals(
     cartItems.reduce((acc: any, item: any) => {
-      console.log( item.price )
       return acc + item.price * item.quantity}, 0)
   );
-  cartItems.shippingPrice = addDecimals(cartItems.itemsPrice > 100 ? 0 : 100);
-  cartItems.taxPrice = addDecimals(
-    Number((0.15 * cartItems.itemsPrice).toFixed(2))
+  const shippingPrice = addDecimals(itemsPrice > 100 ? 0 : 100);
+  
+  const taxPrice = addDecimals(
+    Number((0.15 * itemsPrice).toFixed(2))
   );
-  const { itemsPrice , shippingPrice, taxPrice } = cartItems
-  // console.log( itemsPrice, shippingPrice, taxPrice )
-  cartItems.totalPrice = (
-    Number(cartItems.itemsPrice) +
-    Number(cartItems.shippingPrice) +
-    Number(cartItems.taxPrice)
+
+  const totalPrice = (
+    Number(itemsPrice) +
+    Number(shippingPrice) +
+    Number(taxPrice)
   ).toFixed(2);
   
   const handlerOrderCreate = () => {
@@ -51,197 +48,192 @@ const PlaceOrder = () => {
       createOrder(
         cartItems,
         shippingAddress,
-        paymentMethod,
-        cartItems.itemsPrice,
-        cartItems.taxPrice,
-        cartItems.shippingPrice,
-        cartItems.totalPrice
+        itemsPrice,
+        taxPrice,
+        shippingPrice,
+        totalPrice,
+        paymentMethod
       )
     
   };
-
   useEffect(() => {
-    if (Object.keys(orderCreate).length) {
-      console.log(orderCreate,"lllllllllllllllllllllllllllllllllll")
+    if (Object.keys(orderCreate).length) {  
       navigate(`/order/${orderCreate._id}`);
     }
     // eslint-disable-next-line
-  }, [createOrder]);
+  }, [orderCreate]);
 
   return (
-    <Layout>
-      {/* <Head title="Place Order" /> */}
-      <Card withBorder shadow="sm" radius="lg" padding="xl">
-        <Steps active={3} />
-        <Grid style={{ marginTop: "2rem" }}>
-          <Grid.Col span={12}>
-            <Text>Shipping Address</Text>
-            <Grid>
-              <Grid.Col span={12}>
-                <Card
-                  withBorder
-                  shadow="xs"
-                  radius="lg"
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    margin: "10px 0",
-                  }}
-                >
-                  <BsBox size="30" />
-                  <Text
-                    color="gray"
-                    style={{ marginLeft: "10px" }}
-                  //  weight={500}
-                    size="sm"
-                  >
-                    {shippingAddress.address}, {shippingAddress.city}{" "}
-                    {shippingAddress.postalCode}, {shippingAddress.country}
-                  </Text>
-                </Card>
-              </Grid.Col>
-            </Grid>
-          </Grid.Col>
-          <Grid.Col span={12}>
-            <Text>Payment Method</Text>
-            <Grid>
-              <Grid.Col span={12}>
-                <Card
-                  withBorder
-                  shadow="xs"
-                  radius="lg"
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    margin: "10px 0",
-                  }}
-                >
-                  <BsCreditCard2Front size="30" />
-                  <Text
-                    style={{ marginLeft: "10px" }}
-                    color="gray"
-                   
-                    size="sm"
-                  >
-                    {paymentMethod}
-                  </Text>
-                </Card>
-              </Grid.Col>
-            </Grid>
-          </Grid.Col>
-          <Grid.Col style={{ margin: "10px 0" }} span={12}>
-            <Text>Order Items</Text>
-            <Grid>
-              <Grid.Col span={12}>
-                {cartItems && cartItems.length ? (
-                  cartItems.map((item: any) => {
-                    return (
-                      <Card
-                        style={{ margin: "10px 0" }}
-                        padding="sm"
-                        withBorder
-                        shadow="xs"
-                        radius="lg"
-                      >
-                        <Grid>
-                          <Grid.Col
-                            style={{ display: "flex", alignItems: "center" }}
-                            span={5}
-                          >
-                            <Image
-                              radius="lg"
-                              fit="contain"
-                              height={40}
-                              width={40}
-                              src={item.image}
-                            />
-                          </Grid.Col>
-                          <Grid.Col
-                            style={{ display: "flex", alignItems: "center" }}
-                            span={3}
-                          >
-                            <Text  style={{alignContent:"left"}} color="gray" >
-                              {item.title}
-                            </Text>
-                          </Grid.Col>
-                          <Grid.Col
-                            style={{
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "flex-end",
-                            }}
-                            span={4}
-                          >
-                            <Text  style={{alignContent:"right"}} >
-                              {item.qty} x ${item.price}
-                            </Text>
-                          </Grid.Col>
-                        </Grid>
-                      </Card>
-                    );
-                  })
-                ) : (
-                  <></>
-                )}
-              </Grid.Col>
-            </Grid>
-          </Grid.Col>
-          <Grid.Col span={12}>
-            <Text style={{ margin: "10px 0" }}>Order Summary</Text>
-            <Card withBorder shadow="xs" radius="lg">
-              <Grid
-                style={{ margin: "10px 0", borderBottom: "1px solid #E0E0E0" }}
+    <Card withBorder shadow="sm" radius="lg" padding="xl">
+      <Steps active={3} />
+      <Grid style={{ marginTop: "2rem" }}>
+        <Grid.Col span={12}>
+          <Text>Shipping Address</Text>
+          <Grid>
+            <Grid.Col span={12}>
+              <Card
+                withBorder
+                shadow="xs"
+                radius="lg"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  margin: "10px 0",
+                }}
               >
-                <Grid.Col span={6}>
-                  <Text>Price</Text>
-                </Grid.Col>
-                <Grid.Col span={6}>
-                  <Text  style={{alignContent:"right"}}>
-                    ${" "}
-                    {cartItems
-                      .reduce(
-                        (acc: any, item: any) => acc + item.quantity * item.price,
-                        0
-                      )
-                      .toFixed(2)}
-                  </Text>
-                </Grid.Col>
-              </Grid>
-              <Grid
-                style={{ margin: "10px 0", borderBottom: "1px solid #E0E0E0" }}
+                <BsBox size="30" />
+                <Text
+                  c="gray"
+                  style={{ marginLeft: "10px" }}
+                //  weight={500}
+                  size="sm"
+                >
+                  {shippingAddress.address}, {shippingAddress.city}{" "}
+                  {shippingAddress.postalCode}, {shippingAddress.country}
+                </Text>
+              </Card>
+            </Grid.Col>
+          </Grid>
+        </Grid.Col>
+        <Grid.Col span={12}>
+          <Text>Payment Method</Text>
+          <Grid>
+            <Grid.Col span={12}>
+              <Card
+                withBorder
+                shadow="xs"
+                radius="lg"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  margin: "10px 0",
+                }}
               >
-                <Grid.Col span={6}>
-                  <Text>Tax (2%)</Text>
-                </Grid.Col>
-                <Grid.Col span={6}>
-                  <Text style={{alignContent:"right"}}>${cartItems.taxPrice}</Text>
-                </Grid.Col>
-              </Grid>
-
-              <Grid style={{ margin: "10px 0" }}>
-                <Grid.Col span={6}>
-                  <Text>Total</Text>
-                </Grid.Col>
-                <Grid.Col span={6}>
-                  <Text  style={{alignContent:"right"}}>${cartItems.totalPrice}</Text>
-                </Grid.Col>
-              </Grid>
-            </Card>
-          </Grid.Col>
-          <Grid.Col span={12}>
-            <Button
-              onClick={() => handlerOrderCreate()}
-              loading={createOrderLoading}
-              color="dark"
-              radius="lg"
-              fullWidth
+                <BsCreditCard2Front size="30" />
+                <Text
+                  style={{ marginLeft: "10px" }}
+                  color="gray"
+                  
+                  size="sm"
+                >
+                  {paymentMethod}
+                </Text>
+              </Card>
+            </Grid.Col>
+          </Grid>
+        </Grid.Col>
+        <Grid.Col style={{ margin: "10px 0" }} span={12}>
+          <Text>Order Items</Text>
+          <Grid>
+            <Grid.Col span={12}>
+              {cartItems && cartItems.length ? (
+                cartItems.map((item: any) => {
+                  return (
+                    <Card
+                      style={{ margin: "10px 0" }}
+                      padding="sm"
+                      withBorder
+                      shadow="xs"
+                      radius="lg"
+                    >
+                      <Grid>
+                        <Grid.Col
+                          style={{ display: "flex", alignItems: "center" }}
+                          span={5}
+                        >
+                          <Image
+                            radius="lg"
+                            fit="contain"
+                            height={40}
+                            width={40}
+                            src={item.image }
+                          />
+                        </Grid.Col>
+                        <Grid.Col
+                          style={{ display: "flex", alignItems: "center" }}
+                          span={3}
+                        >
+                          <Text  style={{alignContent:"left"}} color="gray" >
+                            {item.title}
+                          </Text>
+                        </Grid.Col>
+                        <Grid.Col
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "flex-end",
+                          }}
+                          span={4}
+                        >
+                          <Text  style={{alignContent:"right"}} >
+                            {item.quantity} x Rs. {item.price}
+                          </Text>
+                        </Grid.Col>
+                      </Grid>
+                    </Card>
+                  );
+                })
+              ) : (
+                <></>
+              )}
+            </Grid.Col>
+          </Grid>
+        </Grid.Col>
+        <Grid.Col span={12}>
+          <Text style={{ margin: "10px 0" }}>Order Summary</Text>
+          <Card withBorder shadow="xs" radius="lg">
+            <Grid
+              style={{ margin: "10px 0", borderBottom: "1px solid #E0E0E0" }}
             >
-              Place Order
-            </Button>
-          </Grid.Col>
-        </Grid>
-      </Card>
-    </Layout>
+              <Grid.Col span={6}>
+                <Text>Price</Text>
+              </Grid.Col>
+              <Grid.Col span={6}>
+                <Text  style={{alignContent:"right"}}>
+                  Rs. {" "}
+                  {cartItems
+                    .reduce(
+                      (acc: any, item: any) => acc + item.quantity * item.price,
+                      0
+                    )
+                    .toFixed(2)}
+                </Text>
+              </Grid.Col>
+            </Grid>
+            <Grid
+              style={{ margin: "10px 0", borderBottom: "1px solid #E0E0E0" }}
+            >
+              <Grid.Col span={6}>
+                <Text>Tax (2%)</Text>
+              </Grid.Col>
+              <Grid.Col span={6}>
+                <Text style={{alignContent:"right"}}>Rs. {taxPrice}</Text>
+              </Grid.Col>
+            </Grid>
+
+            <Grid style={{ margin: "10px 0" }}>
+              <Grid.Col span={6}>
+                <Text>Total</Text>
+              </Grid.Col>
+              <Grid.Col span={6}>
+                <Text  style={{alignContent:"right"}}>Rs. {totalPrice}</Text>
+              </Grid.Col>
+            </Grid>
+          </Card>
+        </Grid.Col>
+        <Grid.Col span={12}>
+          <Button
+            onClick={() => handlerOrderCreate()}
+            loading={createOrderLoading}
+            color="dark"
+            radius="lg"
+            fullWidth
+          >
+            Place Order
+          </Button>
+        </Grid.Col>
+      </Grid>
+    </Card>
   );
 };
 

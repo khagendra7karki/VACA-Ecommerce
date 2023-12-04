@@ -23,7 +23,7 @@ REACT_CLIENT_PATH="client"
 
 # Start the Express server in the background
 cd "$EXPRESS_SERVER_PATH"
-npm start &
+npm run development &
 
 # Start the React client in the background
 cd "../$REACT_CLIENT_PATH"

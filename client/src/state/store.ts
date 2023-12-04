@@ -6,5 +6,5 @@ import logger from "redux-logger";
 
 export const store = createStore(
   reducers,
-  composeWithDevTools(applyMiddleware(thunk, logger))
+  process.env.NODE_ENV === 'development' ? composeWithDevTools(applyMiddleware(thunk, logger)) : applyMiddleware(thunk)
 );

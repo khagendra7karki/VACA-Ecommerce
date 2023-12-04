@@ -28,7 +28,6 @@ function verifyToken( token , SECRET) {
 
         const user = jwt.verify( token, SECRET );
         if ( !user ) return false
-        const { _id, uid, email, fullName} = user
         return user;
 
     }catch( error ){

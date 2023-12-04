@@ -1,37 +1,105 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
 import Login from './pages/Login'
-import {Signup} from './pages/SignUp'
+import { Signup } from './pages/SignUp'
 import Home from './pages/Home'
-import { useLoaderData } from 'react-router-dom'
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Shop from './pages/Shop';
+import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import { Notifications } from '@mantine/notifications';
 import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
 import '@mantine/carousel/styles.css';
-// other css files are required only if
-// you are using components from the corresponding package
-// import '@mantine/dates/styles.css';
-// import '@mantine/dropzone/styles.css';
-// import '@mantine/code-highlight/styles.css';
-// ...
-import { MantineProvider, createTheme } from '@mantine/core';
+import { Container, MantineProvider, createTheme, rem } from '@mantine/core';
 import { Provider } from 'react-redux';
 import { store } from "./state/index";
-import Cart from './pages/Cart';
-import Product from './pages/Product';
+import Cart from './pages/Cart/Cart';
+import Product from './pages/Product/Product';
 import app from './firebase';
 import Shipping from './pages/Shipping';
 import Payment from './pages/Payment';
 import PlaceOrder from './pages/PlaceOrder';
 import Order from './pages/Order';
 import { ContactUs } from './pages/Contact/ContactUs';
+import User from './pages/User';
+import UserProfile from './pages/User/UserProfile';
+import MyWishList from './pages/User/MyWishList';
+import MyCart from './pages/User/MyCart';
+import MyReviews from './pages/User/MyReviews';
+import Layout from './components/Layout/Layout';
+import Test from './pages/Test';
+import WishList from './pages/WishList';
+
+// rest of your imports...
+const CONTAINER_SIZES: Record<string, string> = {
+  xxs: rem(300),
+  xs: rem(400),
+  sm: rem(500),
+  md: rem(600),
+  lg: rem(700),
+  xl: rem(800),
+  xxl: rem(1200),
+  xxxl: rem(1600),
+};
 
 const theme = createTheme({
-  /** Put your mantine theme override here */
+  fontFamily: 'Poppins, sans-sefif',
+  components: {
+    Container: Container.extend({
+      vars: (_, { size, fluid }) => ({
+        root: {
+          '--container-size': fluid
+          ? '100%'
+          : size !== undefined && size in CONTAINER_SIZES
+          ? CONTAINER_SIZES[size]
+          : rem(size),
+        },
+      }),
+    }),
+  },
 });
+
+const Root = () => {
+  return <>
+    <Layout>
+      <Container size="xxxl">
+        <Outlet />
+      </Container>
+    </Layout>
+  </>
+}
+
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Root />,
+    children: [
+      { path: "/", element: <Home /> },
+      { path: "login", element: <Login /> },
+      { path: "signup", element: <Signup /> },
+      { path: "contact", element: <ContactUs /> },
+      { path: "cart", element: <Cart /> },
+      { path: "wishlist", element: <WishList /> },
+      { path: "product/:id", element: <Product /> },
+      { path: "shipping", element: <Shipping /> },
+      { path: "payment", element: <Payment /> },
+      { path: "placeorder", element: <PlaceOrder /> },
+      { path: "order/:order", element: <Order /> },
+      {
+        path: "user/:id",
+        element: <User />,
+        children: [
+          { path: "myProfile", element: <UserProfile /> },
+          { path: "addressBook" },
+          { path: "myReturns", element: <UserProfile /> },
+          { path: "myCancellation", element: <UserProfile /> },
+          { path: "myReviews", element: <MyReviews /> },
+          { path: "myWishlist", element: <MyWishList /> },
+          { path: "myCart", element: <MyCart /> }
+        ]
+      },
+      { path: "test", element: <Test /> }
+    ]
+  }
+]);
 
 function App() {
   /**
@@ -39,37 +107,18 @@ function App() {
    * to apps so that the module is 
    * executed which initializes firebase
    * 
-   * Donot delete this line
+   * Do not delete this line
    */
   const apps = app;
-  
-  
+
   return (
     <div >
       <Provider store={store} >
-      <MantineProvider theme={theme}>
-    <Notifications />
-    <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<Signup />} />
-              {/* <Route path="/profile" element={<Shop />} /> */}
-              <Route index element={<Home />} />
-              <Route path="/shop" element={<Shop />} />
-              <Route path="/contact" element={<ContactUs />} />
-              <Route path="/cart" element={<Cart />} />
-              <Route path="/product/:id" element={<Product />} />
-               <Route path="/shipping" element={<Shipping />} />
-              <Route path="/payment" element={<Payment />} />
-              <Route path="/placeorder" element={<PlaceOrder />} />
-              <Route path="/order/:order" element={<Order />} />
-
-              </Routes></BrowserRouter>
-    </MantineProvider>
+        <MantineProvider theme={theme}>
+          <Notifications />
+          <RouterProvider router={router} />
+        </MantineProvider>
       </Provider>
-     
-     
     </div>
   );
 }

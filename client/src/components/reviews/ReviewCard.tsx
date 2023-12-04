@@ -1,11 +1,8 @@
 import React, { PropsWithChildren } from "react";
-import { AiFillStar, AiOutlineStar } from "react-icons/ai";
-import moment from "moment";
-import { v4 as uuidv4 } from 'uuid';
+import RatingStars from './RatingStars'
 
 import {
   Text,
-  Card,
   Divider,
 } from "@mantine/core";
 
@@ -17,21 +14,6 @@ interface IReviewCard {
   rating: number;
 }
 
-const renderRatingsList = (rating: number) => {
-  const stars = [];
-
-  for (let i = 1; i <= rating; i++) {
-    stars.push(<AiFillStar color="orange" key={uuidv4()} />);
-  }
-
-  let remainingStars = 5 - stars.length;
-
-  for (let i = 1; i <= remainingStars; i++) {
-    stars.push(<AiOutlineStar key={uuidv4()} />);
-  }
-
-  return <div>{stars}</div>;
-};
 
 const ReviewCard: React.FC<PropsWithChildren<IReviewCard>> = ({
   id,
@@ -40,6 +22,10 @@ const ReviewCard: React.FC<PropsWithChildren<IReviewCard>> = ({
   comment,
   rating,
 }) => {
+  const formatDate= (date: Date) => {
+    const options = { day: '2-digit', month: 'short', year: 'numeric' } as any;
+    return new Date(date).toLocaleDateString('en-US', options).toUpperCase();
+}
   return (
     <>
       <div style={{ display: "flex" }}>
@@ -48,9 +34,10 @@ const ReviewCard: React.FC<PropsWithChildren<IReviewCard>> = ({
             {name}
           </Text>
           <Text color="gray" size="xs">
-            {moment(date).format("DD-MMM-YYYY")}
+            {" "}
+            {formatDate(date)}
           </Text>
-          {renderRatingsList(rating)}
+          <RatingStars rating = {rating}/>
         </div>
         <div style={{ flex: 1, display: "flex", alignItems: "center" }}>
           <Text size="lg">"{comment}"</Text>

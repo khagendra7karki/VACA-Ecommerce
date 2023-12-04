@@ -1,14 +1,13 @@
 import { ActionType } from "../action-types";
 import { Action } from "../actions/index";
-// INITIAL STATE of the store
-import INITIAL_STATE from "./initialState";
+
 const userInfoFromStorage = localStorage.getItem("userInfo")
   ? JSON.parse(localStorage.getItem("userInfo") || "{}")
   : null;
 
 const registerReducer = (
   state = {
-    userInfo: userInfoFromStorage,
+    hasJustRegistered: false,
     error: null,
     loading: false,
   },
@@ -20,7 +19,7 @@ const registerReducer = (
     case ActionType.USER_REGISTER_SUCCESS:
       return {
         ...state,
-        userInfo: action.payload,
+        hasJustRegistered: true,
         loading: false,
         error: null,
       };
@@ -33,7 +32,7 @@ const registerReducer = (
 
 const loginReducer = (
   state = {
-    userInfo: userInfoFromStorage,
+    isLoggedIn: userInfoFromStorage ? true : false ,
     error: null,
     loading: false,
   },
@@ -45,7 +44,7 @@ const loginReducer = (
     case ActionType.USER_LOGIN_SUCCESS:
       return {
         ...state,
-        userInfo: action.payload,
+        isLoggedIn: true,
         loading: false,
         error: null,
       };
@@ -53,7 +52,7 @@ const loginReducer = (
       return { ...state, loading: false, error: action.payload };
 
     case ActionType.USER_LOGOUT:
-      return { ...state, userInfo: null, loading: false, error: null };
+      return { ...state, isLoggedIn: false, loading: false, error: null };
     default:
       return state;
   }
@@ -61,7 +60,7 @@ const loginReducer = (
 
 const getUserReducer = (
   state = {
-    users: [],
+    userInfo: userInfoFromStorage,
     error: null,
     loading: false,
   },
@@ -73,7 +72,7 @@ const getUserReducer = (
     case ActionType.GET_USER_SUCCESS:
       return {
         ...state,
-        user: action.payload,
+        userInfo: action.payload,
         loading: false,
         error: null,
       };
@@ -148,10 +147,32 @@ const updateUserReducer = (
   }
 };
 
+const getUserReview = (state = { 
+    userReview: [] as Array<any>,
+    error: null, 
+    loading: false,
+  },
+  action: Action
+) =>{
+  switch( action.type ){
+    case ActionType.GET_USER_REVIEW_REQUEST:
+      return { ...state, loading: true, error: null}
+    case ActionType.GET_USER_REVIEW_SUCCESS:
+      return { ...state, userReview: action.payload, loading: false, error: null }
+    case ActionType.GET_USER_REVIEW_FAIL:
+      return { ...state, userReview: [], loading: false, error: action.payload }
+    default: 
+      return state
+  }
+}
+
+// const updateUserReview
+// const 
 export {
   registerReducer,
   loginReducer,
   getUserReducer,
   updateProfileReducer,
   updateUserReducer,
+  getUserReview,
 };

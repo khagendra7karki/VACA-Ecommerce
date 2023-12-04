@@ -1,23 +1,12 @@
 import { ActionType } from "../action-types";
 import { Action } from "../actions/index";
 
-const cartItemsFromStorage = localStorage.getItem("cartItems")
-  ? JSON.parse(localStorage.getItem("cartItems") || "{}")
-  : [];
-
-const shippingAddressFromStorage = localStorage.getItem("shippingAddress")
-  ? JSON.parse(localStorage.getItem("shippingAddress") || "{}")
-  : [];
-
-const paymentMethodFromStorage = localStorage.getItem("paymentMethod")
-  ? JSON.parse(localStorage.getItem("paymentMethod") || "{}")
-  : [];
 
 const cartReducer = (
   state = {
-    cartItems: cartItemsFromStorage,
-    shippingAddress: shippingAddressFromStorage,
-    paymentMethod: paymentMethodFromStorage,
+    cartItems: [] as Array<any>,
+    shippingAddress: {},
+    paymentMethod: {},
   },
   action: Action
 ) => {
@@ -31,7 +20,7 @@ const cartReducer = (
     case ActionType.CART_ADD_ITEM:
       const item = action.payload;
 
-      let existItem = state.cartItems.find(
+      let existItem: any = state.cartItems.find(
         (x: any) => x.product === item.product
       );
 

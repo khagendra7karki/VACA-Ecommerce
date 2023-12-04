@@ -4,21 +4,20 @@
  * directed from here
  * 
  */
-
 import express from 'express'
-import productRouter from './product/index.js'
+
 import userRouter from './user/index.js'
 
-import reviewController from '../controller/review/reviewController.js'
+import productRouter from './product/index.js'
 
 import orderRouter from './order/index.js'
 
 import cartRouter from './cart/index.js'
 
+import wishListRouter from './wishList/index.js'
+
 import reviewRouter from './review/index.js'
-//
-// admin routes
-//
+
 // import adminRoutes from './admin/index.js'
 
 
@@ -26,45 +25,23 @@ const router = express.Router()
 
 
 //product routers
-router.use('/', productRouter );
+router.use('/product', productRouter );
 
 //user router
-router.use('/', userRouter );
+router.use('/user', userRouter );
 
 //order routes
-router.use('/order/', orderRouter );
+router.use('/order', orderRouter );
 
 //cart routes
-router.use('/cart/', cartRouter );
+router.use('/cart', cartRouter );
 
 //wishList routes
-router.use('/wishList/', cartRouter );
+router.use('/wishList', wishListRouter );
 
 //review routes
-/**
- * 
-    To add review the format of the review should be: 
-    const review = {
-        productId: { type: Mongoose.Schema.Types.ObjectId },
-        userId: { type; Mongoose.Schema.Types.ObjectId },
-        review: { type: String },
-        rating: { type: Number } //  between 1 - 5 ( integer )
-    }
-
-*/    
 router.use( '/review', reviewRouter)
 
+router.route('/*').all( (req, res ) => res.status(400).send() )
 
-
-//testing....
-
-
-
-//END testing..
-
-// router.get( '/getReview/:id', reviewController.getReview)
-
-
-// routere.post('/')
-// router.use('/', adminRoutes )
-export default router 
+export default router  

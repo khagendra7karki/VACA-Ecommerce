@@ -1,12 +1,3 @@
-/**
- * TODO
- * optimize the code
- * 
- * addToCart can receive the product info from the 
- * frontend iteself. Request for product need not be 
- * made
- */
-
 import axios from "axios";
 import { Dispatch } from "redux";
 import { ActionType } from "../action-types";
@@ -17,33 +8,134 @@ import createNewUser from "../../firebase/createNewUser";
 
 
 /**
+ * @description - Retrieves user cart from the database
+ * 
+*/
+export const getWishList= () => {
+  return async (dispatch: Dispatch<Action>, getState: any) => {
+    
+    const { isLoggedIn } = store.getState().userLogin;
+    
+    if( !isLoggedIn ) return  
+    
+    const token = store.getState().user.userInfo.token;
+    const config = {
+      headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      
+      const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/cart/getItem`, config);
+      console.log( ' car items \n',data.payload )
+      
+      dispatch({
+        type: ActionType.CART_SET,
+      payload: data.payload
+    })
+    
+  };
+};
+
+/**
  * Adds an item to the cart
  * by creating a whole new cart
  * received from the backend
  * 
  * @param id - product Id
  * @param qty - number of items
- * @returns 
+ */
+export const addToWishList = (id: string) => {
+  return async (dispatch: Dispatch<Action>, getState: any) => {
+      
+    const { isLoggedIn } = store.getState().userLogin;
+    
+    if( !isLoggedIn ) return 
+    
+    const token = store.getState().user.userInfo.token;
+    
+    const config = {
+      headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+    const { data } = await axios.post(`${process.env.REACT_APP_API_URL}/wishList/addItem/${id}`,{},config );
+    console.log( ' car items \n',data.payload )
+
+    dispatch({
+      type: ActionType.WISHLIST_SET,
+      payload: data.payload
+    })
+    
+  };
+};
+
+export const removeFromWishList = (id: string) => {
+  return async (dispatch: Dispatch<Action>, getState: any) => {
+    const token = store.getState().user.userInfo.token;
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    
+    const { data } = await axios.delete(`${process.env.REACT_APP_API_URL}/wishList/removeItem/${id}`,config );
+    console.log( data.payload );
+    
+    dispatch({
+      type: ActionType.WISHLIST_SET,
+      payload: data.payload,
+    });
+  };
+};
+
+
+/**
+ * @description - Retrieves user cart from the database
+ * 
+ */
+export const getCart = () => {
+  return async (dispatch: Dispatch<Action>, getState: any) => {
+
+    const { isLoggedIn } = store.getState().userLogin;
+
+    if( !isLoggedIn ) return  
+
+    const token = store.getState().user.userInfo.token;
+    const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+    const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/cart/getItem`, config);
+    console.log( ' car items \n',data.payload )
+
+    dispatch({
+      type: ActionType.CART_SET,
+      payload: data.payload
+    })
+
+  };
+};
+
+/**
+ * Adds an item to the cart
+ * by creating a whole new cart
+ * received from the backend
+ * 
+ * @param id - product Id
+ * @param qty - number of items
  */
 export const addToCart = (id: string, qty: number) => {
   return async (dispatch: Dispatch<Action>, getState: any) => {
     
-    // const { data } = await axios.get(`http://localhost:5000/getProduct/${id}`);
-    // const product = {
-    //   product: data.payload._id,
-    //   title: data.payload.title,
-    //   image: data.payload.image,
-    //   price: data.payload.price,
-    //   availableQuantity: data.payload.availableQuantity,
-    //   quantity: qty,
-    // }
-    // dispatch({
-    //   type: ActionType.CART_ADD_ITEM,
-    //   payload: product
-    // });
-    
-  
-    const token = store.getState().userLogin.userInfo.token;
+    const token = store.getState().user.userInfo.token;
 
     const config = {
         headers: {
@@ -52,23 +144,20 @@ export const addToCart = (id: string, qty: number) => {
         },
       };
 
-    const { data } = await axios.post(`http://localhost:5000/cart/addItem/${id}/${qty}`,{},config );
+    const { data } = await axios.post(`${process.env.REACT_APP_API_URL}/cart/addItem/${id}/${qty}`,{},config );
     console.log( ' car items \n',data.payload )
+
     dispatch({
       type: ActionType.CART_SET,
-      payload: data.payload.items
+      payload: data.payload
     })
 
-    localStorage.setItem(
-      "cartItems",
-      JSON.stringify(store.getState().cart.cartItems)
-    );
   };
 };
 
 export const removeFromCart = (id: string) => {
   return async (dispatch: Dispatch<Action>, getState: any) => {
-    const token = store.getState().userLogin.userInfo.token;
+    const token = store.getState().user.userInfo.token;
 
     const config = {
         headers: {
@@ -77,44 +166,34 @@ export const removeFromCart = (id: string) => {
         },
       };
     
-    const { data } = await axios.post(`http://localhost:5000/cart/removeItem/${id}`,{},config );
+    const { data } = await axios.post(`${process.env.REACT_APP_API_URL}/cart/removeItem/${id}`,{},config );
     console.log( data.payload );
 
     dispatch({
       type: ActionType.CART_SET,
-      payload: data.payload.items,
+      payload: data.payload,
     });
-
-    localStorage.setItem(
-      "cartItems",
-      JSON.stringify(store.getState().cart.cartItems)
-    );
   };
 };
 
 export const updateCart = ( id: string, qty : number ) =>{
     return async (dispatch: Dispatch<Action>, getState: any) => {
-    const token = store.getState().userLogin.userInfo.token;
+    const token = store.getState().user.userInfo.token;
 
     const config = {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-      };
-    
-    const { data } = await axios.post(`http://localhost:5000/cart/updateItem/${id}/${qty}`,{},config );
-    console.log( data.payload );
-    console.log( data.payload )
+    };
+  
+    const { data } = await axios.post(`${process.env.REACT_APP_API_URL}/cart/updateItem/${id}/${qty}`,{},config );
+
     dispatch({
       type: ActionType.CART_SET,
-      payload: data.payload.items,
+      payload: data.payload,
     });
 
-    localStorage.setItem(
-      "cartItems",
-      JSON.stringify(store.getState().cart.cartItems)
-    );
   };
 
 }
@@ -126,7 +205,6 @@ export const saveShippingAddress = (data: any) => {
       payload: data,
     });
 
-    localStorage.setItem("shippingAddress", JSON.stringify(data));
   };
 };
 
@@ -147,12 +225,10 @@ export const getProducts = (page: number) => {
       dispatch({
         type: ActionType.GET_PRODUCTS_REQUEST,
       });
-      console.log('kkkkkk',page )
-      const { data } = await axios.get(`http://localhost:5000/getProducts?pageNumber=${page}`);
- console.log('kkkkkk',page , data)
+      const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/product/getProducts?pageNumber=${page}`);
       dispatch({
         type: ActionType.GET_PRODUCTS_SUCCESS,
-        payload: data,
+        payload: data.payload,
       });
     } catch (error: any) {
       dispatch({
@@ -170,11 +246,12 @@ export const quickSearchProducts = (keyword: number) => {
         type: ActionType.QUICK_SEARCH_REQUEST,
       });
       const { data } = await axios.get(
-        `http://localhost:5000/getProducts/search?keyword=${keyword}`
+        `${process.env.REACT_APP_API_URL}/product/getProducts/search?keyword=${keyword}`
       );
+      console.log(data.payload, data , "csdjbsefbvjh")
       dispatch({
         type: ActionType.QUICK_SEARCH_SUCCESS,
-        payload: data,
+        payload: data.payload,
       });
     } catch (error: any) {
       dispatch({
@@ -188,15 +265,18 @@ export const quickSearchProducts = (keyword: number) => {
 export const getProduct = (id: string) => {
   return async (dispatch: Dispatch<Action>) => {
     try {
+
       dispatch({
         type: ActionType.GET_PRODUCT_REQUEST,
       });
    
-      const { data } = await axios.get(`http://localhost:5000/getProduct/${id}`);
+      const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/product/getProduct/${id}`);
+
       dispatch({
         type: ActionType.GET_PRODUCT_SUCCESS,
         payload: data.payload,
       });
+
     } catch (error: any) {
       dispatch({
         type: ActionType.GET_PRODUCT_FAIL,
@@ -213,7 +293,7 @@ export const addReview = (id: string, rating: number, comment: string) => {
         type: ActionType.ADD_REVIEW_REQUEST,
       });
 
-      const token = store.getState().userLogin.userInfo.token;
+      const {token, _id, fullName} = store.getState().user.userInfo;
 
       const config = {
         headers: {
@@ -224,26 +304,24 @@ export const addReview = (id: string, rating: number, comment: string) => {
 
 
       //make reivew object
-      
       const reviewObject = {
-        userId: store.getState().userLogin.userInfo._id,
+        user: _id,
         review: comment,
-        rating: rating
+        rating: rating,
+        fullName
       }
 
       // receive the updated product info
       const { data } = await axios.post(
-        `http://localhost:5000/review/addReview`,
+        `${process.env.REACT_APP_API_URL}/review/addReview`,
         {   productId: id , review: reviewObject },
         config
       );
-      
-      //update the product 
-      // dispatch({
-      //   type: ActionType.GET_PRODUCT_SUCCESS,
-      //   payload: data.payload
-      // })
-      
+      console.log('From data review', data.payload )
+      dispatch({
+        type: ActionType.ADD_REVIEW_SUCCESS,
+        payload:data.payload 
+      })
 
     } catch (error: any) {
       dispatch({
@@ -269,12 +347,6 @@ export const register = (fullName: string, email: string, password: string) => {
         },
       };
 
-      const formData = {  
-        fullName,
-        email,
-        password,
-      };
-
       // create a new user using the 
       // firebase SDK
       createNewUser( email, password, ( userCredential  ) =>{
@@ -284,21 +356,26 @@ export const register = (fullName: string, email: string, password: string) => {
 
         console.log( user );
         
-        axios.post("http://localhost:5000/registerUser", user , config)
+        axios.post(`${process.env.REACT_APP_API_URL}/user/registerUser`, user , config)
         .then( res =>{
           console.log( 'Payload', res.data.payload )
+          
+          // dispatch register action
           dispatch({
               type: ActionType.USER_REGISTER_SUCCESS,
-              payload: res.data.payload,
             });
 
-            dispatch({
-              type: ActionType.USER_LOGIN_SUCCESS,
-              payload: res.data.payload,
-            });
-      
-            localStorage.setItem("userInfo", JSON.stringify(res.data.payload ));
-            })
+          // dispatch login action
+          dispatch({
+            type: ActionType.USER_LOGIN_SUCCESS,
+          });
+          
+          // dispatch get user action
+          dispatch({
+            type: ActionType.GET_USER_SUCCESS,
+            payload: res.data.payload
+          })
+        })
       })
 
 
@@ -330,39 +407,36 @@ export const login = (email: string, password: string) => {
       };
 
       const { data } = await axios.post(
-        "http://localhost:5000/login",
+        `${process.env.REACT_APP_API_URL}/user/login`,
         formData,
         config
       );
 
       //extract user data from the 
-      // response payload
+      // response
       const { cart, wishList, ...user } = data.payload 
       
-
       // add userInfo to 
       // redux store
       dispatch({
-        type: ActionType.USER_LOGIN_SUCCESS,
-        payload: user,
+        type: ActionType.USER_LOGIN_SUCCESS
       });
+
+
+      // add userInfo to
+      // redux store
+      dispatch({
+        type: ActionType.GET_USER_SUCCESS,
+        payload: user,
+      })
       
       // add to local storage
       // as  " userInfo "
       localStorage.setItem("userInfo", JSON.stringify( user ));
       
-      // add cart data to 
-      // redux store
-      dispatch({
-        type: ActionType.CART_SET,
-        payload: cart.items,
-      })
-      localStorage.setItem("cartItems", JSON.stringify( cart.items))
-      console.log( 'login response payload', data )
-      
-      //add 
 
     } catch (error: any) {
+
       console.log( error )
       dispatch({
         type: ActionType.USER_LOGIN_FAIL,
@@ -375,11 +449,11 @@ export const login = (email: string, password: string) => {
 export const createOrder = (
   orderItems: any,
   shippingAddress: any,
-  paymentMethod: string,
   itemsPrice: any,
   taxPrice: any,
   shippingPrice: any,
-  totalPrice: any
+  totalPrice: any,
+  paymentMethod: string = "onDelivery",
 ) => {
   return async (dispatch: Dispatch<Action>) => {
     try {
@@ -387,7 +461,7 @@ export const createOrder = (
         type: ActionType.CREATE_ORDER_REQUEST,
       });
 
-      const token = store.getState().userLogin.userInfo.token;
+      const token = store.getState().user.userInfo.token;
 
       const config = {
         headers: {
@@ -405,21 +479,14 @@ export const createOrder = (
         shippingPrice,
         totalPrice,
       };
-      let _id : any = "65386caaf5f81f2689e95abb"
-      //     const { data } = await axios.post("/api/v1/orders", formData, config);
-      const data = {orderItems :orderItems,
-        shippingAddress :shippingAddress,
-        paymentMethod: paymentMethod,
-        itemsPrice :itemsPrice,
-        taxPrice :taxPrice,
-        shippingPrice :shippingPrice,
-        totalPrice : totalPrice,
-        _id
-      }
+
+      console.log(formData)
+      const { data } = await axios.post(`${process.env.REACT_APP_API_URL}/order`, formData, config);
+
  
       dispatch({
         type: ActionType.CREATE_ORDER_SUCCESS,
-        payload: data,
+        payload: data.payload,
       });
     } catch (error: any) {
       dispatch({
@@ -432,12 +499,12 @@ export const createOrder = (
 
 export const getOrder = (id: any) => {
   return async (dispatch: Dispatch<Action>, getState: any) => {
-    try {
+    try { 
       dispatch({
         type: ActionType.GET_ORDER_REQUEST,
       });
 
-      const token = store.getState().userLogin.userInfo.token;
+      const {token} = store.getState().user.userInfo;
 
       const config = {
         headers: {
@@ -446,28 +513,12 @@ export const getOrder = (id: any) => {
         },
       };
 
-     // const { data } = await axios.get(`/api/v1/orders/${id}`, config);
 
+      const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/order/${id}`, config);
 
-      const data = {
-        isPaid: true,
-        user: {
-          name: "dk",
-          email: "njdnck",
-        },
-        paymentMethod: "admnd",
-        orderItems: {},
-        isDelivered: false,
-        shippingAddress: {
-          address: "cdadc",
-          city: "casdac",
-          postalCode: "cadca",
-          country: "cadca",
-        },
-      };
       dispatch({
         type: ActionType.GET_ORDER_SUCCESS,
-        payload: data,
+        payload: data.payload,
       });
     } catch (error: any) {
       dispatch({
@@ -481,11 +532,12 @@ export const getOrder = (id: any) => {
 export const payOrder = (id: any, paymentResult: any) => {
   return async (dispatch: Dispatch<Action>, getState: any) => {
     try {
+      console.log( id )
       dispatch({
         type: ActionType.ORDER_PAY_REQUEST,
       });
 
-      const token = store.getState().userLogin.userInfo.token;
+      const token = store.getState().user.userInfo.token;
 
       const config = {
         headers: {
@@ -494,16 +546,12 @@ export const payOrder = (id: any, paymentResult: any) => {
         },
       };
 
-      // const { data } = await axios.put(
-      //   `/api/v1/orders/${id}/pay`,
-      //   paymentResult,
-      //   config
-      // );
-const data = {}
-      dispatch({
-        type: ActionType.ORDER_PAY_SUCCESS,
-        payload: data,
-      });
+      const data = {}
+        dispatch({
+          type: ActionType.ORDER_PAY_SUCCESS,
+          payload: data,
+        });
+
     } catch (error: any) {
       dispatch({
         type: ActionType.ORDER_PAY_FAIL,
@@ -520,7 +568,7 @@ export const getUser = () => {
         type: ActionType.GET_USER_REQUEST,
       });
 
-      const token = store.getState().userLogin.userInfo.token;
+      const token = store.getState().user.userInfo.token;
 
       const config = {
         headers: {
@@ -533,7 +581,7 @@ export const getUser = () => {
 
       dispatch({
         type: ActionType.GET_USER_SUCCESS,
-        payload: data,
+        payload: data.payload,
       });
     } catch (error: any) {
       dispatch({
@@ -544,6 +592,37 @@ export const getUser = () => {
   };
 };
 
+export const getUserReviews = () =>{
+  return async (dispatch: Dispatch<Action>) => {
+    try {
+      dispatch({
+        type: ActionType.GET_USER_REVIEW_REQUEST,
+      });
+
+      const token = store.getState().user.userInfo.token;
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/user/reviews`, config);
+
+      dispatch({
+        type: ActionType.GET_USER_REVIEW_SUCCESS,
+        payload: data.payload,
+      });
+    } catch (error: any) {
+      dispatch({
+        type: ActionType.GET_USER_REVIEW_FAIL,
+        payload: error,
+      });
+    }
+  };
+}
+
 export const getOrders = () => {
   return async (dispatch: Dispatch<Action>) => {
     try {
@@ -551,7 +630,7 @@ export const getOrders = () => {
         type: ActionType.GET_ORDERS_REQUEST,
       });
 
-      const token = store.getState().userLogin.userInfo.token;
+      const token = store.getState().user.userInfo.token;
 
       const config = {
         headers: {
@@ -582,7 +661,7 @@ export const deliverOrder = (id: string) => {
         type: ActionType.ORDER_DELIVER_REQUEST,
       });
 
-      const token = store.getState().userLogin.userInfo.token;
+      const token = store.getState().user.userInfo.token;
 
       const config = {
         headers: {
@@ -626,7 +705,7 @@ export const createProduct = (
         type: ActionType.CREATE_PRODUCT_REQUEST,
       });
 
-      const token = store.getState().userLogin.userInfo.token;
+      const token = store.getState().user.userInfo.token;
 
       const config = {
         headers: {
@@ -668,7 +747,7 @@ export const getTopProducts = () => {
         type: ActionType.GET_TOP_PRODUCTS_REQUEST,
       });
 
-      const { data } = await axios.get(`/api/v1/products/top`);
+      const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/getTopProducts`);
 
       dispatch({
         type: ActionType.GET_TOP_PRODUCTS_SUCCESS,
@@ -690,7 +769,7 @@ export const getMyOrders = () => {
         type: ActionType.GET_MY_ORDERS_REQUEST,
       });
 
-      const token = store.getState().userLogin.userInfo.token;
+      const token = store.getState().user.userInfo.token;
 
       const config = {
         headers: {
@@ -715,7 +794,7 @@ export const getMyOrders = () => {
 };
 
 export const updateProfile = (
-  name: string,
+  fullName: string,
   email: string,
   password: string
 ) => {
@@ -724,8 +803,9 @@ export const updateProfile = (
       dispatch({
         type: ActionType.UPDATE_PROFILE_REQUEST,
       });
-
-      const token = store.getState().userLogin.userInfo.token;
+      
+      const id = store.getState().user.userInfo._id;
+      const token = store.getState().user.userInfo.token;
 
       const config = {
         headers: {
@@ -735,20 +815,20 @@ export const updateProfile = (
       };
 
       const formData = {
-        name,
+        fullName,
         email,
         password,
       };
 
       const { data } = await axios.put(
-        `/api/v1/users/profile`,
+        `${process.env.REACT_APP_API_URL}/user/updateProfile`,
         formData,
         config
       );
 
       dispatch({
         type: ActionType.UPDATE_PROFILE_SUCCESS,
-        payload: data,
+        payload: data.payload,
       });
 
       dispatch({
@@ -770,7 +850,7 @@ export const updateUser = (id: string, isAdmin: boolean) => {
         type: ActionType.UPDATE_USER_REQUEST,
       });
 
-      const token = store.getState().userLogin.userInfo.token;
+      const token = store.getState().user.userInfo.token;
 
       const config = {
         headers: {
@@ -807,11 +887,10 @@ export const logout = () => {
 
     //remove info from localStorage
 
-    localStorage.removeItem( "cartItems")
-    localStorage.removeItem("paymentMethod")
     localStorage.removeItem("userInfo");
-    localStorage.removeItem("shippingAddress")
+    
     
     dispatch({ type: ActionType.USER_LOGOUT, payload: {} });
+    dispatch({ type: ActionType.GET_USER_SUCCESS, payload: {} })
   };
 };

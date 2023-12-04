@@ -1,9 +1,8 @@
 import { useForm } from "@mantine/form";
-import React, { FC, useEffect, useRef, useState } from "react";
+import React, { FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { bindActionCreators } from "redux";
 import { State, actionCreators } from "../../state";
-import { store } from '../../state/store'
 import {
   Alert,
   Box,
@@ -11,8 +10,6 @@ import {
   Card,
   Grid,
   Group,
-  NumberInputHandlers,
-  SimpleGrid,
   Text,
   TextInput,
 } from "@mantine/core";
@@ -20,14 +17,14 @@ import { ActionType } from "../../state/action-types";
 import { AiFillStar } from "react-icons/ai";
 import { IoIosCloseCircle, IoIosUnlock } from "react-icons/io";
 import ReviewCard from "./ReviewCard";
-import { v4 as uuidv4 } from 'uuid';
 
 
 interface Reviews {
   createdAt: Date;
   rating: Number;
+  fullName: String;
   review: String;
-  userId: String;
+  user: string;
   _id: String;
 }
 
@@ -39,31 +36,16 @@ interface MyProps {
 export const Review: FC<MyProps> = ({ reviewM }): JSX.Element => {
   const dispatch = useDispatch();
 
-  const { getProduct, addReview, addToCart } = bindActionCreators(
+  const { addReview } = bindActionCreators(
     actionCreators,
     dispatch
   );
 
-  const [value, setValue] = useState<any>(1);
-  const [opened, setOpened] = useState(false);
 
-  const handlers = useRef<NumberInputHandlers>(null);
 
-  const { userInfo } = useSelector((state: State) => state.userLogin);
-  const productId = useSelector( ( state: State ) => state.product.product._id)
-  // const {
-  //   review,
-  //   loading: reviewLoading,
-  //   error: reviewError,
-  // } = useSelector((state: State) => state.review);
+  const { isLoggedIn } = useSelector((state: State) => state.userLogin );
+  const {product} = useSelector( ( state: State ) => state.product )
 
-  const ratingLevels = [
-    { value: "1", label: "1 - Poor" },
-    { value: "2", label: "2 - Fair" },
-    { value: "3", label: "3 - Good" },
-    { value: "4", label: "4 - Very Good" },
-    { value: "5", label: "5 - Excellent" },
-  ];
 
 
   const form = useForm({
@@ -71,42 +53,14 @@ export const Review: FC<MyProps> = ({ reviewM }): JSX.Element => {
       rating: "",
       comment: "",
     },
-
-    // validate: {
-    //   email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
-    // },
   });
-  // useEffect(() => {
-  //   // if (reviewError !== null) {
-  //   //   notifications.showNotification({
-  //   //     title: "Error!",
-  //   //     message: reviewError,
-  //   //     color: "red",
-  //   //   });
-  //   // }
-  //   dispatch({
-  //     type: ActionType.ADD_REVIEW_RESET,
-  //   });
-  //   // eslint-disable-next-line
-  // }, [reviewError]);
 
-  //   useEffect(() => {
-  //     if (review && Object.keys(review).includes("message")) {
-  //       notifications.showNotification({
-  //         title: "Success!",
-  //         message: review.message,
-  //         color: "green",
-  //       });
-  //     }
-  //     // eslint-disable-next-line
-  //   }, [review]);
 
 
   const handleSubmit = (values: any) => {
     const { rating, comment } = values;
-   // addReview(params as string, parseInt(rating), comment);
-    setOpened(false);
-    addReview( productId, rating, comment )
+
+    addReview( product._id, rating, comment )
     dispatch({
       type: ActionType.ADD_REVIEW_RESET,
     });
@@ -133,16 +87,15 @@ export const Review: FC<MyProps> = ({ reviewM }): JSX.Element => {
 
             <div style={{ marginTop: "1rem" }}>
               {reviewM ? (
-                reviewM.map((review: any) => {
+                reviewM.map((review: any, index: number) => {
                   return (
                     <ReviewCard
                       comment={review.review}
                       date={review.createdAt}
                       id={review._id}
-                      // name={review.name}
-                      name="sdsdcs"
+                      name={ review.fullName }
                       rating={review.rating}
-                      key={uuidv4()}
+                      key={index}
                     />
                   );
                 })
@@ -166,15 +119,14 @@ export const Review: FC<MyProps> = ({ reviewM }): JSX.Element => {
              
              
                 <Text>
-                    {/* {product.rating.toFixed(1)} */}
-                      5
+                    {product.rating}
                   </Text>
                 <AiFillStar color="orange" size="18" />
              
             </Group>
           }
 
-          {!userInfo ? (
+          {!isLoggedIn ? (
             <Alert
               icon={<IoIosUnlock size={16} />}
               style={{ marginTop: "1rem" }}

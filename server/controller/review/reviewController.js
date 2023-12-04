@@ -4,8 +4,8 @@
  * verify the sent user exists in the background
  * 
  */
-
-import productSchema from '../../models/productSchema.js'
+import mongoose from 'mongoose';
+import productSchema from '../../models/Product.js'
 
 const reviewController = {
 
@@ -26,15 +26,24 @@ const reviewController = {
         try{
             const { productId, review } = req.body;
 
-            console.log( review )
+            // review.rating = parseInt( review.rating )
             const product = await productSchema.findByIdAndUpdate( productId, {
-                $push: { "review.reviews": review }
-            }, { new: true } ).lean()
+                $push: { "reviews": review }
+            }, { new: true }).lean()
 
-            res.status( 200).json( { status: 'successful', task: 'addReview', payload: product})
+            const averageRating = product.reviews.reduce( ( acc, current) =>{
+                return acc + current.rating 
+            },0) / product.reviews.length
+            
+            const finalProduct = await productSchema.findByIdAndUpdate( productId, { 
+                $set: { rating: averageRating.toFixed(1)},
+            },{new: true }).lean()
+
+
+            res.status( 200).json( { status: 'successful', task: 'addReview', payload: finalProduct.reviews })
         }
         catch( error){
-            console.log( 'An error occurred', error )
+            console.log( 'An error occurred in addReiew', error )
         }
    },
 
@@ -59,13 +68,13 @@ const reviewController = {
             const { productId,  reviewId } = req.body;
             console.log( productId, reviewId )
             const product = await productSchema.findByIdAndUpdate( productId, {
-                $pull: { "review.reviews": {_id: reviewId} }
+                $pull: { "reviews": {_id: reviewId} }
             }, { new: true} ).lean()
 
             res.status( 200).json( { status: 'successful', task: 'addReview', payload: product})
         }
         catch( error){
-            console.log( 'An error occurred', error )
+            console.log( 'An error occurred occurred in removeRevieww', error )
         }
    }
 }

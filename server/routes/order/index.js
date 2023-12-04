@@ -9,11 +9,12 @@ import {
   getOrders,
 } from "../../controller/order/index.js";
 //import { protect, admin } from "../middleware/authMiddleware";
+import { verificationMiddleware } from '../../middleware/auth/index.js'
 
-orderRouter.route("/").post( addOrderItems).get( getOrders);
-orderRouter.route("/myorders").get( getMyOrders);
-orderRouter.route("/:id").get( getOrderById);
-orderRouter.route("/:id/pay").put( updateOrderToPaid);
-orderRouter.route("/:id/deliver").put( updateOrderToDelivered);
+orderRouter.route("/").post( verificationMiddleware, addOrderItems).get( verificationMiddleware, getOrders);
+orderRouter.route("/myorders").get( verificationMiddleware,  getMyOrders);
+orderRouter.route("/:id").get( verificationMiddleware, getOrderById);
+orderRouter.route("/:id/pay").put( verificationMiddleware, updateOrderToPaid);
+orderRouter.route("/:id/deliver").put( verificationMiddleware, updateOrderToDelivered);
 
 export default orderRouter;

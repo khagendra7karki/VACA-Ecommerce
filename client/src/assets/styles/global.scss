@@ -1,0 +1,14 @@
+@use './variables';
+
+
+body::-webkit-scrollbar {
+width: 6px;
+height: 2px;
+}
+body::-webkit-scrollbar-track {
+  background: transparent;
+}
+body::-webkit-scrollbar-thumb {
+  background: variables.$text-grey;
+  border-radius: 6px;
+}
