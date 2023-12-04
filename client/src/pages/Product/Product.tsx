@@ -1,24 +1,28 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
   ActionIcon,
+  Alert,
   Badge,
   Button,
   Container,
   Divider,
+  Drawer,
   Grid,
   Group,
   Image,
   InputBase,
+  Modal,
   NumberInput,
   NumberInputHandlers,
   Pill,
+  ScrollArea,
   Select,
   Space,
   Stack,
   Text,
 } from "@mantine/core";
 import classes from "./product.module.css";
-
+import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router";
 import { bindActionCreators } from "redux";
 import { actionCreators, State } from "../../state";
@@ -27,23 +31,43 @@ import Loading from "../../components/Loading";
 import { Carousel } from "@mantine/carousel";
 import Reactangle from "../../components/Rectangle";
 import CardCarousel from "../../components/CardCarousel";
-import { ScrollRestoration } from "react-router-dom";
+import { useDisclosure } from "@mantine/hooks";
+import { RiShoppingBagLine } from "react-icons/ri";
+import { BiTrashAlt } from "react-icons/bi";
 
 const Product = () => {
+  const navigate = useNavigate();
+  const numRef = useRef(null);
+  const [openSidebar, { open, close }] = useDisclosure(false);
+  const [image, setImage] = useState<string>();
+  const [opened, setOpened] = useState(false);
+  const [selectedItem, setSelectedItem] = useState("");
   const params = useParams();
   const dispatch = useDispatch();
 
-  const { getProduct, addToCart, addToWishList } = bindActionCreators(
+  const { getProduct, addToCart, addToWishList,getCart, removeFromCart, updateCart } = bindActionCreators(
     actionCreators,
     dispatch
   );
+  const selectItem = (id: string) => {
+    setOpened(true);
+    setSelectedItem(id);
+  };
+  const handlerUpdateCartItems = (value: number, id: string) => {
+    updateCart(id, value);
+  };
+  const handlerDeleteCartItem = (id: string) => {
+    setOpened(false);
+    console.log(id);
+    removeFromCart(id);
+  };
 
   const [value, setValue] = useState<any>(1);
 
   const handlers = useRef<NumberInputHandlers>(null);
 
   const { product, loading } = useSelector((state: State) => state.product);
-
+  const { cartItems } = useSelector((state: State) => state.cart);
   const handlerAddToCart = (quantity: number, id: string) => {
     addToCart(id, quantity);
   };
@@ -51,6 +75,10 @@ const Product = () => {
   useEffect(() => {
     getProduct(params.id as string);
   }, [dispatch, params]);
+
+  useEffect( () =>{
+    getCart()
+  }, [])
 
   const productImages: string[] = product.images;
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -92,6 +120,12 @@ const Product = () => {
     );
   }
 
+  const addCart = () => {
+    open()
+    handlerAddToCart(value, product._id)
+   
+  }
+
   const pills = product.size?.map((size: string, index: number) => (
     <Pill key={index} withRemoveButton>
       size {size}
@@ -104,7 +138,6 @@ const Product = () => {
         <Loading />
       ) : (
         <>
-          <ScrollRestoration />
           <Container size= "100%"> 
             {Object.keys(product).length && (
               <>
@@ -213,7 +246,8 @@ const Product = () => {
                           variant="outline"
                           color="rgba(0, 0, 0, 0.71)"
                           //style={{ flex: 1 }}
-                          onClick={() => handlerAddToCart(value, product._id)}
+                          onClick={(() => addCart())  }
+                         
                         >
                           Add To Cart
                         </Button>
@@ -244,6 +278,174 @@ const Product = () => {
                 <CardCarousel />
               </>
             )}
+            {/* {Object.keys(product).length && (
+          <Review reviewM={product.reviews} />
+        )} */}
+         <Drawer position= 'right' size={300} opened={openSidebar} onClose={close} title="Your Cart">
+        {/* Drawer content */}
+        <Divider/>
+        <ScrollArea h={650} >
+        {cartItems && cartItems.length ? (
+          cartItems.map((item: any, index: number) => {
+            return (
+              
+              <div key = {index} >
+
+                <Modal
+                  title="Delete Item?"
+                  size="lg"
+                  onClose={() => setOpened(false)}
+                  opened={opened}
+                >
+                  <Text size="sm">
+                    Are you sure that you want to remove this item?
+                  </Text>
+                  <div className="button-container">
+                    <Button
+                      onClick={() => setOpened(false)}
+                      color="gray"
+                      size="lg"
+                      fullWidth
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      onClick={() => handlerDeleteCartItem(selectedItem)}
+                      color="red"
+                      size="lg"
+                      fullWidth
+                    >
+                      Yes
+                    </Button>
+                  </div>
+                </Modal>
+                <Container fluid h='100%' style={{borderStyle:'solid', borderWidth:'1px', borderColor:'grey'}} mb={10}>
+     
+   
+                <Grid gutter={{ base: 5}} my={20}>
+                  <Grid.Col span={{ base: 12 }}>
+                    <Grid gutter={{ base: 5 }}>
+                      <Grid.Col span={{ base: 12}}>
+                        {" "}
+                        <Group justify="center"><Button
+                          size="sm"
+                          px={0}
+                          mt={10}
+                          radius="md"
+                          variant="subtle"
+                          color="#DB4444"
+                          onClick={() => selectItem(item.product)}
+                        >
+                        <BiTrashAlt size={15} style ={{margin:"auto"}} />
+                        </Button> </Group>
+                        
+              
+                      </Grid.Col>
+                      <Grid.Col span={{ base: 12}}>
+                        {" "}
+                        <Group justify="center"> <Image
+                          fit="contain"
+                          radius="sm"
+                          height={50}
+                          width={50}
+                          src={item.image}
+                        /> </Group>
+                       
+                      </Grid.Col>
+                      <Grid.Col span={{ base: 12 }}>
+                      <Group justify="center">{item.title} </Group></Grid.Col>
+                    </Grid>
+                  </Grid.Col>
+                  <Grid.Col span={{ base: 12 }}>
+                  <Group justify="center">Rs. {item.price}</Group>
+                     </Grid.Col>
+                  <Grid.Col span={{ base: 12}}>
+                  <Group justify="center"> <NumberInput
+                      style = {{maxWidth: '70px'}}
+                      radius="sm"
+                      value={item.quantity}
+                      ref={numRef}
+                      onChange={(e) => {
+                        handlerUpdateCartItems(e as number, item.product);
+                      }}
+                      min={1}
+                      //max={item.countInStock}
+                      max={5}
+                      required
+                    /></Group>
+                   
+                  </Grid.Col>
+                  <Grid.Col span={{ base: 12 }}>
+                  <Group justify="center">  Rs. {item.price * item.quantity}</Group>
+                   </Grid.Col>
+                </Grid> </Container>
+              </div>
+            );
+          })
+        ) : (
+          <>
+            {" "}
+            <Alert
+              icon={<RiShoppingBagLine size={16} />}
+              style={{ marginTop: "1rem" }}
+              color="blue"
+              radius="lg"
+            >
+              No items in the cart
+            </Alert>
+          </>
+        )}
+        </ScrollArea>
+        <Grid>
+            <Grid.Col span = {6}> <Text>
+              Subtotal 
+            </Text></Grid.Col>
+            <Grid.Col span = {6} >
+            <Text  ta = 'right' >
+              Rs.
+              {cartItems
+                .reduce(
+                  (acc: any, item: any) => acc + item.quantity * item.price,
+                  0
+                )
+                .toFixed(2)}
+            </Text>
+            </Grid.Col>
+          </Grid>
+          <Text size='xs'>To find out your shipping cost , Please proceed to checkout.</Text>
+          <Button
+                style={{ marginTop: ".5rem" }}
+                color="#DB4444"
+                size="md"
+                fullWidth
+                onClick={() => navigate("/cart")}
+              >
+                Go To Cart
+              </Button>
+          {cartItems && cartItems.length ? (
+              <Button
+                style={{ marginTop: ".5rem" }}
+                color="#DB4444"
+                size="md"
+                fullWidth
+                onClick={() => navigate("/shipping")}
+              >
+                Proceed to Checkout
+              </Button>
+            ) : (
+              <></>
+            )}
+            <Button
+                style={{ marginTop: ".5rem" }}
+                color="#DB4444"
+                size="md"
+                fullWidth
+                onClick={close}
+              >
+                Continue Shopping
+              </Button>
+      </Drawer>
+      
           </Container>
         </>
       )}

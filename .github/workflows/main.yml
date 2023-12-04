@@ -28,3 +28,10 @@ jobs:
           cd ../server
           npm install --omit-dev
           pm2 restart server
+
+          
+          
+
+            
+            
+
