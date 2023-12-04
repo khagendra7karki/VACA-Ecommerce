@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Layout from "../Layout/Layout";
 import { Group, Pagination, Space } from "@mantine/core";
 import Products from "../components/Products";
 export default function Shop() {
@@ -13,7 +12,7 @@ export default function Shop() {
     console.log(activePage);
   });
   return (
-    <Layout>
+    <>
       <div>
         <Products page={activePage} pages={pageFunction} />
       </div>
@@ -23,6 +22,6 @@ export default function Shop() {
       <Group justify="center" my="20px">
         <Pagination value={activePage} onChange={setPage} total={totalPages} />
       </Group>
-    </Layout>
+    </>
   );
 }

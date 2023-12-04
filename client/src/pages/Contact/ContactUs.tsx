@@ -11,7 +11,7 @@ import {
   import { IconBrandTwitter, IconBrandYoutube, IconBrandInstagram } from '@tabler/icons-react';
   import { ContactIconsList } from './ContactIcons';
   import classes from './ContactUs.module.css';
-import Layout from '../../Layout/Layout';
+// import Layout from '../../Layout/Layout';
   
   const social = [IconBrandTwitter, IconBrandYoutube, IconBrandInstagram];
   
@@ -23,7 +23,7 @@ import Layout from '../../Layout/Layout';
     ));
   
     return (
-      <Layout><div className={classes.wrapper}>
+      <><div className={classes.wrapper}>
       <SimpleGrid cols={{ base: 1, sm: 2 }} spacing={50}>
         <div>
           <Title className={classes.title}>Contact us</Title>
@@ -63,7 +63,7 @@ import Layout from '../../Layout/Layout';
         </div>
       </SimpleGrid>
     </div>
-    </Layout>
+    </>
       
     );
   }
