@@ -1,26 +1,18 @@
-import { SimpleGrid, Card, Image, Text, Container, AspectRatio, Button } from '@mantine/core';
-import classes from './Products.module.css';
+import { SimpleGrid, Card, Image, Text, Container} from '@mantine/core';
 import {  MantineProvider, createTheme, rem } from '@mantine/core';
-
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect  } from "react";
-
-import { useNotifications } from "@mantine/notifications";
-
-
 import { bindActionCreators } from "redux";
 import { actionCreators, State } from "../state";
-import Loading from "./Loading";
 import { useNavigate } from "react-router";
 import { ProductsCard } from './ProductsCard';
-import { v4 as uuidv4 } from 'uuid';
 
 interface Product {
   _id: string,  
   title: string,
-  image: string[],
-  oldPrice?: Number,
-  price: Number,
+  images: string[],
+  oldPrice: number,
+  price: number,
 };
 
 // interface PageNum {
@@ -98,8 +90,8 @@ useEffect(()=> {
   const cards =
   Object.keys(products).length 
    ? (
-  products.products.map((product : Product ) => (
-    <ProductsCard product = { product } key = { uuidv4()}/>
+  products.products.map((product : Product, index : number ) => (
+    <ProductsCard product = { product } key = { index }/>
      )))
     : (
       <>hello world</>

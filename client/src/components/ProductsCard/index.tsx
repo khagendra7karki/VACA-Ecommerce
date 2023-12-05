@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 
 import './productStyle.scss';
-import RatingStars from '../reviews/RatingStars';
 import Reactangle from '../Rectangle';
 
 interface Product {
@@ -10,7 +9,7 @@ interface Product {
     images: string[],
     oldPrice: number,
     price: number,
-    rating : number,
+    // rating : number,
 };
 
 const calculateDiscout = ( actual : number , discounted : number ) => {
@@ -44,7 +43,6 @@ export function ProductsCard( {product} : { product: Product} ){
                     &&
                     <p className = 'oldPrice'>{`Rs. ${String(product.oldPrice)}`}</p>}
             </div>
-            {/* <RatingStars rating = {product.rating || 0} /> */}
         </div>
     </div>
     </>
