@@ -21,6 +21,7 @@ import {
 import { RiShoppingBagLine } from "react-icons/ri";
 import { BiTrashAlt } from "react-icons/bi";
 import classes from './Cart.module.css'
+import { ActionType } from "../../state/action-types";
 
 const Cart = () => {
   const numRef = useRef(null);
@@ -30,8 +31,10 @@ const Cart = () => {
   const [opened, setOpened] = useState(false);
   const [selectedItem, setSelectedItem] = useState("");
   const { cartItems } = useSelector((state: State) => state.cart);
+  const { isLoggedIn } = useSelector((state: State) => state.userLogin);
 
-  const { getCart, removeFromCart, updateCart } = bindActionCreators(
+
+  const { getCart, removeFromCart, updateCart, clearCart } = bindActionCreators(
     actionCreators,
     dispatch
   );
@@ -54,6 +57,11 @@ const Cart = () => {
   useEffect( () =>{
     getCart()
   }, [])
+
+  useEffect( () =>{
+    if( !isLoggedIn ) clearCart()
+    
+  }, [ isLoggedIn ])
 
   return (
     <>

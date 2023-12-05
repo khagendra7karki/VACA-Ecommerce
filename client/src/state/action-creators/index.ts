@@ -16,7 +16,9 @@ export const getWishList= () => {
     try{
       const { isLoggedIn } = store.getState().userLogin;
       
-      if( !isLoggedIn ) return  
+      if( !isLoggedIn ) {
+        return
+      }
       
       const token = store.getState().user.userInfo.token;
       const config = {
@@ -52,7 +54,9 @@ export const addToWishList = (id: string) => {
     try{
       const { isLoggedIn } = store.getState().userLogin;
       
-      if( !isLoggedIn ) return 
+      if( !isLoggedIn ) {
+        return 
+      } 
       
       const token = store.getState().user.userInfo.token;
       
@@ -115,7 +119,11 @@ export const removeFromWishList = (id: string) => {
   };
 };
 
-
+export const clearWishList = () =>{
+  return async( dispatch: Dispatch<Action> , getState: any ) => {
+    dispatch({type: ActionType.WISHLIST_CLEAR_ITEMS})
+  }
+}
 /**
  * @description - Retrieves user cart from the database
  * 
@@ -127,7 +135,9 @@ export const getCart = () => {
       
       const { isLoggedIn } = store.getState().userLogin;
   
-      if( !isLoggedIn ) return  
+      if( !isLoggedIn ){
+        return
+      }
   
       const token = store.getState().user.userInfo.token;
       const config = {
@@ -246,6 +256,12 @@ export const updateCart = ( id: string, qty : number ) =>{
 
   };
 
+}
+
+export const clearCart = () =>{
+  return async( dispatch: Dispatch<Action> , getState: any ) => {
+    dispatch({type: ActionType.CART_CLEAR_ITEMS})
+  }
 }
 
 export const saveShippingAddress = (data: any) => {

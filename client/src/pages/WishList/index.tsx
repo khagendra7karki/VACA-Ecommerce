@@ -21,8 +21,8 @@ export default function WishList( ) {
     const [opened, setOpened] = useState(false);
     const [selectedItem, setSelectedItem] = useState("");
     const { wishListItems } = useSelector((state: State) => state.wishList);
-
-    const { getWishList, removeFromWishList } = bindActionCreators(
+    const { isLoggedIn } = useSelector( (state: State) => state.userLogin )
+    const { getWishList, removeFromWishList, clearWishList } = bindActionCreators(
     actionCreators,
     dispatch
     );
@@ -41,7 +41,11 @@ export default function WishList( ) {
 
     useEffect(() =>{
         getWishList();
-    })
+    }, [])
+
+    useEffect( () => {
+        if( !isLoggedIn ) clearWishList()
+    }, [ isLoggedIn])
 
     return (
     <>

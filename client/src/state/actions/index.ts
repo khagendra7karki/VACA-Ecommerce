@@ -27,6 +27,11 @@ interface WishListRemoveItemAction {
   payload: any;
 }
 
+interface WishListClearItemsAction {
+  type: ActionType.WISHLIST_CLEAR_ITEMS;
+  payload?: any;
+}
+
 interface CartSaveShippingAction {
   type: ActionType.CART_SAVE_SHIPPING_ITEM;
   payload: any;
@@ -39,7 +44,7 @@ interface CartSavePaymentAction {
 
 interface CartClearItemsAction {
   type: ActionType.CART_CLEAR_ITEMS;
-  payload: any;
+  payload?: any;
 }
 
 interface GetProductsRequestAction {
@@ -347,6 +352,7 @@ export type Action =
   | WishListSetAction
   | WishListAddItemAction
   | WishListRemoveItemAction
+  | WishListClearItemsAction
   | CartSaveShippingAction
   | CartSavePaymentAction
   | CartClearItemsAction
