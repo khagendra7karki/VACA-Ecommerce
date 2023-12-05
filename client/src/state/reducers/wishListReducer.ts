@@ -11,32 +11,22 @@ const wishListReducer = (
   action: Action
 ) => {
   switch (action.type) {
+    
     case ActionType.WISHLIST_SET:
-      const cartItems = action.payload;
+      const wishListItem = action.payload;
       return { 
         ...state,
-        wishListItems: [ ...cartItems ]
+        wishListItems: wishListItem
       }
+
     case ActionType.WISHLIST_ADD_ITEM:
       const item = action.payload;
 
-      let existItem: any = state.wishListItems.find(
-        (x: any) => x.product === item.product
-      );
+      return {
+        ...state,
+        wishListItems: [...state.wishListItems, item],
+      };
 
-      if (existItem) {
-        return {
-          ...state,
-          cartItems: state.wishListItems.map((x: any) =>
-            x.product === existItem.product ? item : x
-          ),
-        };
-      } else {
-        return {
-          ...state,
-          wishListItems: [...state.wishListItems, item],
-        };
-      }
     case ActionType.WISHLIST_REMOVE_ITEM:
       return {
         ...state,
@@ -44,7 +34,8 @@ const wishListReducer = (
           (x: any) => x.product !== action.payload
         ),
       };
-    default:
+
+      default:
       return state;
   }
 };

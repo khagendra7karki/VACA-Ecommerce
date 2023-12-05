@@ -13,26 +13,28 @@ import createNewUser from "../../firebase/createNewUser";
 */
 export const getWishList= () => {
   return async (dispatch: Dispatch<Action>, getState: any) => {
-    
-    const { isLoggedIn } = store.getState().userLogin;
-    
-    if( !isLoggedIn ) return  
-    
-    const token = store.getState().user.userInfo.token;
-    const config = {
-      headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      };
+    try{
+      const { isLoggedIn } = store.getState().userLogin;
       
-      const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/cart/getItem`, config);
-      console.log( ' car items \n',data.payload )
+      if( !isLoggedIn ) return  
       
-      dispatch({
-        type: ActionType.CART_SET,
-      payload: data.payload
-    })
+      const token = store.getState().user.userInfo.token;
+      const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        };
+        
+        const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/cart/getItem`, config);
+        
+        dispatch({
+          type: ActionType.CART_SET,
+        payload: data.payload
+      })
+    }catch( error ){
+      //for errors
+    }
     
   };
 };
@@ -47,49 +49,69 @@ export const getWishList= () => {
  */
 export const addToWishList = (id: string) => {
   return async (dispatch: Dispatch<Action>, getState: any) => {
+    try{
+      const { isLoggedIn } = store.getState().userLogin;
       
-    const { isLoggedIn } = store.getState().userLogin;
-    
-    if( !isLoggedIn ) return 
-    
-    const token = store.getState().user.userInfo.token;
-    
-    const config = {
-      headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      };
+      if( !isLoggedIn ) return 
+      
+      const token = store.getState().user.userInfo.token;
+      
+      const existItem = store.getState().wishList.wishListItems.find(
+        (x: any ) => x.product == id
+      )
+  
+      if( existItem ){
+        // notify
+  
+        return
+      }
+  
+      const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        };
+  
+      const { data } = await axios.post(`${process.env.REACT_APP_API_URL}/wishList/addItem/${id}`,{},config );
+  
+      dispatch({
+        type: ActionType.WISHLIST_ADD_ITEM,
+        payload: data.payload
+      })
 
-    const { data } = await axios.post(`${process.env.REACT_APP_API_URL}/wishList/addItem/${id}`,{},config );
-    console.log( ' car items \n',data.payload )
+    }catch( error ){
 
-    dispatch({
-      type: ActionType.WISHLIST_SET,
-      payload: data.payload
-    })
+    }
+      
     
   };
 };
 
 export const removeFromWishList = (id: string) => {
   return async (dispatch: Dispatch<Action>, getState: any) => {
-    const token = store.getState().user.userInfo.token;
 
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    };
-    
-    const { data } = await axios.delete(`${process.env.REACT_APP_API_URL}/wishList/removeItem/${id}`,config );
-    console.log( data.payload );
-    
-    dispatch({
-      type: ActionType.WISHLIST_SET,
-      payload: data.payload,
-    });
+    try {
+      
+      const token = store.getState().user.userInfo.token;
+  
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      
+      const { data } = await axios.delete(`${process.env.REACT_APP_API_URL}/wishList/removeItem/${id}`,config );
+      
+      dispatch({
+        type: ActionType.WISHLIST_SET,
+        payload: data.payload,
+      });
+
+    } catch (error) {
+      
+    }
   };
 };
 
@@ -101,25 +123,30 @@ export const removeFromWishList = (id: string) => {
 export const getCart = () => {
   return async (dispatch: Dispatch<Action>, getState: any) => {
 
-    const { isLoggedIn } = store.getState().userLogin;
+    try {
+      
+      const { isLoggedIn } = store.getState().userLogin;
+  
+      if( !isLoggedIn ) return  
+  
+      const token = store.getState().user.userInfo.token;
+      const config = {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        };
+  
+      const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/cart/getItem`, config);
+  
+      dispatch({
+        type: ActionType.CART_SET,
+        payload: data.payload
+      })
 
-    if( !isLoggedIn ) return  
-
-    const token = store.getState().user.userInfo.token;
-    const config = {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      };
-
-    const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/cart/getItem`, config);
-    console.log( ' car items \n',data.payload )
-
-    dispatch({
-      type: ActionType.CART_SET,
-      payload: data.payload
-    })
+    } catch (error) {
+      
+    }
 
   };
 };
@@ -134,65 +161,88 @@ export const getCart = () => {
  */
 export const addToCart = (id: string, qty: number) => {
   return async (dispatch: Dispatch<Action>, getState: any) => {
-    
-    const token = store.getState().user.userInfo.token;
 
-    const config = {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
+    try {
+      const token = store.getState().user.userInfo.token;
+      if (!token ) return 
+  
+      const config = {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
       };
-
-    const { data } = await axios.post(`${process.env.REACT_APP_API_URL}/cart/addItem/${id}/${qty}`,{},config );
-    console.log( ' car items \n',data.payload )
-
-    dispatch({
-      type: ActionType.CART_SET,
-      payload: data.payload
-    })
+  
+      let existItem: any = store.getState().cart.cartItems.find( 
+        ( x: any ) => x.product == id
+      )
+      if( existItem ){
+        //notify
+  
+        return
+      }
+  
+      const { data } = await axios.post(`${process.env.REACT_APP_API_URL}/cart/addItem/${id}/${qty}`,{},config );
+      dispatch({
+        type: ActionType.CART_ADD_ITEM,
+        payload: data.payload
+      })
+      
+    } catch (error) {
+      
+    }
+    
 
   };
 };
 
 export const removeFromCart = (id: string) => {
   return async (dispatch: Dispatch<Action>, getState: any) => {
-    const token = store.getState().user.userInfo.token;
+    try{
+      const token = store.getState().user.userInfo.token;
+  
+      const config = {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        };
+      
+      const { data } = await axios.post(`${process.env.REACT_APP_API_URL}/cart/removeItem/${id}`,{},config );
+  
+      dispatch({
+        type: ActionType.CART_SET,
+        payload: data.payload,
+      });
+      
+    }catch( error ){
 
-    const config = {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      };
-    
-    const { data } = await axios.post(`${process.env.REACT_APP_API_URL}/cart/removeItem/${id}`,{},config );
-    console.log( data.payload );
-
-    dispatch({
-      type: ActionType.CART_SET,
-      payload: data.payload,
-    });
+    }
   };
 };
 
 export const updateCart = ( id: string, qty : number ) =>{
-    return async (dispatch: Dispatch<Action>, getState: any) => {
-    const token = store.getState().user.userInfo.token;
-
-    const config = {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-    };
+  return async (dispatch: Dispatch<Action>, getState: any) => {
+    try {
+      const token = store.getState().user.userInfo.token;
   
-    const { data } = await axios.post(`${process.env.REACT_APP_API_URL}/cart/updateItem/${id}/${qty}`,{},config );
-
-    dispatch({
-      type: ActionType.CART_SET,
-      payload: data.payload,
-    });
+      const config = {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+      };
+    
+      const { data } = await axios.post(`${process.env.REACT_APP_API_URL}/cart/updateItem/${id}/${qty}`,{},config );
+  
+      dispatch({
+        type: ActionType.CART_SET,
+        payload: data.payload,
+      });
+      
+    } catch (error) {
+      
+    }
 
   };
 
@@ -200,6 +250,7 @@ export const updateCart = ( id: string, qty : number ) =>{
 
 export const saveShippingAddress = (data: any) => {
   return async (dispatch: Dispatch<Action>) => {
+    
     dispatch({
       type: ActionType.CART_SAVE_SHIPPING_ITEM,
       payload: data,
@@ -248,7 +299,6 @@ export const quickSearchProducts = (keyword: number) => {
       const { data } = await axios.get(
         `${process.env.REACT_APP_API_URL}/product/getProducts/search?keyword=${keyword}`
       );
-      console.log(data.payload, data , "csdjbsefbvjh")
       dispatch({
         type: ActionType.QUICK_SEARCH_SUCCESS,
         payload: data.payload,
@@ -317,7 +367,6 @@ export const addReview = (id: string, rating: number, comment: string) => {
         {   productId: id , review: reviewObject },
         config
       );
-      console.log('From data review', data.payload )
       dispatch({
         type: ActionType.ADD_REVIEW_SUCCESS,
         payload:data.payload 
@@ -354,8 +403,6 @@ export const register = (fullName: string, email: string, password: string) => {
         const { uid, email, accessToken } = userCredential
         const user = { fullName, uid, email, password, accessToken }
 
-        console.log( user );
-        
         axios.post(`${process.env.REACT_APP_API_URL}/user/registerUser`, user , config)
         .then( res =>{
           console.log( 'Payload', res.data.payload )
@@ -437,7 +484,6 @@ export const login = (email: string, password: string) => {
 
     } catch (error: any) {
 
-      console.log( error )
       dispatch({
         type: ActionType.USER_LOGIN_FAIL,
         payload: error,
@@ -480,7 +526,6 @@ export const createOrder = (
         totalPrice,
       };
 
-      console.log(formData)
       const { data } = await axios.post(`${process.env.REACT_APP_API_URL}/order`, formData, config);
 
  
@@ -532,7 +577,6 @@ export const getOrder = (id: any) => {
 export const payOrder = (id: any, paymentResult: any) => {
   return async (dispatch: Dispatch<Action>, getState: any) => {
     try {
-      console.log( id )
       dispatch({
         type: ActionType.ORDER_PAY_REQUEST,
       });

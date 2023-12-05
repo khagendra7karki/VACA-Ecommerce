@@ -37,7 +37,8 @@ const wishListController= {
 
             if( !user ) return res.status(500).json({ status:'unsuccessful', task: 'addItem', reason: 'Internal Error'})
 
-            return res.status(200).json({status: 'successful', task: 'addItem', payload: user.wishList })
+            return res.status(200).json({status: 'successful', task: 'addItem', payload: user.wishList.at(-1) })
+
         }
         catch( error ){
             console.log('Error while pushing item to cart', error );

@@ -22,7 +22,7 @@ import {
   Text,
 } from "@mantine/core";
 import classes from "./product.module.css";
-import { useNavigate } from "react-router-dom";
+import { ScrollRestoration, useNavigate } from "react-router-dom";
 import { useParams } from "react-router";
 import { bindActionCreators } from "redux";
 import { actionCreators, State } from "../../state";
@@ -39,7 +39,6 @@ const Product = () => {
   const navigate = useNavigate();
   const numRef = useRef(null);
   const [openSidebar, { open, close }] = useDisclosure(false);
-  const [image, setImage] = useState<string>();
   const [opened, setOpened] = useState(false);
   const [selectedItem, setSelectedItem] = useState("");
   const params = useParams();
@@ -134,6 +133,7 @@ const Product = () => {
 
   return (
     <>
+      <ScrollRestoration />
       {loading ? (
         <Loading />
       ) : (

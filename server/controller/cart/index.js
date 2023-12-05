@@ -38,14 +38,15 @@ const cartController = {
             const { id , qty } = req.params;
             //find the product from the database
             let product = await Product.findById( id ).lean()
-
+            
+            let cartObject = { product: product._id, price: product.price, title: product.title, image: product.images[0], quantity: qty }
             let user = await User.findByIdAndUpdate(userId, {
-                $push: { "cart": { product: product._id, price: product.price, title: product.title, image: product.images[0], quantity: qty } }
+                $push: { "cart": cartObject }
             }, { new: true }).lean();
 
             if( !user ) return res.status(500).json({ status:'unsuccessful', task: 'addItem', reason: 'Internal Error'})
 
-            return res.status(200).json({status: 'successful', task: 'addItem', payload: user.cart })
+            return res.status(200).json({status: 'successful', task: 'addItem', payload: user.cart.at(-1) })
         }
         catch( error ){
             console.log('Error while pushing item to cart', error );
