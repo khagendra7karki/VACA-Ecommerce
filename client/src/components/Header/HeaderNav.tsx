@@ -28,7 +28,7 @@ export default function HeaderNav(){
       { link : '/wishlist', label: 'Wish List', onClick: handleLinkClick}
     ];
     const [ links, setLinks ] = useState( initialLinks )
-    const [ selected, setSelected ] = useState<string>('Home');
+    const [ selected, setSelected ] = useState<string>('');
 
     useEffect( () =>{
       if( isLoggedIn )

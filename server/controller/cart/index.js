@@ -16,7 +16,7 @@ const cartController = {
             const userId = res.locals.user._id;
             let result = await User.aggregate([
                 {$match: {_id: new mongoose.Types.ObjectId(userId) } },
-                {$project: { cart : 1, _id: 0}},                
+                {$project: { cart : 1, _id: 0}},  
             ])
             return res.status( 200 ).json({ status: 'successful', task: 'getItem', payload: result[0].cart })
 
@@ -42,8 +42,9 @@ const cartController = {
             let cartObject = { product: product._id, price: product.price, title: product.title, image: product.images[0], quantity: qty }
             let user = await User.findByIdAndUpdate(userId, {
                 $push: { "cart": cartObject }
-            }, { new: true }).lean();
+            }, { new: true }).populate('cart.product', 'availableQuantity').lean();
 
+            console.log( user )
             if( !user ) return res.status(500).json({ status:'unsuccessful', task: 'addItem', reason: 'Internal Error'})
 
             return res.status(200).json({status: 'successful', task: 'addItem', payload: user.cart.at(-1) })

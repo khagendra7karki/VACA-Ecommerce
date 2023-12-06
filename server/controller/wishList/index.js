@@ -33,7 +33,7 @@ const wishListController= {
 
             let user = await User.findByIdAndUpdate(userId, {
                 $push: { "wishList": { product: product._id, price: product.price, title: product.title, image: product.images[0] } }
-            }, { new: true }).lean();
+            }, { new: true }).populate('wishList.product', 'availableQuantity').lean();
 
             if( !user ) return res.status(500).json({ status:'unsuccessful', task: 'addItem', reason: 'Internal Error'})
 

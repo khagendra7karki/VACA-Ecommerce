@@ -8,7 +8,7 @@ productRouter.get('/getProducts', productController.getProducts)
 productRouter.get('/getProduct/:id', productController.getProductByIdWithReview )
 productRouter.get('/getProducts/search', productController.getProductsForSearch )
 productRouter.get('/getTopProducts', productController.getTopProducts )
-
+productRouter.get('/getLatestProducts', productController.getLatestProducts )
 
 //
 // Yet to be tested 

@@ -110,6 +110,15 @@ const productController = {
         }
 
     },
+    getLatestProducts : async( req, res ) => {
+        try{
+            const result = await productSchema.find({}).sort({ createdAt: -1}).limit( 20 ).lean()
+            res.status(200).json({ task: 'createProduct', status: 'successful', payload: result })
+        }catch( error ){
+            console.log ( error )
+            return res.status( 500 ).json( { task: 'createProduct',status: 'unsuccessful',  reason: error })
+        }
+    },
 
     getProductsForSearch : async(req, res) => {
         try{

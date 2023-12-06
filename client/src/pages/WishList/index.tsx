@@ -98,7 +98,7 @@ export default function WishList( ) {
                             radius="lg"
                             variant="filled"
                             color="#DB4444"
-                            onClick={() => selectItem(item.product)}
+                            onClick={() => selectItem(item.product._id)}
                             fullWidth
                         >
                             <BiTrashAlt />
@@ -119,7 +119,7 @@ export default function WishList( ) {
                     </Grid.Col>
                     <Grid.Col span={3}> Rs. {item.price}</Grid.Col>
                     <Grid.Col span={3}>
-                        { item.availableQuantity > 0 ? 'In Stock'  : "Out of Stock" }
+                        { item.product.availableQuantity > 0 ? 'In Stock'  : "Out of Stock" }
                     </Grid.Col>
                 </Grid>
                 <Divider mb={20} />
@@ -131,8 +131,7 @@ export default function WishList( ) {
             {" "}
             <Alert
                 icon={<RiShoppingBagLine size={16} />}
-                style={{ marginTop: "1rem" }}
-                color="blue"
+                style={{ marginTop: "1rem" , background: 'white'}}
                 radius="lg"
             >
                 No items added to Wish List

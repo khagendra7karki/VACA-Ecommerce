@@ -106,7 +106,7 @@ const Cart = () => {
                     </Button>
                   </div>
                 </Modal>
-                <Container fluid h='100%' style={{borderStyle:'solid', borderWidth:'1px', borderColor:'grey'}} mb={10}>
+                <Container fluid h='100%' mb={10}>
      
    
                 <Grid gutter={{ base: 5, xs: "md", md: "xl", xl: 50 }} my={20}>
@@ -121,7 +121,7 @@ const Cart = () => {
                           radius="md"
                           variant="subtle"
                           color="#DB4444"
-                          onClick={() => selectItem(item.product)}
+                          onClick={() => selectItem(item.product._id)}
                         >
                         <BiTrashAlt size={15} style ={{margin:"auto"}} />
                         </Button> </Group>
@@ -130,13 +130,15 @@ const Cart = () => {
                       </Grid.Col>
                       <Grid.Col span={{ base: 12, md: 6, lg: 3 }}>
                         {" "}
-                        <Group justify="center"> <Image
-                          fit="contain"
-                          radius="sm"
-                          height={50}
-                          width={50}
-                          src={item.image}
-                        /> </Group>
+                        <Group justify="center"> 
+                          <Image
+                            fit="contain"
+                            radius="sm"
+                            height={60}
+                            width={60}
+                            src={item.image}
+                          />
+                        </Group>
                        
                       </Grid.Col>
                       <Grid.Col span={{ base: 12, md: 6, lg: 7 }}>
@@ -153,11 +155,11 @@ const Cart = () => {
                       value={item.quantity}
                       ref={numRef}
                       onChange={(e) => {
-                        handlerUpdateCartItems(e as number, item.product);
+                        handlerUpdateCartItems(e as number, item.product._id);
                       }}
                       min={1}
                       //max={item.countInStock}
-                      max={5}
+                      max={item.availableQuantity}
                       required
                     /></Group>
                    
@@ -174,8 +176,7 @@ const Cart = () => {
             {" "}
             <Alert
               icon={<RiShoppingBagLine size={16} />}
-              style={{ marginTop: "1rem" }}
-              color="blue"
+              style={{ marginTop: "1rem", background: 'white' }}
               radius="lg"
             >
               No items in the cart
