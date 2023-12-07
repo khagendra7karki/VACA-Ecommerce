@@ -14,11 +14,8 @@ const cartController = {
     getItem: async ( req, res ) =>{
         try{
             const userId = res.locals.user._id;
-            let result = await User.aggregate([
-                {$match: {_id: new mongoose.Types.ObjectId(userId) } },
-                {$project: { cart : 1, _id: 0}},  
-            ])
-            return res.status( 200 ).json({ status: 'successful', task: 'getItem', payload: result[0].cart })
+            let result = await User.findById(userId, {cart: 1, _id: 0}).populate( 'cart.product', 'availableQuantity').lean()
+            return res.status( 200 ).json({ status: 'successful', task: 'getItem', payload: result.cart })
 
         }catch( error ){
             console.log('Error while getting getItem', error );

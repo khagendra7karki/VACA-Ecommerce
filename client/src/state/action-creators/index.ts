@@ -28,10 +28,11 @@ export const getWishList= () => {
           },
         };
         
-        const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/cart/getItem`, config);
+        const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/wishList/getItem`, config);
+        // console.log( data.payload )
         
         dispatch({
-          type: ActionType.CART_SET,
+          type: ActionType.WISHLIST_SET,
         payload: data.payload
       })
     }catch( error ){

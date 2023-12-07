@@ -40,7 +40,7 @@ const productController = {
                 product.description = req.body.description
                 product.price = req.body.price
                 product.category = req.body.category
-                product.image = req.body.image
+                product.images = req.body.images
 
                 const updatedProduct = await product.save()
                 res.send(updatedProduct)

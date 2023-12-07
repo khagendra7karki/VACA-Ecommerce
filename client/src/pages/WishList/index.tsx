@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 import { actionCreators, State } from "../../state";
@@ -23,19 +23,20 @@ export default function WishList( ) {
     const { wishListItems } = useSelector((state: State) => state.wishList);
     const { isLoggedIn } = useSelector( (state: State) => state.userLogin )
     const { getWishList, removeFromWishList, clearWishList } = bindActionCreators(
-    actionCreators,
-    dispatch
+        actionCreators,
+        dispatch
     );
 
 
     const selectItem = (id: string) => {
         setOpened(true);
+        console.log( id )
         setSelectedItem(id);
     };
 
     const handlerDeleteCartItem = (id: string) => {
         setOpened(false);
-        console.log(id);
+        // console.log( id )
         removeFromWishList(id);
     };
 
@@ -67,7 +68,7 @@ export default function WishList( ) {
                     opened={opened}
                 >
                     <Text size="sm">
-                    Are you sure that you want to remove this item?
+                        Are you sure that you want to remove this item?
                     </Text>
                     <div className="button-container">
                     <Button

@@ -8,11 +8,11 @@ const wishListController= {
     getItem: async ( req, res ) =>{
         try{
             const userId = res.locals.user._id;
-            let result = await User.aggregate([
-                {$match: {_id: new mongoose.Types.ObjectId(userId) } },
-                {$project: { wishList : 1, _id: 0}},                
-            ])
-            return res.status( 200 ).json({ status: 'successful', task: 'getItem', payload: result[0].wishList })
+            let result = await User.findById(userId, {wishList: 1, _id: 0})
+            .populate( 'wishList.product', 'availableQuantity')
+            .lean()
+            
+            return res.status( 200 ).json({ status: 'successful', task: 'getItem', payload: result.wishList })
 
         }catch( error ){
             console.log('Error while getting getItem', error );
@@ -30,10 +30,16 @@ const wishListController= {
             const { id } = req.params;
             //find the product from the database
             let product = await Product.findById( id ).lean()
-
+            let productObject = { product: product._id, price: product.price,
+                                 title: product.title, 
+                                 image: product.images[0] }
+                                 
             let user = await User.findByIdAndUpdate(userId, {
-                $push: { "wishList": { product: product._id, price: product.price, title: product.title, image: product.images[0] } }
-            }, { new: true }).populate('wishList.product', 'availableQuantity').lean();
+                $push: { "wishList": productObject }
+            }, 
+            { new: true })
+            .populate('wishList.product', 'availableQuantity')
+            .lean();
 
             if( !user ) return res.status(500).json({ status:'unsuccessful', task: 'addItem', reason: 'Internal Error'})
 
