@@ -18,12 +18,12 @@ import {
 } from "react-icons/bs";
 import { useParams } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
-import { actionCreators, State } from "../state";
+import { actionCreators, State } from "../../state";
 import { bindActionCreators } from "redux";
 import { useEffect } from "react";
 
 
-import { ActionType } from "../state/action-types";
+import { ActionType } from "../../state/action-types";
 
 const Order = () => {
   const params = useParams();

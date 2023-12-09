@@ -13,10 +13,10 @@ import { store } from "./state/index";
 import Cart from './pages/Cart/Cart';
 import Product from './pages/Product/Product';
 import app from './firebase';
-import Shipping from './pages/Shipping';
-import Payment from './pages/Payment';
-import PlaceOrder from './pages/PlaceOrder';
-import Order from './pages/Order';
+import Shipping from './pages/Checkout/Shipping';
+import Payment from './pages/Checkout/Payment';
+import PlaceOrder from './pages/Checkout/PlaceOrder';
+import Order from './pages/Checkout/Order';
 import { ContactUs } from './pages/Contact/ContactUs';
 import User from './pages/User';
 import UserProfile from './pages/User/UserProfile';
@@ -26,6 +26,8 @@ import MyReviews from './pages/User/MyReviews';
 import Layout from './components/Layout/Layout';
 import Test from './pages/Test';
 import WishList from './pages/WishList';
+import EsewaSuccess from './pages/Checkout/Payment/Esewa/EsewaSuccess';
+import EsewaFailed from './pages/Checkout/Payment/Esewa/EsewaFailed';
 
 
 const CONTAINER_SIZES: Record<string, string> = {
@@ -96,7 +98,8 @@ function App() {
                 <Route path="/payment" element={<Payment />} />
                 <Route path="/placeorder" element={<PlaceOrder />} />
                 <Route path="/order/:order" element={<Order />} />
-
+                <Route path = 'esewa_payment_success' element = { <EsewaSuccess /> } />
+                  <Route path = 'esewa_payment_failed' element = { <EsewaFailed /> } />
 
                 {/* User Routes */}
                 
@@ -109,6 +112,7 @@ function App() {
                   <Route path = 'myReviews' element = { <MyReviews /> } />
                   <Route path = 'myWishlist' element = { <MyWishList /> } />
                   <Route path = 'myCart' element = { <MyCart /> } />
+                 
 
                   
                 </Route>

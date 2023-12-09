@@ -15,7 +15,7 @@ await db.connectDB( URI )
 const PORT  = process.env.PORT 
 const app = express()
 
-
+app.use(express.urlencoded({ extended: true }));
 app.use(cors())
 
 app.use(express.json())

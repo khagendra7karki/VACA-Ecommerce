@@ -18,6 +18,8 @@ import wishListRouter from './wishList/index.js'
 
 import reviewRouter from './review/index.js'
 
+import esewaRouter from './esewa.js'
+
 // import adminRoutes from './admin/index.js'
 
 
@@ -35,6 +37,8 @@ router.use('/order', orderRouter );
 
 //cart routes
 router.use('/cart', cartRouter );
+
+router.use('/payment', esewaRouter );
 
 //wishList routes
 router.use('/wishList', wishListRouter );

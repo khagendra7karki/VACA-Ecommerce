@@ -7,10 +7,10 @@ import {
   Button,
 } from "@mantine/core";
 import { useNavigate } from "react-router";
-import Steps from "../components/Steps";
+import Steps from "../../components/Steps";
 
 import { bindActionCreators } from "redux";
-import { actionCreators } from "../state";
+import { actionCreators } from "../../state";
 import { useDispatch } from "react-redux";
 
 const Payment = () => {
