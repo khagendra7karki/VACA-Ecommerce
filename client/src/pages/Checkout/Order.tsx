@@ -37,12 +37,13 @@ const Order = () => {
 
 
   useEffect(() => {
-    getOrder(params.order);
+    console.log(params.order as string)
+    getOrder(params.order as string);
     if (success) {
       dispatch({ type: ActionType.CART_CLEAR_ITEMS });
     }
     // eslint-disable-next-line
-  }, [dispatch,order, success]);
+  }, [dispatch,params, success]);
 
   return (
     <>

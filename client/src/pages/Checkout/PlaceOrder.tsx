@@ -8,13 +8,7 @@ import { actionCreators, State } from "../../state";
 
 import { bindActionCreators } from "redux";
 import { useEffect } from "react";
-
-import sha256 from 'crypto-js/sha256';
-import hmacSHA512 from 'crypto-js/hmac-sha512';
-import Base64 from 'crypto-js/enc-base64';
-
 import CryptoJS from "crypto-js";
-import { v4 as uuidv4 } from 'uuid';
 // interface params {
 //   amt: number;
 //   psc: number;
@@ -69,24 +63,28 @@ const PlaceOrder = () => {
       shippingPrice,
       totalPrice,
       paymentMethod
-    );
+    )
+    
+
+
   };
   useEffect(() => {
     if (Object.keys(orderCreate).length) {
-      navigate(`/order/${orderCreate._id}`);
+      // navigate(`/order/${orderCreate._id}`);
+      esewaCall()
     }
+    
     // eslint-disable-next-line
-  }, [orderCreate]);
+  }, [dispatch,orderCreate]);
 
   const esewaCall = () => {
-    const uuid = uuidv4()
+    console.log(orderCreate, "cjsdn")
+    
 
-    const Message = `total_amount=100,transaction_uuid=${uuid},product_code=EPAYTEST`
+    const Message = `total_amount=100,transaction_uuid=${orderCreate._id},product_code=EPAYTEST`
     const secret = "8gBm/:&EnhH.1/q"
     var hash = CryptoJS.HmacSHA256(Message, secret);
     var hashInBase64 = CryptoJS.enc.Base64.stringify(hash);
-    console.log(hashInBase64,"5555", hash,"55555555", uuid)
-
     var path = "https://rc-epay.esewa.com.np/api/epay/main/v2/form";
     var params = {
       amount: "100",
@@ -99,7 +97,7 @@ const PlaceOrder = () => {
       success_url: "http://localhost:3000/esewa_payment_success",
       tax_amount: "0",
       total_amount: "100",
-      transaction_uuid: uuid,
+      transaction_uuid: orderCreate._id,
     };
 
     var form = document.createElement("form");
@@ -276,8 +274,8 @@ const PlaceOrder = () => {
         </Grid.Col>
         <Grid.Col span={12}>
           <Button
-            // onClick={() => handlerOrderCreate()}
-            onClick={() => esewaCall()}
+             onClick={() => handlerOrderCreate()}
+            //onClick={() => esewaCall()}
             // loading={createOrderLoading}
             color="dark"
             radius="lg"

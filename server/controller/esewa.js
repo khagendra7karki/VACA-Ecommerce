@@ -26,7 +26,8 @@ const verifyPayment = async (req, res, next) => {
         console.log(body, "cbsadbja");
 
         if (body.status === "COMPLETE") {
-            next()
+            res.json({status : body.status, orderId : transaction_uuid })
+           // next()
         } else {
             return res.status(400).json({error: err.message})
         }
