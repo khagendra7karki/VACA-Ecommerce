@@ -16,7 +16,7 @@ const addOrderItems = asyncHandler(async (req, res) => {
   } = req.body;
 
   const userId = res.locals.user._id
-
+  console.log(req.body)
   if (orderItems && orderItems.length === 0) {
     res.status(400);
     throw new Error("No order items");
@@ -34,7 +34,7 @@ const addOrderItems = asyncHandler(async (req, res) => {
     });
 
     const createdOrder = await order.save();
-
+    console.log(createdOrder)
     res.status(201).json({ status: 'successful', task: 'addOrderItems', payload: createdOrder});
   }
 });

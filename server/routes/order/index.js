@@ -11,7 +11,8 @@ import {
 //import { protect, admin } from "../middleware/authMiddleware";
 import { verificationMiddleware } from '../../middleware/auth/index.js'
 
-orderRouter.route("/").post( verificationMiddleware, addOrderItems).get( verificationMiddleware, getOrders);
+// orderRouter.route("/").post( verificationMiddleware, addOrderItems).get( verificationMiddleware, getOrders);
+orderRouter.route("/").post( verificationMiddleware, addOrderItems)
 orderRouter.route("/myorders").get( verificationMiddleware,  getMyOrders);
 orderRouter.route("/:id").get( verificationMiddleware, getOrderById);
 orderRouter.route("/:id/pay").put( verificationMiddleware, updateOrderToPaid);
