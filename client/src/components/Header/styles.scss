@@ -44,5 +44,25 @@
   text-decoration: 'none';
   color: black;
   font-weight: '500';
-  // padding: '10px';
+}
+
+ul.mobile-nav{
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  z-index: 1000;
+  background-color: #ffff;
+  // transition: all 0.5s ease-out;
+  
+  li{
+    text-align: center;
+    .mobile-nav-item{
+      width: 100%;
+      display: inline-block;
+      text-decoration: none;
+      padding: 12px 0;
+    }
+
+  }
+
 }

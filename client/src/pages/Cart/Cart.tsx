@@ -20,8 +20,6 @@ import {
 } from "@mantine/core";
 import { RiShoppingBagLine } from "react-icons/ri";
 import { BiTrashAlt } from "react-icons/bi";
-import classes from './Cart.module.css'
-import { ActionType } from "../../state/action-types";
 
 const Cart = () => {
   const numRef = useRef(null);
@@ -159,7 +157,7 @@ const Cart = () => {
                       }}
                       min={1}
                       //max={item.countInStock}
-                      max={item.availableQuantity}
+                      max={item.product.availableQuantity}
                       required
                     /></Group>
                    

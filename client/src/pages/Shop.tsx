@@ -9,7 +9,6 @@ export default function Shop() {
   };
   useEffect(() => {
     // Update the document title using the browser API
-    console.log(activePage);
   });
   return (
     <>

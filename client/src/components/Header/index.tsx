@@ -1,5 +1,5 @@
 import React from 'react';
-import { Group, Burger, ListItem, List, Divider, Box } from '@mantine/core';
+import { Group, Burger} from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import './styles.scss';
 import SearchBar from '../SearchBar';
@@ -29,28 +29,23 @@ export function Header() {
             </Link>
           </Group>
           <Group>
-              <Group gap={50} visibleFrom="sm" style={{ flexWrap: 'nowrap' }}>
-                <HeaderNav />
-                <SearchBar />
-              </Group>
+            <Group gap={50} visibleFrom="sm" style={{ flexWrap: 'nowrap' }}>
+              <HeaderNav />
+              <SearchBar />
             </Group>
+          </Group>
         </div>
       </header>
-      {drawerOpened ? (
-            <Box hiddenFrom='sm' style={{zIndex:"10000" , backgroundColor:"#ffffff"}} mt={2}>
-             <Group></Group>
-              <List>
-                <ListItem onClick={closeDrawer}><Link className='linked' to="/">Home</Link></ListItem>
-                <ListItem onClick={closeDrawer}><Link className='linked' to="/contact">Contact</Link></ListItem>
-                <ListItem onClick={closeDrawer}><Link className='linked' to="/cart">Cart</Link></ListItem>
-                <ListItem onClick={closeDrawer}><Link className='linked' to="/wishlist"> Wish List</Link></ListItem>
-                <ListItem onClick={closeDrawer}><Link className='linked' to="/login">Login</Link></ListItem>
-                <ListItem onClick={closeDrawer}><Link className='linked' to="/signup">Sign Up</Link></ListItem>
-              </List>
-            </Box>
-          ) : (
-            <></>
-          )}
+
+        <ul className='mobile-nav' style={{ height: `${ drawerOpened ? '100%' : '0px'}`, overflow: 'hidden'}}>
+          <li><Link className='mobile-nav-item linked' to="/">Home</Link></li>
+          <li><Link className='mobile-nav-item linked' to="/contact">Contact</Link></li>
+          <li><Link className='mobile-nav-item linked' to="/cart">Cart</Link></li>
+          <li><Link className='mobile-nav-item linked' to="/wishlist"> Wish List</Link></li>
+          <li><Link className='mobile-nav-item linked' to="/login">Login</Link></li>
+          <li><Link className='mobile-nav-item linked' to="/signup">Sign Up</Link></li>
+        </ul>
+
     </div>
   );
 }
