@@ -23,7 +23,7 @@ import CryptoJS from "crypto-js";
 
 const PlaceOrder = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+
 
   const { createOrder } = bindActionCreators(actionCreators, dispatch);
 
@@ -78,9 +78,6 @@ const PlaceOrder = () => {
   }, [dispatch,orderCreate]);
 
   const esewaCall = () => {
-    console.log(orderCreate, "cjsdn")
-    
-
     const Message = `total_amount=100,transaction_uuid=${orderCreate._id},product_code=EPAYTEST`
     const secret = "8gBm/:&EnhH.1/q"
     var hash = CryptoJS.HmacSHA256(Message, secret);
@@ -139,10 +136,8 @@ const PlaceOrder = () => {
               >
                 <BsBox size="30" />
                 <Text
-                  c="gray"
                   style={{ marginLeft: "10px" }}
-                  //  weight={500}
-                  size="sm"
+                  size="md"
                 >
                   {shippingAddress.address}, {shippingAddress.city}{" "}
                   {shippingAddress.postalCode}, {shippingAddress.country}

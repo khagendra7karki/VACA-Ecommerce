@@ -204,6 +204,7 @@ export const saveShippingAddress = (data: any) => {
       type: ActionType.CART_SAVE_SHIPPING_ITEM,
       payload: data,
     });
+    localStorage.setItem("shippingAddress", JSON.stringify(data));
 
   };
 };
@@ -453,7 +454,7 @@ export const createOrder = (
   taxPrice: any,
   shippingPrice: any,
   totalPrice: any,
-  paymentMethod: string = "onDelivery",
+  paymentMethod: any ,
 ) => {
   return async (dispatch: Dispatch<Action>) => {
     try {
