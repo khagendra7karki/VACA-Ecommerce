@@ -7,7 +7,7 @@ import HeaderNav from './HeaderNav';
 import { Link } from 'react-router-dom';
 
 export function Header() {
-  const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
+  const [drawerOpened, { toggle: toggleDrawer}] = useDisclosure(false);
 
   return (
     <div>

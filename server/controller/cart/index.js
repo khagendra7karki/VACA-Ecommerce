@@ -63,7 +63,7 @@ const cartController = {
             const { id } = req.params   // product Id
             let user = await User.findByIdAndUpdate(userId, {
                 $pull: {"cart": {"product": id }},
-            },{ new: true }).lean();
+            },{ new: true }).populate('cart.product', 'availableQuantity').lean();
 
             if( !user ) return res.status(500).json({ status:'unsuccessful', task: 'addItem', reason: 'Internal Error'})
 
@@ -91,8 +91,9 @@ const cartController = {
 
             let user = await User.findByIdAndUpdate( userId, 
                 {$set: { "cart.$[inner].quantity": qty }},
-                { arrayFilters: [ {"inner.product" : new mongoose.Types.ObjectId( id ) }], new: true}
-                ).lean()
+                { arrayFilters: [ {"inner.product" : new mongoose.Types.ObjectId( id ) }], new: true},
+                
+                ).populate('cart.product', 'availableQuantity').lean()
             
             res.status( 200 ).json({status: 'successful', task: 'update Cart', payload: user.cart })
         

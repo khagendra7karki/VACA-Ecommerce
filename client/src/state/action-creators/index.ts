@@ -149,7 +149,8 @@ export const getCart = () => {
         };
   
       const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/cart/getItem`, config);
-  
+      
+      console.log( data )
       dispatch({
         type: ActionType.CART_SET,
         payload: data.payload
