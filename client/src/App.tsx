@@ -13,10 +13,10 @@ import { store } from "./state/index";
 import Cart from './pages/Cart/Cart';
 import Product from './pages/Product/Product';
 import app from './firebase';
-import Shipping from './pages/Shipping';
-import Payment from './pages/Payment';
-import PlaceOrder from './pages/PlaceOrder';
-import Order from './pages/Order';
+import Shipping from './pages/Checkout/Shipping';
+import Payment from './pages/Checkout/Payment';
+import PlaceOrder from './pages/Checkout/PlaceOrder';
+import Order from './pages/Checkout/Order';
 import { ContactUs } from './pages/Contact/ContactUs';
 import User from './pages/User';
 import UserProfile from './pages/User/UserProfile';
@@ -26,6 +26,8 @@ import MyReviews from './pages/User/MyReviews';
 import Layout from './components/Layout/Layout';
 import Test from './pages/Test';
 import WishList from './pages/WishList';
+import EsewaSuccess from './pages/Checkout/Payment/Esewa/EsewaSuccess';
+import EsewaFailed from './pages/Checkout/Payment/Esewa/EsewaFailed';
 
 // rest of your imports...
 const CONTAINER_SIZES: Record<string, string> = {
@@ -83,6 +85,8 @@ const router = createBrowserRouter([
       { path: "payment", element: <Payment /> },
       { path: "placeorder", element: <PlaceOrder /> },
       { path: "order/:order", element: <Order /> },
+      { path: "esewa_payment_success", element: <EsewaSuccess /> },
+      { path: "esewa_payment_failed", element: <EsewaFailed /> },
       {
         path: "user/:id",
         element: <User />,

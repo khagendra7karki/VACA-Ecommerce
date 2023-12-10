@@ -1,12 +1,12 @@
 import { Card, Grid, TextInput, Button } from "@mantine/core";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
-import { actionCreators } from ".././state";
+import { actionCreators } from "../../state";
 
 import { bindActionCreators } from "redux";
 
 import { useForm } from "@mantine/form";
-import Steps from "../components/Steps";
+import Steps from "../../components/Steps";
 
 const Shipping = () => {
   const dispatch = useDispatch();

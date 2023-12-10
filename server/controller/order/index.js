@@ -16,7 +16,7 @@ const addOrderItems = asyncHandler(async (req, res) => {
   } = req.body;
 
   const userId = res.locals.user._id
-
+  console.log(req.body)
   if (orderItems && orderItems.length === 0) {
     res.status(400);
     throw new Error("No order items");
@@ -34,7 +34,7 @@ const addOrderItems = asyncHandler(async (req, res) => {
     });
 
     const createdOrder = await order.save();
-
+    console.log(createdOrder)
     res.status(201).json({ status: 'successful', task: 'addOrderItems', payload: createdOrder});
   }
 });
@@ -43,13 +43,16 @@ const addOrderItems = asyncHandler(async (req, res) => {
 // @route   GET /api/orders/:id
 // @access  Private
 const getOrderById = asyncHandler(async (req, res) => {
-  const order = await Order.findById(req.params.id).populate(
+  console.log(req.params.id)
+  const order = await Order.findById(req.params.id)
+  .populate(
     "user",
     "fulName email"
   );
+  console.log(order)
 
   if (order) {
-    res.json(order);
+    res.json({ payload: order});
   } else {
     res.status(404);
     throw new Error("Order not found");
