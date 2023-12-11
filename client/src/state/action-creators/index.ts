@@ -62,7 +62,7 @@ export const addToWishList = (id: string) => {
       const token = store.getState().user.userInfo.token;
       
       const existItem = store.getState().wishList.wishListItems.find(
-        (x: any ) => x.product == id
+        (x: any ) => x.product._id == id
       )
   
       if( existItem ){
@@ -185,7 +185,7 @@ export const addToCart = (id: string, qty: number) => {
       };
   
       let existItem: any = store.getState().cart.cartItems.find( 
-        ( x: any ) => x.product == id
+        ( x: any ) => x.product._id == id
       )
       if( existItem ){
         //notify

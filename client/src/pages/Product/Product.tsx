@@ -366,7 +366,7 @@ const Product = () => {
                       value={item.quantity}
                       ref={numRef}
                       onChange={(e) => {
-                        handlerUpdateCartItems(e as number, item.product);
+                        handlerUpdateCartItems(e as number, item.product._id);
                       }}
                       min={1}
                       //max={item.countInStock}
@@ -428,7 +428,7 @@ const Product = () => {
                 color="#DB4444"
                 size="md"
                 fullWidth
-                onClick={() => navigate("/shipping")}
+                onClick={() => navigate("/checkout")}
               >
                 Proceed to Checkout
               </Button>
