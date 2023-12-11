@@ -37,12 +37,10 @@ const Order = () => {
 
 
   useEffect(() => {
-    console.log(params.order as string)
     getOrder(params.order as string);
     if (success) {
       dispatch({ type: ActionType.CART_CLEAR_ITEMS });
     }
-    // eslint-disable-next-line
   }, [dispatch,params, success]);
 
   return (
@@ -161,11 +159,10 @@ const Order = () => {
                           title="Paid"
                           color="green"
                         >
-                          Paid on 23-02-2022.
+                          {order.paidAt }
                         </Alert>
                       ) : (
                         <Alert
-                        //  icon={<BstyleCircleFill />}
                           radius="lg"
                           title="Not Delivered"
                           color="red"
@@ -205,7 +202,7 @@ const Order = () => {
                                 fit="contain"
                                 height={40}
                                 width={40}
-                                src={item.image}
+                                src={item.images[0]}
                               />
                             </Grid.Col>
                             <Grid.Col
@@ -225,7 +222,7 @@ const Order = () => {
                               span={4}
                             >
                               <Text ta="right" size="md">
-                                {item.qty} x ${item.price}
+                                {item.qty} x Rs. {item.price}
                               </Text>
                             </Grid.Col>
                           </Grid>

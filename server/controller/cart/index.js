@@ -41,7 +41,6 @@ const cartController = {
                 $push: { "cart": cartObject }
             }, { new: true }).populate('cart.product', 'availableQuantity').lean();
 
-            console.log( user )
             if( !user ) return res.status(500).json({ status:'unsuccessful', task: 'addItem', reason: 'Internal Error'})
 
             return res.status(200).json({status: 'successful', task: 'addItem', payload: user.cart.at(-1) })
@@ -92,10 +91,10 @@ const cartController = {
             let user = await User.findByIdAndUpdate( userId, 
                 {$set: { "cart.$[inner].quantity": qty }},
                 { arrayFilters: [ {"inner.product" : new mongoose.Types.ObjectId( id ) }], new: true},
-                
+
                 ).populate('cart.product', 'availableQuantity').lean()
             
-            res.status( 200 ).json({status: 'successful', task: 'update Cart', payload: user.cart })
+            res.status( 200 ).json({status: 'successful', task: 'updateItem', payload: user.cart })
         
         }catch( error ){
             
@@ -104,6 +103,26 @@ const cartController = {
             
         }
     
+    },
+
+    /**Clears cart items */
+    clearCartItems: async ( req, res) =>{
+        try{
+            const userId = res.locals.user._id
+            await User.findByIdAndUpdate( userId, 
+                {$set: { "cart": [] }},
+                {new: true}
+            ).lean()
+
+            res.status(200).json({status: 'successful', task: 'clearCartItems'})
+
+            
+        }catch( error ){
+            
+            console.log('Error while clearing cart Items', error );
+            res.status(500).json({ status:'unsuccessful', task: 'addItem', reason: 'Internal Error'})
+            
+        }
     }
 }
 

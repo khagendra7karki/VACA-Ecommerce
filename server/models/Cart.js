@@ -4,7 +4,6 @@ export const cartItemSchema = new Schema({
     product: {
         type: Schema.Types.ObjectId,
         ref: 'Product',
-        unique: true,
     },
 
     title: {

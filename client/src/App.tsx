@@ -13,11 +13,8 @@ import { store } from "./state/index";
 import Cart from './pages/Cart/Cart';
 import Product from './pages/Product/Product';
 import app from './firebase';
-import Shipping from './pages/Checkout/Shipping';
-import Payment from './pages/Checkout/Payment';
-import PlaceOrder from './pages/Checkout/PlaceOrder';
-import Order from './pages/Checkout/Order';
 import { ContactUs } from './pages/Contact/ContactUs';
+import Order from './pages/Order';
 import User from './pages/User';
 import UserProfile from './pages/User/UserProfile';
 import MyWishList from './pages/User/MyWishList';
@@ -28,8 +25,9 @@ import Test from './pages/Test';
 import WishList from './pages/WishList';
 import EsewaSuccess from './pages/Checkout/Payment/Esewa/EsewaSuccess';
 import EsewaFailed from './pages/Checkout/Payment/Esewa/EsewaFailed';
+import AllInOne from './pages/Checkout';
 
-// rest of your imports...
+
 const CONTAINER_SIZES: Record<string, string> = {
   xxs: rem(300),
   xs: rem(400),
@@ -81,10 +79,8 @@ const router = createBrowserRouter([
       { path: "cart", element: <Cart /> },
       { path: "wishlist", element: <WishList /> },
       { path: "product/:id", element: <Product /> },
-      { path: "shipping", element: <Shipping /> },
-      { path: "payment", element: <Payment /> },
-      { path: "placeorder", element: <PlaceOrder /> },
       { path: "order/:order", element: <Order /> },
+      { path: 'checkout', element :<AllInOne />},
       { path: "esewa_payment_success", element: <EsewaSuccess /> },
       { path: "esewa_payment_failed", element: <EsewaFailed /> },
       {

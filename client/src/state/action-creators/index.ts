@@ -150,7 +150,6 @@ export const getCart = () => {
   
       const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/cart/getItem`, config);
       
-      console.log( data )
       dispatch({
         type: ActionType.CART_SET,
         payload: data.payload
@@ -266,28 +265,6 @@ export const clearCart = () =>{
   }
 }
 
-export const saveShippingAddress = (data: any) => {
-  return async (dispatch: Dispatch<Action>) => {
-    
-    dispatch({
-      type: ActionType.CART_SAVE_SHIPPING_ITEM,
-      payload: data,
-    });
-    localStorage.setItem("shippingAddress", JSON.stringify(data));
-
-  };
-};
-
-export const savePaymentMethod = (data: any) => {
-  return async (dispatch: Dispatch<Action>) => {
-    dispatch({
-      type: ActionType.CART_SAVE_PAYMENT_ITEM,
-      payload: data,
-    });
-
-    localStorage.setItem("paymentMethod", JSON.stringify(data));
-  };
-};
 
 export const getProducts = (page: number) => {
   return async (dispatch: Dispatch<Action>) => {
@@ -518,7 +495,7 @@ export const createOrder = (
   taxPrice: any,
   shippingPrice: any,
   totalPrice: any,
-  paymentMethod: any ,
+  paymentMethod: any,
 ) => {
   return async (dispatch: Dispatch<Action>) => {
     try {
@@ -552,6 +529,7 @@ export const createOrder = (
         type: ActionType.CREATE_ORDER_SUCCESS,
         payload: data.payload,
       });
+
     } catch (error: any) {
       dispatch({
         type: ActionType.CREATE_ORDER_FAIL,

@@ -5,8 +5,8 @@ import { Action } from "../actions/index";
 const cartReducer = (
   state = {
     cartItems: [] as Array<any>,
-    shippingAddress: {},
-    paymentMethod: {},
+    loading: {},
+    error: {},
   },
   action: Action
 ) => {
@@ -32,16 +32,6 @@ const cartReducer = (
         ),
       };
       
-    case ActionType.CART_SAVE_SHIPPING_ITEM:
-      return {
-        ...state,
-        shippingAddress: action.payload,
-      };
-    case ActionType.CART_SAVE_PAYMENT_ITEM:
-      return {
-        ...state,
-        paymentMethod: action.payload,
-      };
     case ActionType.CART_CLEAR_ITEMS:
       return {
         ...state,

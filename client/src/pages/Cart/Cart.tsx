@@ -215,7 +215,6 @@ const Cart = () => {
 
           <Grid.Col
             span={{ base: 12, md: 6, lg: 4 }}
-            // style={{ display: "flex", justifyContent: "flex-end" }}
           >
              <div className="subtotal-container">
           <Card radius="lg" shadow="xl" withBorder>
@@ -281,7 +280,7 @@ const Cart = () => {
                 color="#DB4444"
                 size="md"
                 fullWidth
-                onClick={() => navigate("/shipping")}
+                onClick={() => navigate("/checkout")}
               >
                 Proceed to Checkout
               </Button>

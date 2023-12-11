@@ -2,13 +2,14 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { State } from '../../../state'
 import { Link } from 'react-router-dom'
+import './styles.scss';
 
 const UserNavBar = () => {
     const { userInfo } = useSelector( ( state: State ) =>   state.user )
   
   return <>
-    <nav>
-        <ul>
+    <nav className = 'user-nav'>
+        <ul style = {{listStyle: 'none'}}>
             <li> Manage My Account
                 <ul>
                     <li>

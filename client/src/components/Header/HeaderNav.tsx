@@ -41,8 +41,7 @@ export default function HeaderNav(){
 
     return<>
     {
-        links.map((link, index ) => (
-    
+        links.map((link, index ) => (    
             <button 
             key = { index }
             onClick = { (e) => link.onClick( link.link, link.label) }
@@ -50,8 +49,6 @@ export default function HeaderNav(){
             >
             { link.label }
             </button>
-
-            
         ))
     }
     </>

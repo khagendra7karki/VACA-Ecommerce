@@ -4,8 +4,6 @@ const review = new Schema({
     user: {
         type: Schema.Types.ObjectId,
         ref: 'User',
-        unique: true,
-        sparse: true
     },
 
     fullName: {

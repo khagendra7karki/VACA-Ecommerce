@@ -4,8 +4,6 @@ const wishListItem = new Schema({
     product: {
         type: Schema.Types.ObjectId,
         ref: 'Product',
-        unique: true,
-        sparse: true,
     },
 
     title: {
@@ -21,10 +19,6 @@ const wishListItem = new Schema({
         type: String,
         requried: true
     },
-    availableQuantity: {
-        type: Number,
-        required: true
-    },
 
 }, { timestamps: true })
 
@@ -33,8 +27,6 @@ const cartItem = new Schema({
     product: {
         type: Schema.Types.ObjectId,
         ref: 'Product',
-        unique: true,
-        sparse: true,
     },
 
     title: {
@@ -56,10 +48,6 @@ const cartItem = new Schema({
         required: true
     },
     
-    availableQuantity:{
-        type: Number,
-        required: true
-    },
 
 }, { timestamps: true })
 
