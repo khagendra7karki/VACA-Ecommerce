@@ -87,10 +87,12 @@ export function Signup() {
   }
 
   return (
-    <Container fluid h={800} pl={0} ml={0} mb={50}>
+    <Container fluid  pl={0} ml={0} mb={50}>
       <Grid gutter={{ base: 5, xs: "md", md: "xl", xl: 100 }}>
         <Grid.Col span={{ base: 12, md: 12, lg: 8 }}>
-          <Image src={img2} h={781} w="100%" fit="contain" />
+        
+          <Image src={img2} className={classes.imageSize} />
+          
         </Grid.Col>
         <Grid.Col
           span={{ base: 12, md: 12, lg: 4 }}
