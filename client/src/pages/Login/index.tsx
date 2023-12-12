@@ -124,10 +124,10 @@ export default function Signin() {
   };
 
   return (
-    <Container fluid h={800} pl={0} ml={0} mb={50}>
+    <Container fluid  pl={0} ml={0} mb={50}>
       <Grid gutter={{ base: 5, xs: "md", md: "xl", xl: 100 }}>
         <Grid.Col span={{ base: 12, md: 12, lg: 8 }}>
-          <Image src={img1} h={781} w="100%" fit="contain" />
+          <Image src={img1} className={classes.imageSize} />
         </Grid.Col>
         <Grid.Col
           span={{ base: 12, md: 12, lg: 4 }}
@@ -193,12 +193,18 @@ export default function Signin() {
                     <Text fw={500}>Forget Password ? </Text>
                   </Grid.Col>
                 </Grid>
-                <Space h="xl"/>
+                <Space h="xl" />
                 <Text ta="center" size="xs">
                   Or, Login with
                 </Text>
 
-                <Button fullWidth mt="md"  leftSection={<GoogleIcon />}  variant="default" onClick={googleLogin}>
+                <Button
+                  fullWidth
+                  mt="md"
+                  leftSection={<GoogleIcon />}
+                  variant="default"
+                  onClick={googleLogin}
+                >
                   Login With Google
                 </Button>
 
