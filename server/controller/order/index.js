@@ -41,7 +41,6 @@ const addOrderItems = asyncHandler(async (req, res) => {
 // @route   GET /api/orders/:id
 // @access  Private
 const getOrderById = asyncHandler(async (req, res) => {
-  console.log(req.params.id)
   const order = await Order.findById(req.params.id)
   .populate(
     "user",
@@ -74,7 +73,7 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
 
     const updatedOrder = await order.save();
 
-    res.json(updatedOrder);
+    res.status(200).json({payload: updatedOrder});
   } else {
     res.status(404);
     throw new Error("Order not found");

@@ -202,7 +202,7 @@ const Order = () => {
                                 fit="contain"
                                 height={40}
                                 width={40}
-                                src={item.images[0]}
+                                src={item.image}
                               />
                             </Grid.Col>
                             <Grid.Col
@@ -210,7 +210,7 @@ const Order = () => {
                               span={3}
                             >
                               <Text  color="gray" size="md">
-                                {item.name}
+                                {item.title}
                               </Text>
                             </Grid.Col>
                             <Grid.Col

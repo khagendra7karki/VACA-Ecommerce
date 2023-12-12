@@ -33,7 +33,6 @@ const verifyPayment = async (req, res, next) => {
                 $set : { isPaid: true, paidAt: new Date(0)}
             }, {new: true}).lean()
 
-            console.log("order after update \n", newOrder )
             res.json({status : body.status, orderId : transaction_uuid })
            // next()
         } else {
