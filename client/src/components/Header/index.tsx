@@ -5,6 +5,7 @@ import './styles.scss';
 import SearchBar from '../SearchBar';
 import HeaderNav from './HeaderNav';
 import { Link } from 'react-router-dom';
+import MenuProfile from "../profileMenu"
 
 export function Header() {
   const [drawerOpened, { toggle: toggleDrawer}] = useDisclosure(false);
@@ -31,6 +32,7 @@ export function Header() {
           <Group>
             <Group gap={50} visibleFrom="sm" style={{ flexWrap: 'nowrap' }}>
               <HeaderNav />
+              <MenuProfile/>
               <SearchBar />
             </Group>
           </Group>
@@ -45,7 +47,7 @@ export function Header() {
           <li><Link className='mobile-nav-item linked' to="/login">Login</Link></li>
           <li><Link className='mobile-nav-item linked' to="/signup">Sign Up</Link></li>
         </ul>
-
+      
     </div>
   );
 }
