@@ -11,7 +11,7 @@ export function Header() {
   const [drawerOpened, { toggle: toggleDrawer}] = useDisclosure(false);
 
   return (
-    <header className="header" >
+    <header className="header">
       <Group>
         <Group hiddenFrom = 'sm'>
           <Burger opened={drawerOpened} onClick={toggleDrawer} size="sm" hiddenFrom="sm" />
@@ -19,12 +19,12 @@ export function Header() {
         
         <Link to = '/' className = 'logo'>VACA</Link>
 
+        <HeaderNav drawerOpened = {drawerOpened}/>
         <Group visibleFrom = 'sm'>
           <MenuProfile/>
           <SearchBar />
         </Group>
       </Group>
-      <HeaderNav drawerOpened = {drawerOpened}/>
 
     </header>
   );

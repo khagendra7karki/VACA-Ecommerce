@@ -3,7 +3,12 @@
   display: flex;
   flex-direction: row;
 }
+@media ( min-width: 767px){
+  nav{
+    display: block !important;
 
+}
+}
 .logo{
   margin: 0px 30px;
   font-size: 32px;
@@ -31,23 +36,22 @@
   }
 }
   
-  ul.mobile-nav{
+@media ( max-width: 767px ){
+  .link-wraper{
+    display: block;
+    z-index: 99;
+    width: 100%;
     margin: 0;
     padding: 0;
     list-style-type: none;
     background-color: #ffff;
     position: absolute;
-
-    li{
+    .link{
+      width: 100%;
       text-align: center;
-      .mobile-nav-item{
-        width: 100%;
-        display: inline-block;
-        text-decoration: none;
-        padding: 12px 0;
-        color: black;
+      display: inline-block;
+      text-decoration: none;
+      padding: 12px 0;
     }
-
   }
-
 }

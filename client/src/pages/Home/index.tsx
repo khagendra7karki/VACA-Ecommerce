@@ -27,7 +27,7 @@ export default function Home() {
   return (
     <div>
       <Group style={{ flexDirection: "row", flexWrap: "nowrap" }}>
-        <CategoryListText />
+        {/* <CategoryListText /> */}
         <Slider />
       </Group>
       <Group>

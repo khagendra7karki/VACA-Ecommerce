@@ -14,31 +14,31 @@ export default function HeaderNav({drawerOpened } : { drawerOpened: boolean}){
     
 
     return<>
-      <nav>
-        <ul className = {`${drawerOpened ? 'mobile-nav': 'link-wraper'}`}>
+      <nav style = {{ display : `${drawerOpened ? 'block': 'none'}`}}>
+        <ul className = {`link-wraper`}>
           <li>
-            <Link to = '/' className = {`${drawerOpened ? 'mobile-nav-item' : 'link'}`} > Home</Link>
+            <Link to = '/' className = {`link`} > Home</Link>
           </li>
 
           <li>
-            <Link to = '/contact' className = {`${drawerOpened ? 'mobile-nav-item' : 'link'}`} >Contact</Link>
+            <Link to = '/contact' className = {`link`} >Contact</Link>
           </li>
           <li>
-            <Link to = '/cart' className = {`${drawerOpened ? 'mobile-nav-item' : 'link'}`}>Cart</Link>
+            <Link to = '/cart' className = {`link`}>Cart</Link>
           </li>
           <li>
-            <Link to = '/wishlist' className = {`${drawerOpened ? 'mobile-nav-item' : 'link'}`} >Wish List</Link>
+            <Link to = '/wishlist' className = {`link`} >Wish List</Link>
           </li>
 
           <li style = {{display: `${isLoggedIn ? 'block': 'none'}`}}>
-            <button className = {`${drawerOpened ? 'mobile-nav-item' : 'link'}`} onClick = {(e) => logout() } >Logout</button>
+            <button className = {`link`} onClick = {(e) => logout() } >Logout</button>
           </li>
           <li style = {{display: `${isLoggedIn ? 'none': 'block'}`}}>
-            <Link to = '/login' className = {`${drawerOpened ? 'mobile-nav-item' : 'link'}`}>Login</Link>
+            <Link to = '/login' className = {`link`}>Login</Link>
           </li>
 
           <li style = {{display: `${isLoggedIn ? 'none': 'block'}`}}>
-            <Link to = '/signUp' className = {`${drawerOpened ? 'mobile-nav-item' : 'link'}`} >Sign Up</Link>
+            <Link to = '/signUp' className = {`link`} >Sign Up</Link>
           </li>
         </ul>
         
