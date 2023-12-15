@@ -1,3 +1,6 @@
+header{
+  position: relative;
+}
 .link-wraper{
   list-style: none;
   display: flex;
@@ -6,11 +9,10 @@
 @media ( min-width: 767px){
   nav{
     display: block !important;
+}
 
 }
-}
 .logo{
-  margin: 0px 30px;
   font-size: 32px;
   text-decoration: none;
   color: black;
@@ -25,7 +27,6 @@
   text-decoration: none;
   font-weight: 500;
   border: none;
-  position:relative;
   transition: all 0.3s ease-in;
   color: black;
 
@@ -40,6 +41,8 @@
   .link-wraper{
     display: block;
     z-index: 99;
+    left: 0;
+    top: 50px;
     width: 100%;
     margin: 0;
     padding: 0;

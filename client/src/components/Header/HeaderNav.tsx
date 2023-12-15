@@ -14,7 +14,7 @@ export default function HeaderNav({drawerOpened } : { drawerOpened: boolean}){
     
 
     return<>
-      <nav style = {{ display : `${drawerOpened ? 'block': 'none'}`}}>
+      <nav style = {{ marginLeft: 'auto', display : `${drawerOpened ? 'block': 'none'}`}}>
         <ul className = {`link-wraper`}>
           <li>
             <Link to = '/' className = {`link`} > Home</Link>
@@ -23,9 +23,11 @@ export default function HeaderNav({drawerOpened } : { drawerOpened: boolean}){
           <li>
             <Link to = '/contact' className = {`link`} >Contact</Link>
           </li>
+
           <li>
             <Link to = '/cart' className = {`link`}>Cart</Link>
           </li>
+          
           <li>
             <Link to = '/wishlist' className = {`link`} >Wish List</Link>
           </li>
@@ -33,6 +35,7 @@ export default function HeaderNav({drawerOpened } : { drawerOpened: boolean}){
           <li style = {{display: `${isLoggedIn ? 'block': 'none'}`}}>
             <button className = {`link`} onClick = {(e) => logout() } >Logout</button>
           </li>
+
           <li style = {{display: `${isLoggedIn ? 'none': 'block'}`}}>
             <Link to = '/login' className = {`link`}>Login</Link>
           </li>
