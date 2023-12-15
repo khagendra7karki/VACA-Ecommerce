@@ -5,7 +5,7 @@ import { State, actionCreators } from "../../state"
 import './styles.scss'
 
 
-export default function HeaderNav({drawerOpened } : { drawerOpened: boolean}){
+export default function HeaderNav({drawerOpened, toggleDrawer } : { drawerOpened: boolean, toggleDrawer: () => void }){
     const dispatch = useDispatch()
 
     const { logout } = bindActionCreators( actionCreators, dispatch )
@@ -17,31 +17,31 @@ export default function HeaderNav({drawerOpened } : { drawerOpened: boolean}){
       <nav style = {{ marginLeft: 'auto', display : `${drawerOpened ? 'block': 'none'}`}}>
         <ul className = {`link-wraper`}>
           <li>
-            <Link to = '/' className = {`link`} > Home</Link>
+            <Link to = '/' onClick = {toggleDrawer} className = {`link`} > Home</Link>
           </li>
 
           <li>
-            <Link to = '/contact' className = {`link`} >Contact</Link>
+            <Link to = '/contact' onClick = {toggleDrawer} className = {`link`} >Contact</Link>
           </li>
 
           <li>
-            <Link to = '/cart' className = {`link`}>Cart</Link>
+            <Link to = '/cart' onClick = {toggleDrawer} className = {`link`}>Cart</Link>
           </li>
           
           <li>
-            <Link to = '/wishlist' className = {`link`} >Wish List</Link>
+            <Link to = '/wishlist' onClick = {toggleDrawer} className = {`link`} >Wish List</Link>
           </li>
 
           <li style = {{display: `${isLoggedIn ? 'block': 'none'}`}}>
-            <button className = {`link`} onClick = {(e) => logout() } >Logout</button>
+            <button className = {`link`} onClick = {(e) => {toggleDrawer();logout()} } >Logout</button>
           </li>
 
           <li style = {{display: `${isLoggedIn ? 'none': 'block'}`}}>
-            <Link to = '/login' className = {`link`}>Login</Link>
+            <Link to = '/login' onClick = {toggleDrawer} className = {`link`}>Login</Link>
           </li>
 
           <li style = {{display: `${isLoggedIn ? 'none': 'block'}`}}>
-            <Link to = '/signUp' className = {`link`} >Sign Up</Link>
+            <Link to = '/signUp' onClick = {toggleDrawer} className = {`link`} >Sign Up</Link>
           </li>
         </ul>
         

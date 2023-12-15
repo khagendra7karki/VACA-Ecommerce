@@ -21,7 +21,7 @@ export function Header() {
         
         <Link to = '/' className = 'logo'>VACA</Link>
 
-        <HeaderNav drawerOpened = {drawerOpened}/>
+        <HeaderNav drawerOpened = {drawerOpened} toggleDrawer = {toggleDrawer}/>
         <Group visibleFrom = 'md' style = {{flexWrap: 'nowrap'}}>
           <SearchBar />
           {isLoggedIn && <MenuProfile/>}
