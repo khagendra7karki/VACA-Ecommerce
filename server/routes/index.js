@@ -19,6 +19,7 @@ import wishListRouter from './wishList/index.js'
 import reviewRouter from './review/index.js'
 
 import esewaRouter from './esewa.js'
+import adminRouter from './admin/index.js'
 
 // import adminRoutes from './admin/index.js'
 
@@ -45,6 +46,9 @@ router.use('/wishList', wishListRouter );
 
 //review routes
 router.use( '/review', reviewRouter)
+
+// admin routes
+router.use('/admin', adminRouter)
 
 router.route('/*').all( (req, res ) => res.status(400).send() )
 

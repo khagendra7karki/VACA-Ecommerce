@@ -125,6 +125,7 @@ export const clearWishList = () =>{
     dispatch({type: ActionType.WISHLIST_CLEAR_ITEMS})
   }
 }
+
 /**
  * @description - Retrieves user cart from the database
  * 

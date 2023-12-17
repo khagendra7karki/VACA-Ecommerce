@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { bindActionCreators } from "redux";
-
+import actionCreator from '../redux' 
 import {  actionCreators } from "../../../state";
 
 import {
@@ -26,7 +26,7 @@ export default function Login() {
   const dispatch = useDispatch();
 
 
-  const { login } = bindActionCreators(actionCreators, dispatch);
+  const { login } = bindActionCreators( actionCreator, dispatch);
 
 
   const form = useForm({

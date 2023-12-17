@@ -129,8 +129,6 @@ const userController = {
 
             }
  
- 
-
         }catch( error ){
             console.log('An errorr occurred at updateProfile', error )
             return res.status(500).json({status: 'successful', task: 'updateProfile', reason: 'Internal Server Error '})

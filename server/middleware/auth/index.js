@@ -56,9 +56,3 @@ export function verificationMiddleware( req, res, next ){
     res.locals.user = result
     next()
 }
-
-// export function adminAuthMiddleware( req, res, next ){
-//     const idToken = req.header('Authorization').split('Bearer ')[1];
-
-//     cont result = verifgyTo
-// }
