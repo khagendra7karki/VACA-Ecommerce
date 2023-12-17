@@ -14,7 +14,7 @@ const adminController = {
             
             if (!result) throw Error("Wrong Password")
             const token = await createCustomToen( admin, SECRET)
-            res.status(200).send()
+            res.status(200).json({payload: token})
 
         }catch(error){
             console.log("An error occurred ", error);
