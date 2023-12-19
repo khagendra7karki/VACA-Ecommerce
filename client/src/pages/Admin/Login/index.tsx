@@ -1,8 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 import actionCreator from '../redux' 
-import {  actionCreators } from "../../../state";
 
 import {
   Paper,

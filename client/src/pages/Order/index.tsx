@@ -65,11 +65,10 @@ const Order = () => {
                         <BiUser />
                         <Text
                           style={{ marginLeft: "10px" }}
-                          color="gray"
-                        //  weight={500}
+                          c="gray"
                           size="sm"
                         >
-                          {order.user.name}
+                          {order.user.fullName}
                         </Text>
                       </Grid.Col>
                       <Grid.Col
@@ -79,8 +78,7 @@ const Order = () => {
                         <HiOutlineMail />
                         <Text
                           style={{ marginLeft: "10px" }}
-                          color="gray"
-                        //  weight={500}
+                          c="gray"
                           size="sm"
                         >
                           {order.user.email}
@@ -93,8 +91,7 @@ const Order = () => {
                         <BsBox />
                         <Text
                           style={{ marginLeft: "10px" }}
-                          color="gray"
-                        //  weight={500}
+                          c="gray"
                           size="sm"
                         >
                           {order.shippingAddress.address},{" "}
@@ -143,7 +140,7 @@ const Order = () => {
                       <BsCreditCard2Front />
                       <Text
                         style={{ marginLeft: "10px" }}
-                        color="gray"
+                        c="gray"
                         size="sm"
                       >
                         {order.paymentMethod}
@@ -168,9 +165,6 @@ const Order = () => {
                           Not paid yet.
                         </Alert>
                       )}
-
-
-                    
                     </Grid.Col>
                   </Card>
                 </Grid.Col>
@@ -181,9 +175,10 @@ const Order = () => {
               <Grid style={{ marginTop: "10px" }}>
                 <Grid.Col span={12}>
                   {order.orderItems && order.orderItems.length ? (
-                    order.orderItems.map((item: any) => {
+                    order.orderItems.map((item: any, index: number) => {
                       return (
                         <Card
+                          key = {index}
                           style={{ margin: "10px 0" }}
                           padding="sm"
                           withBorder

@@ -5,7 +5,6 @@ import { Group } from "@mantine/core";
 import CategoryListText from "../../components/CategoryListText";
 import "./styles.scss";
 import Reactangle from "../../components/Rectangle";
-import newArrivals from "../../assets/img/newArrivals.png";
 import CountDownTimer from "../../components/CountDown";
 import Categories from "../../components/Categories";
 
@@ -43,6 +42,8 @@ export default function Home() {
         <CountDownTimer targetDate={date} />
       </Group>
       <CardCarousel />
+      <div style={{height: "50px"}}></div>
+
 
       <Group>
         <Reactangle />
@@ -50,6 +51,7 @@ export default function Home() {
       </Group>
       <h1>Browse By Categories</h1>
       <Categories />
+      <div style={{height: "70px"}}></div>
       <Group>
         <Reactangle />
         <h5 className="sub-title">This Month</h5>
@@ -57,15 +59,8 @@ export default function Home() {
       <h1>Best Selling Product</h1>
 
       <CardCarousel />
+      <div style={{height: "70px"}}></div>
 
-      {/* <Group >
-            <Reactangle />
-            <h5 className = 'sub-title'>Featured</h5>
-        </Group>
-        <h1>
-            New Arrival
-        </h1>
-        <img src = {newArrivals } /> */}
     </div>
   );
 }
