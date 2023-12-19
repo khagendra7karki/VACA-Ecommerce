@@ -6,48 +6,28 @@ import SearchBar from '../SearchBar';
 import HeaderNav from './HeaderNav';
 import { Link } from 'react-router-dom';
 import MenuProfile from "../profileMenu"
+import { useSelector } from 'react-redux';
+import { State } from '../../state';
 
 export function Header() {
   const [drawerOpened, { toggle: toggleDrawer}] = useDisclosure(false);
-
+  const { isLoggedIn } = useSelector( (state: State) => state.userLogin)
   return (
-    <div>
-      <header className="header" style={{ borderBottom: '1px solid grey' }}>
-        <div className="inner">
-          <Group>
-            <Burger opened={drawerOpened} onClick={toggleDrawer} size="sm" hiddenFrom="sm" />
-            <Link
-              to="/"
-              style={{
-                fontSize: '32px',
-                textDecoration: 'none',
-                color: 'black',
-                fontWeight: '500',
-                padding: '10px',
-              }}
-            >
-              VACA
-            </Link>
-          </Group>
-          <Group>
-            <Group gap={50} visibleFrom="sm" style={{ flexWrap: 'nowrap' }}>
-              <HeaderNav />
-              <MenuProfile/>
-              <SearchBar />
-            </Group>
-          </Group>
-        </div>
-      </header>
+    <header className="header" style = {{borderBottom: '1px solid grey', padding: '0px 20px'}}>
+      <Group style = {{flexWrap: 'nowrap'}}>
+        <Group hiddenFrom = 'sm'>
+          <Burger opened={drawerOpened} onClick={toggleDrawer} size="sm" hiddenFrom="md" />
+        </Group>
+        
+        <Link to = '/' className = 'logo'>VACA</Link>
 
-        <ul className='mobile-nav' style={{ height: `${ drawerOpened ? '100%' : '0px'}`, overflow: 'hidden'}}>
-          <li><Link className='mobile-nav-item linked' to="/">Home</Link></li>
-          <li><Link className='mobile-nav-item linked' to="/contact">Contact</Link></li>
-          <li><Link className='mobile-nav-item linked' to="/cart">Cart</Link></li>
-          <li><Link className='mobile-nav-item linked' to="/wishlist"> Wish List</Link></li>
-          <li><Link className='mobile-nav-item linked' to="/login">Login</Link></li>
-          <li><Link className='mobile-nav-item linked' to="/signup">Sign Up</Link></li>
-        </ul>
-      
-    </div>
+        <HeaderNav drawerOpened = {drawerOpened} toggleDrawer = {toggleDrawer}/>
+        <Group visibleFrom = 'md' style = {{flexWrap: 'nowrap'}}>
+          <SearchBar />
+          {isLoggedIn && <MenuProfile/>}
+        </Group>
+      </Group>
+
+    </header>
   );
 }

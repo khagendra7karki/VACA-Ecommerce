@@ -13,7 +13,6 @@ import {
   Paper,
   TextInput,
   PasswordInput,
-  Checkbox,
   Button,
   Title,
   Text,
@@ -77,14 +76,6 @@ export default function Signin() {
       email: "",
       password: "",
     },
-    // validate: {
-    //   email: (value) => /^\S+@\S+$/.test(value),
-    //   password: (value) => value.trim().length >= 6,
-    // },
-    // errorMessages: {
-    //   email: "Email is not valid",
-    //   password: "Password is not valid",
-    // },
   });
 
   useEffect(() => {
@@ -167,7 +158,6 @@ export default function Signin() {
                   {...form.getInputProps("password")}
                 />
                 <Divider my="sm" />
-                {/* <Checkbox label="Keep me logged in" mt="xl" size="md" /> */}
                 <Grid>
                   <Grid.Col
                     span={6}
@@ -213,7 +203,6 @@ export default function Signin() {
                   <Anchor
                     underline="hover"
                     onClick={(event) => {
-                      // event.preventDefault()
                       navigate("/signup");
                     }}
                   >

@@ -14,7 +14,6 @@ import {
   BsBox,
   BsCreditCard2Front,
   BsCheckCircleFill,
- // BstyleCircleFill,
 } from "react-icons/bs";
 import { useParams } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
@@ -145,7 +144,6 @@ const Order = () => {
                       <Text
                         style={{ marginLeft: "10px" }}
                         color="gray"
-                      //  weight={500}
                         size="sm"
                       >
                         {order.paymentMethod}
@@ -202,15 +200,15 @@ const Order = () => {
                                 fit="contain"
                                 height={40}
                                 width={40}
-                                src={item.images[0]}
+                                src={item.image}
                               />
                             </Grid.Col>
                             <Grid.Col
                               style={{ display: "flex", alignItems: "center" }}
                               span={3}
                             >
-                              <Text  color="gray" size="md">
-                                {item.name}
+                              <Text  c="gray" size="md">
+                                {item.title}
                               </Text>
                             </Grid.Col>
                             <Grid.Col
@@ -281,7 +279,6 @@ const Order = () => {
           </Grid>
 
           <Group style={{ marginTop: "1rem" }} 
-          //position="right"
           >
           </Group>
         </Card>

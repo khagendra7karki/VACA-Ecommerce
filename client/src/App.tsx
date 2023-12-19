@@ -26,6 +26,7 @@ import WishList from './pages/WishList';
 import EsewaSuccess from './pages/Checkout/Payment/Esewa/EsewaSuccess';
 import EsewaFailed from './pages/Checkout/Payment/Esewa/EsewaFailed';
 import AllInOne from './pages/Checkout';
+import Admin from './pages/Admin';
 
 
 const CONTAINER_SIZES: Record<string, string> = {
@@ -96,9 +97,14 @@ const router = createBrowserRouter([
           { path: "myCart", element: <MyCart /> }
         ]
       },
-      { path: "test", element: <Test /> }
+      { path: "test", element: <Test /> },
     ]
-  }
+  },
+  { path : 'admin',
+    element: <Admin />,
+    children: [
+      // {path: '/', elemen}
+    ]},
 ]);
 
 function App() {

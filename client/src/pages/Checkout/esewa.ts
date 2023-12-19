@@ -11,13 +11,13 @@ export default function esewaCall({total_amount = 0 , tax_amount = 0, product_de
     var path = "https://rc-epay.esewa.com.np/api/epay/main/v2/form";
     var params = {
       amount: `${amount}`,
-      failure_url: "https://google.com",
+      failure_url: `${process.env.REACT_APP_WEBPAGE_URL}/esewa_payment_failed`,
       product_delivery_charge: `${product_delivery_charge}`,
       product_service_charge: `${product_service_charge}`,
       product_code: "EPAYTEST",
       signature: hashInBase64,
       signed_field_names: "total_amount,transaction_uuid,product_code",
-      success_url: "http://localhost:3000/esewa_payment_success",
+      success_url: `${process.env.REACT_APP_WEBPAGE_URL}/esewa_payment_success`,
       tax_amount: `${tax_amount}`,
       total_amount: `${total_amount}`,
       transaction_uuid: orderCreate._id,

@@ -1,55 +1,50 @@
 import { useDispatch, useSelector } from "react-redux"
-import { useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { bindActionCreators } from "redux"
 import { State, actionCreators } from "../../state"
-import { useEffect, useState } from "react"
 import './styles.scss'
 
 
-export default function HeaderNav(){
-    const navigate = useNavigate()
+export default function HeaderNav({drawerOpened, toggleDrawer } : { drawerOpened: boolean, toggleDrawer: () => void }){
     const dispatch = useDispatch()
 
     const { logout } = bindActionCreators( actionCreators, dispatch )
-    const handleLinkClick = ( url: string, label: string ) =>{
-      setSelected( label )
-      navigate( url )
-    }
 
     const { isLoggedIn } = useSelector( (state : State) => state.userLogin )
     
-    const handleLogout = ( url: string, label : string ) =>{
-      logout() 
-    }
-    const initialLinks = [
-      { link: '/', label: 'Home', onClick: handleLinkClick },
-      { link: '/contact', label: 'Contact', onClick: handleLinkClick },
-      { link: '/cart', label: 'Cart', onClick: handleLinkClick },
-      { link : '/wishlist', label: 'Wish List', onClick: handleLinkClick}
-    ];
-    const [ links, setLinks ] = useState( initialLinks )
-    const [ selected, setSelected ] = useState<string>('');
-
-    useEffect( () =>{
-      if( isLoggedIn )
-        setLinks( [ ...initialLinks, { link: '/logout', label: 'Logout', onClick : handleLogout }  ])
-      else{  
-        setLinks( [ ...initialLinks, { link: '/signup', label: 'Sign Up', onClick: handleLinkClick },{ link: '/login', label: 'Login', onClick: handleLinkClick}] )
-
-      }
-    }, [ isLoggedIn ])
 
     return<>
-    {
-        links.map((link, index ) => (    
-            <button 
-            key = { index }
-            onClick = { (e) => link.onClick( link.link, link.label) }
-            className = { `link ${selected == link.label ? 'selected' : '' }`}
-            >
-            { link.label }
-            </button>
-        ))
-    }
+      <nav style = {{ marginLeft: 'auto', display : `${drawerOpened ? 'block': 'none'}`}}>
+        <ul className = {`link-wraper`}>
+          <li>
+            <Link to = '/' onClick = {toggleDrawer} className = {`link`} > Home</Link>
+          </li>
+
+          <li>
+            <Link to = '/contact' onClick = {toggleDrawer} className = {`link`} >Contact</Link>
+          </li>
+
+          <li>
+            <Link to = '/cart' onClick = {toggleDrawer} className = {`link`}>Cart</Link>
+          </li>
+          
+          <li>
+            <Link to = '/wishlist' onClick = {toggleDrawer} className = {`link`} >Wish List</Link>
+          </li>
+
+          <li style = {{display: `${isLoggedIn ? 'block': 'none'}`}}>
+            <button className = {`link`} onClick = {(e) => {toggleDrawer();logout()} } >Logout</button>
+          </li>
+
+          <li style = {{display: `${isLoggedIn ? 'none': 'block'}`}}>
+            <Link to = '/login' onClick = {toggleDrawer} className = {`link`}>Login</Link>
+          </li>
+
+          <li style = {{display: `${isLoggedIn ? 'none': 'block'}`}}>
+            <Link to = '/signUp' onClick = {toggleDrawer} className = {`link`} >Sign Up</Link>
+          </li>
+        </ul>
+        
+      </nav>
     </>
 }
