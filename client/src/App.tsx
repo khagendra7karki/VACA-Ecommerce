@@ -27,6 +27,7 @@ import EsewaSuccess from './pages/Checkout/Payment/Esewa/EsewaSuccess';
 import EsewaFailed from './pages/Checkout/Payment/Esewa/EsewaFailed';
 import AllInOne from './pages/Checkout';
 import Admin from './pages/Admin';
+import Search from './pages/Search';
 
 
 const CONTAINER_SIZES: Record<string, string> = {
@@ -74,6 +75,7 @@ const router = createBrowserRouter([
     element: <Root />,
     children: [
       { path: "/", element: <Home /> },
+      { path: '/search', element: <Search />},
       { path: "login", element: <Login /> },
       { path: "signup", element: <Signup /> },
       { path: "contact", element: <ContactUs /> },

@@ -1,42 +1,39 @@
-/**
- * TODO
- * 
- * Optimize this
- * 
- * Right now the frontend sends a lot of search queries to backend
- * 
- * First search from the available products then 
- * when the user presses the search button, send the
- * query to the backend
- */
 import {  Select } from "@mantine/core"
-import { IconSearch } from '@tabler/icons-react';
-import { bindActionCreators } from "redux";
-import { State, actionCreators } from "../../state";
-import { useDispatch, useSelector } from "react-redux";
+import { IconSearch } from '@tabler/icons-react'
 import { useNavigate } from "react-router-dom";
-
+import quickSearchAPI from "./api";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { actionCreators } from "../../state";
+import { bindActionCreators } from "redux";
 
 const SearchBar = () =>{
-    const dispatch = useDispatch();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
-    const { quickSearchProducts, getProduct } = bindActionCreators(actionCreators, dispatch);
-    const { quickSearch } = useSelector((state: State) => state.quickSearch);
+    const { getProducts } = bindActionCreators( actionCreators, dispatch )
 
+    const [ quickSearch, setQuickSearch ] = useState([])
+    const [ query , setQuery ] = useState('')
+    
     const handlerSearch = (value: any) => {
-        quickSearchProducts(value);
+        setQuery(value )
+        const values = quickSearchAPI(value)
+        setQuickSearch(values)
     };
 
     const handlerSearchSelect = (id: any) => {
-        getProduct(id);
         navigate(`/product/${id}`);
     };
 
+    const handleSubmit = () =>{
+        getProducts(1, query )
+        navigate(`/search`)
+    }
 
     return<>
+        <form onSubmit = { handleSubmit }>
             <Select
-            style ={{ backgroundColor: 'var(--secondary-white)'}}
             my = '5px'
             mx = '20px'
             size="sm"
@@ -47,7 +44,13 @@ const SearchBar = () =>{
             data={quickSearch ? quickSearch : ["help" , " me"]}
             searchable
             nothingFoundMessage="Nothing found..."
+            onKeyDown={event => {
+                if (event.key === 'Enter') {
+                  handleSubmit()
+                }
+              }}
             />
+        </form>
     </>
 }
 

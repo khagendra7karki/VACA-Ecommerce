@@ -108,61 +108,11 @@ const createProductReducer = (
   }
 };
 
-const getTopProductsReducer = (
-  state = {
-    topProducts: [],
-    error: null,
-    loading: false,
-  },
-  action: Action
-) => {
-  switch (action.type) {
-    case ActionType.GET_TOP_PRODUCTS_REQUEST:
-      return { ...state, loading: true, error: null };
-    case ActionType.GET_TOP_PRODUCTS_SUCCESS:
-      return {
-        ...state,
-        topProducts: action.payload,
-        loading: false,
-        error: null,
-      };
-    case ActionType.GET_TOP_PRODUCTS_FAIL:
-      return { ...state, loading: false, error: action.payload };
-    default:
-      return state;
-  }
-};
 
-const quickSearchReducer = (
-  state = {
-    quickSearch: [],
-    error: null,
-    loading: false,
-  },
-  action: Action
-) => {
-  switch (action.type) {
-    case ActionType.QUICK_SEARCH_REQUEST:
-      return { ...state, loading: true, error: null };
-    case ActionType.QUICK_SEARCH_SUCCESS:
-      return {
-        ...state,
-        quickSearch: action.payload,
-        loading: false,
-        error: null,
-      };
-    case ActionType.QUICK_SEARCH_FAIL:
-      return { ...state, loading: false, error: action.payload };
-    default:
-      return state;
-  }
-};
 
 export {
   getProductsReducer,
   getProductReducer,
   addReviewReducer,
   createProductReducer,
-  getTopProductsReducer,
-  quickSearchReducer,
 };

@@ -13,8 +13,6 @@ import {
   createProductReducer,
   getProductReducer,
   getProductsReducer,
-  getTopProductsReducer,
-  quickSearchReducer,
 } from "./productReducer";
 import {
   loginReducer,
@@ -41,8 +39,6 @@ const reducers = combineReducers({
   orders: getOrdersReducer,
   orderDeliver: orderDeliverReducer,
   createProduct: createProductReducer,
-  topProducts: getTopProductsReducer,
-  quickSearch: quickSearchReducer,
   myOrders: getMyOrdersReducer,
   profileUpdate: updateProfileReducer,
   userUpdate: updateUserReducer,

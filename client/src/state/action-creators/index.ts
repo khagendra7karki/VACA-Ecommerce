@@ -267,13 +267,13 @@ export const clearCart = () =>{
 }
 
 
-export const getProducts = (page: number) => {
+export const getProducts = (page: number, query = "") => {
   return async (dispatch: Dispatch<Action>) => {
     try {
       dispatch({
         type: ActionType.GET_PRODUCTS_REQUEST,
       });
-      const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/product/getProducts?pageNumber=${page}`);
+      const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/product/getProducts?pageNumber=${page}&keyword=${query}`);
       dispatch({
         type: ActionType.GET_PRODUCTS_SUCCESS,
         payload: data.payload,
@@ -287,27 +287,6 @@ export const getProducts = (page: number) => {
   };
 };
 
-export const quickSearchProducts = (keyword: number) => {
-  return async (dispatch: Dispatch<Action>) => {
-    try {
-      dispatch({
-        type: ActionType.QUICK_SEARCH_REQUEST,
-      });
-      const { data } = await axios.get(
-        `${process.env.REACT_APP_API_URL}/product/getProducts/search?keyword=${keyword}`
-      );
-      dispatch({
-        type: ActionType.QUICK_SEARCH_SUCCESS,
-        payload: data.payload,
-      });
-    } catch (error: any) {
-      dispatch({
-        type: ActionType.QUICK_SEARCH_FAIL,
-        payload: error,
-      });
-    }
-  };
-};
 
 export const getProduct = (id: string) => {
   return async (dispatch: Dispatch<Action>) => {
@@ -782,28 +761,6 @@ export const createProduct = (
   };
 };
 
-export const getTopProducts = () => {
-  return async (dispatch: Dispatch<Action>) => {
-    try {
-      dispatch({
-        type: ActionType.GET_TOP_PRODUCTS_REQUEST,
-      });
-
-      const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/getTopProducts`);
-
-      dispatch({
-        type: ActionType.GET_TOP_PRODUCTS_SUCCESS,
-        payload: data,
-      });
-    } catch (error: any) {
-      dispatch({
-        type: ActionType.GET_TOP_PRODUCTS_FAIL,
-        payload: error,
-      });
-    }
-  };
-};
-
 export const getMyOrders = () => {
   return async (dispatch: Dispatch<Action>) => {
     try {
@@ -876,6 +833,7 @@ export const updateProfile = (
       dispatch({
         type: ActionType.UPDATE_PROFILE_RESET,
       });
+
     } catch (error: any) {
       dispatch({
         type: ActionType.UPDATE_PROFILE_FAIL,

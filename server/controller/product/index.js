@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import productSchema from "../../models/Product.js"
+import Product from "../../models/Product.js"
 
 
 const productController = {
@@ -17,24 +17,23 @@ const productController = {
                   },
                 }
               : {};
-          
-            const count = await productSchema.countDocuments({ ...keyword });
-            const products = await productSchema.find({ ...keyword })
-              .limit(pageSize)
-              .skip(pageSize * (page - 1));
+            const count = await Product.countDocuments()
+            const products = await Product.find(keyword)
+            .limit(pageSize)
+            .skip(pageSize * (page - 1));
           
             res.status(200).json( {payload : { products, page, pages: Math.ceil(count / pageSize) }});
-            
         }
         catch( error ){
             console.log('An error from productController.js occurred', error)
+            res.status(500).send()
         }
     },
 
     updateProduct: async ( req, res) =>{
         try{
             const { id } = req.params
-            const product = await productSchema.findById( id ).lean()
+            const product = await Product.findById( id ).lean()
             if( product ){
                 product.title = req.body.title
                 product.description = req.body.description
@@ -54,7 +53,7 @@ const productController = {
     deleteProductById: async( req, res) =>{
         const { id } = req.params
         try{
-            await productSchema.deleteOne( { _id: new mongoose.Types.ObjectId( id ) })
+            await Product.deleteOne( { _id: new mongoose.Types.ObjectId( id ) })
             res.status( 200).json( { task: 'deleteItem', status: 'successful'})
         }
         catch( error ){
@@ -73,7 +72,7 @@ const productController = {
 
             const { id } = req.params
             // res.status(500).json({message: 'An error occurred'})
-            const product = await productSchema.findById( id ).lean()
+            const product = await Product.findById( id ).lean()
             res.status(200).json( {task : 'getProductId',status:'unsuccessful', payload: product })
 
         }catch( error ){
@@ -91,7 +90,7 @@ const productController = {
             const {product} = req.body
             console.log( "New product is to be saved to the database")
             console.log( req.body )
-            const producttModel = new  productSchema( product)
+            const producttModel = new  Product( product)
             await producttModel.save()
             res.status(200).json({ task: res.status(200).json({ task: 'createProduct', status: 'successful'})})
         }catch( error ){
@@ -102,7 +101,7 @@ const productController = {
 
     getTopProducts:async (req, res ) => {
         try{
-            const result = await productSchema.find({}).sort({ rating: -1}).limit( 20 ).lean()
+            const result = await Product.find({}).sort({ rating: -1}).limit( 20 ).lean()
             res.status(200).json({ task: 'createProduct', status: 'successful', payload: result })
         }catch( error ){
             console.log ( error )
@@ -112,7 +111,7 @@ const productController = {
     },
     getLatestProducts : async( req, res ) => {
         try{
-            const result = await productSchema.find({}).sort({ createdAt: -1}).limit( 20 ).lean()
+            const result = await Product.find({}).sort({ createdAt: -1}).limit( 20 ).lean()
             res.status(200).json({ task: 'createProduct', status: 'successful', payload: result })
         }catch( error ){
             console.log ( error )
@@ -131,7 +130,7 @@ const productController = {
                 }
                 : {};
             
-            const products = await productSchema.aggregate([
+            const products = await Product.aggregate([
                 {$match: keyword },
                 {
                     $project:{ 
