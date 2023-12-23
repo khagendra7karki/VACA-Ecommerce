@@ -87,7 +87,6 @@ export default function Signin() {
 
   const handlerLogin = (values: any) => {
     const { email, password } = values;
-    console.log(email, password, "email and password");
     login(email, password);
   };
 

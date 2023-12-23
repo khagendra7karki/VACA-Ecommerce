@@ -38,7 +38,6 @@ export default function Login() {
 
   const handlerLogin = (values: any) => {
     const { email, password } = values;
-    console.log(email, password, "email and password");
     login(email, password);
   };
 
