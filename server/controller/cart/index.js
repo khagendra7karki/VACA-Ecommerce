@@ -15,6 +15,7 @@ const cartController = {
         try{
             const userId = res.locals.user._id;
             let result = await User.findById(userId, {cart: 1, _id: 0}).populate( 'cart.product', 'availableQuantity').lean()
+            console.log(result)
             return res.status( 200 ).json({ status: 'successful', task: 'getItem', payload: result.cart })
 
         }catch( error ){

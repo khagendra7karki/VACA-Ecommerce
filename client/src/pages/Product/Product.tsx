@@ -121,6 +121,7 @@ const Product = () => {
 
   const addCart = () => {
     open()
+    console.log(value, product._id)
     handlerAddToCart(value, product._id)
    
   }

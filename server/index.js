@@ -9,6 +9,7 @@ dotenv.config()
 
 const db = new Database();
 const URI = process.env.MONGODB_URI
+console.log(URI)
 
 await db.connectDB( URI )
 

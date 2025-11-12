@@ -3,32 +3,49 @@ import Product from "../../models/Product.js"
 
 
 const productController = {
-    getProducts : async (req, res) => {
+    getProducts: async (req, res) => {
+        try {
 
-        try{
             const pageSize = 8;
             const page = Number(req.query.pageNumber) || 1;
-          
+
             const keyword = req.query.keyword
-              ? {
-                  name: {
-                    $regex: req.query.keyword,
-                    $options: "i",
-                  },
+            ? {
+                name: { $regex: req.query.keyword, $options: "i" }
                 }
-              : {};
-            const count = await Product.countDocuments()
-            const products = await Product.find(keyword)
-            .limit(pageSize)
-            .skip(pageSize * (page - 1));
-          
-            res.status(200).json( {payload : { products, page, pages: Math.ceil(count / pageSize) }});
-        }
-        catch( error ){
-            console.log('An error from productController.js occurred', error)
-            res.status(500).send()
+            : {};
+
+            const result = await Product.aggregate([
+            { $match: keyword },
+            {
+                $facet: {
+                products: [
+                    { $skip: pageSize * (page - 1) },
+                    { $limit: pageSize }
+                ],
+                totalCount: [
+                    { $count: "count" }
+                ]
+                }
+            }
+            ]);
+
+            const products = result[0].products;
+            const count = result[0].totalCount[0]?.count || 0;
+
+            res.status(200).json({
+            payload: {
+                products,
+                page,
+                pages: Math.ceil(count / pageSize),
+            },
+            });
+        } catch (error) {
+            console.log('An error from productController.js occurred', error);
+            res.status(500).send();
         }
     },
+
 
     updateProduct: async ( req, res) =>{
         try{
@@ -78,7 +95,6 @@ const productController = {
         }catch( error ){
             console.log( 'An error occcurred at getproductByIdWithReview',error )
             return res.status( 500 ).json( { task: 'getProductByIdWithReview',status: 'unsuccessful',  reason: error })
-
         }
     },
 

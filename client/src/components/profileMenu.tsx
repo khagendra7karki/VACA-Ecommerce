@@ -9,6 +9,8 @@ import {
   IconTrash,
   IconArrowsLeftRight,
 } from "@tabler/icons-react";
+import { useSelector } from "react-redux";
+import {  State } from "../state";
 interface UserButtonProps extends React.ComponentPropsWithoutRef<"button"> {
   image: string;
   name: string;
@@ -43,13 +45,14 @@ const UserButton = forwardRef<HTMLButtonElement, UserButtonProps>(
   )
 );
 
-export default function menu() {
-  return (
-    <Menu withArrow>
+export default function ProfileMenu() {
+  const user = useSelector((state: State) => state.user)
+
+  return <Menu withArrow>
       <Menu.Target>
         <UserButton
           image="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-8.png"
-          name="Harriette Spoonlicker"
+          name={user?.userInfo?.fullName}
           email="Profile & Setting"
         />
       </Menu.Target>
@@ -97,5 +100,5 @@ export default function menu() {
         </Menu.Item>
       </Menu.Dropdown>
     </Menu>
-  );
+  
 }

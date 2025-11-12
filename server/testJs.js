@@ -1,6 +1,12 @@
 import bcrypt from 'bcrypt';
+import dontenv from 'dotenv';
+
+dontenv.config()
 
 
-bcrypt.hash( 'btrektours01', 10, ( err, hash ) =>{
+const saltRound = parseInt(process.env.SALT_ROUND)
+console.log(saltRound)
+
+bcrypt.hash( 'admin_password', saltRound, ( err, hash ) =>{
     console.log( hash )
 })

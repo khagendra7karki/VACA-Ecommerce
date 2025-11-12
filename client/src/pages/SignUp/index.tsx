@@ -82,7 +82,7 @@ export function Signup() {
 
 
   if( isLoggedIn ){
-    window.location.href = 'http://localhost:3000/'
+    navigate('/')
     return <></>
   }
 

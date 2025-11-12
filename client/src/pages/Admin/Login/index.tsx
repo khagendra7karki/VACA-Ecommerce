@@ -25,7 +25,9 @@ export default function Login() {
   const dispatch = useDispatch();
 
 
+
   const { login } = bindActionCreators( actionCreator, dispatch);
+
 
 
   const form = useForm({
@@ -39,6 +41,7 @@ export default function Login() {
   const handlerLogin = (values: any) => {
     const { email, password } = values;
     login(email, password);
+    navigate('/admin/home')
   };
 
 

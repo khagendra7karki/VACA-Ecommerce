@@ -1,9 +1,7 @@
 import { ActionType } from "../action-types";
 import { Action } from "../actions/index";
 
-const userInfoFromStorage = localStorage.getItem("userInfo")
-  ? JSON.parse(localStorage.getItem("userInfo") || "{}")
-  : null;
+const userInfoFromStorage =  JSON.parse(localStorage.getItem("userInfo") || "{}");
 
 const registerReducer = (
   state = {
@@ -32,7 +30,7 @@ const registerReducer = (
 
 const loginReducer = (
   state = {
-    isLoggedIn: userInfoFromStorage ? true : false ,
+    isLoggedIn:localStorage.getItem("userLogin.isLoggedIn") === "true",
     error: null,
     loading: false,
   },

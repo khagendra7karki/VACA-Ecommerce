@@ -16,6 +16,7 @@ function createNewUser( email : string , password: string, handleSuccess : ( use
         console.log (error.message) 
         // ..
       });
+      
 
 }
 

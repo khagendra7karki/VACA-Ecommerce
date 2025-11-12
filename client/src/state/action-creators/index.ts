@@ -6,7 +6,6 @@ import { store } from "../store";
 import createNewUser from "../../firebase/createNewUser";
 
 
-
 /**
  * @description - Retrieves user cart from the database
  * 
@@ -62,7 +61,7 @@ export const addToWishList = (id: string) => {
       const token = store.getState().user.userInfo.token;
       
       const existItem = store.getState().wishList.wishListItems.find(
-        (x: any ) => x.product._id == id
+        (x: any ) => x.product._id === id
       )
   
       if( existItem ){
@@ -175,8 +174,14 @@ export const addToCart = (id: string, qty: number) => {
   return async (dispatch: Dispatch<Action>, getState: any) => {
 
     try {
+      console.log("Adding to cart")
       const token = store.getState().user.userInfo.token;
-      if (!token ) return 
+      console.log(token)
+      if (!token ){
+        console.log("No token")
+        window.alert("You need to log in first")
+        return
+      }
   
       const config = {
           headers: {
